@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import React, { useState, useMemo, useEffect, forwardRef, useRef } from 'react';
@@ -30,7 +31,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     : [purifier.image]), [purifier]);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const autoScrollTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoScrollTimerRef = useRef<number | null>(null);
 
   const clearAutoScrollTimer = () => {
     if (autoScrollTimerRef.current) {
@@ -52,7 +53,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     setCurrentImageIndex(0); 
     startAutoScrollTimer(); 
     return () => clearAutoScrollTimer(); 
-  }, [purifier, allImages.length]); 
+  }, [allImages]); // Changed dependency from [purifier, allImages.length]
 
 
   const handleThumbnailClick = (index: number) => {
@@ -331,3 +332,4 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
+
