@@ -33,7 +33,7 @@ export default function KeyFeaturesDisplay({ purifier, className, displayMode }:
 
   if (!purifier || features.length === 0) {
     return (
-      <div className={`w-full mx-auto p-2 text-center text-sm text-muted-foreground ${className}`}>
+      <div className={`w-full mx-auto p-1 text-center text-xs text-muted-foreground ${className}`}>
         {purifier ? 'No specific key features listed for this purifier.' : 'Select a purifier to see its features.'}
       </div>
     );
@@ -45,24 +45,24 @@ export default function KeyFeaturesDisplay({ purifier, className, displayMode }:
     <div className={`w-full mx-auto ${className}`}>
       {displayMode === 'animate' ? (
         featureForAnimation ? (
-          <div className="h-[28px] flex items-center justify-center overflow-hidden px-2">
+          <div className="h-[22px] flex items-center justify-center overflow-hidden px-2">
             <AnimatedFeature
               key={featureForAnimation.id}
               feature={featureForAnimation}
             />
           </div>
         ) : (
-          <div className="h-[28px]" /> // Fallback empty space for animate mode if no feature
+          <div className="h-[22px]" /> // Fallback empty space for animate mode if no feature
         )
       ) : ( // displayMode === 'list'
         <div className="px-2">
-          <h4 className="text-sm font-semibold text-foreground mb-1.5">Key Features</h4>
+          <h4 className="text-xs font-semibold text-foreground mb-1">Key Features</h4>
           <ul className="space-y-0.5">
             {features.map(feature => {
               const IconComponent = feature.icon || Check;
               return (
-                <li key={feature.id} className="flex items-start text-xs text-muted-foreground">
-                  <IconComponent className="w-3.5 h-3.5 mr-2 text-dynamic-accent flex-shrink-0 mt-px" />
+                <li key={feature.id} className="flex items-start text-[11px] text-muted-foreground">
+                  <IconComponent className="w-3 h-3 mr-1.5 text-dynamic-accent flex-shrink-0 mt-px" />
                   <span>{feature.name}</span>
                 </li>
               );
