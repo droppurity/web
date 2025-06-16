@@ -30,7 +30,7 @@ export default function PurifierSelector({
                                : 'theme-blue'; 
 
         return (
-          <div key={purifier.id} className={`relative flex-1 sm:flex-shrink-0 text-center pb-0.5 ${buttonThemeClass}`}>
+          <div key={purifier.id} className={`relative flex-1 sm:flex-shrink-0 text-center pb-2 ${buttonThemeClass}`}> {/* Changed pb-0.5 to pb-2 */}
             {isSelected && purifier.tagline && (
               <div className="absolute -top-0 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap" style={{minWidth: 'max-content'}}>
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] leading-tight font-semibold bg-primary text-primary-foreground shadow-md">
@@ -44,7 +44,7 @@ export default function PurifierSelector({
               onClick={() => onSelectPurifier(purifier.id)}
               className={`h-auto shadow-sm transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 w-full sm:w-auto
                 px-2 py-1.5 md:px-2.5 md:py-0.5
-                mt-6 // Increased margin-top for tagline space
+                mt-6 
                 ${isSelected 
                   ? 'bg-gradient-to-br from-gradient-start to-gradient-end text-dynamic-accent-foreground border-dynamic-accent ring-2 ring-dynamic-accent' 
                   : 'bg-light-dynamic-accent text-dynamic-accent border-dynamic-accent/40 hover:bg-dynamic-accent/20 hover:text-dynamic-accent hover:border-dynamic-accent/60'
