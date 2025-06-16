@@ -51,7 +51,7 @@ export default function Header() {
           <nav className="hidden md:flex gap-4">
             {navItems.map((item) => (
               <Button key={item.label} variant="ghost" asChild>
-                <Link href={item.href} className="text-foreground hover:text-primary">
+                <Link href={item.href} className="text-foreground">
                   {item.label}
                 </Link>
               </Button>
