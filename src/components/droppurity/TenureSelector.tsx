@@ -31,7 +31,7 @@ export default function TenureSelector({
                 {option.displayName}
               </TabsTrigger>
               {option.offerPillText && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400 text-yellow-900 shadow-md whitespace-nowrap">
+                <span className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400 text-yellow-900 shadow-md whitespace-nowrap">
                   {option.offerPillText}
                 </span>
               )}
