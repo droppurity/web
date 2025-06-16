@@ -44,7 +44,7 @@ export default function PurifierSelector({
               onClick={() => onSelectPurifier(purifier.id)}
               className={`h-auto shadow-sm transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 w-full sm:w-auto
                 px-2 py-1.5 md:px-2.5 md:py-0.5
-                mt-6 
+                mt-4 
                 ${isSelected 
                   ? 'bg-gradient-to-br from-gradient-start to-gradient-end text-dynamic-accent-foreground border-dynamic-accent ring-2 ring-dynamic-accent' 
                   : 'bg-light-dynamic-accent text-dynamic-accent border-dynamic-accent/40 hover:bg-dynamic-accent/20 hover:text-dynamic-accent hover:border-dynamic-accent/60'
