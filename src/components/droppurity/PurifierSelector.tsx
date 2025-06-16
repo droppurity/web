@@ -30,7 +30,7 @@ export default function PurifierSelector({
                                : 'theme-blue'; 
 
         return (
-          <div key={purifier.id} className={`relative flex-1 sm:flex-shrink-0 text-center pb-2 ${buttonThemeClass}`}> {/* Changed pb-0.5 to pb-2 */}
+          <div key={purifier.id} className={`relative flex-1 sm:flex-shrink-0 text-center pb-2 ${buttonThemeClass}`}>
             {isSelected && purifier.tagline && (
               <div className="absolute -top-0 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap" style={{minWidth: 'max-content'}}>
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] leading-tight font-semibold bg-primary text-primary-foreground shadow-md">
@@ -60,7 +60,7 @@ export default function PurifierSelector({
             </Button>
             {isSelected && (
               <div
-                className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[6px]"
+                className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px]"
                 style={{ 
                   borderTopColor: `hsl(var(--dynamic-accent-hsl-values))`,
                 }}
