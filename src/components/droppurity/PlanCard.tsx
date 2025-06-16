@@ -24,17 +24,17 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
   if (!priceDetail) {
     return (
       <Card className="flex flex-col shadow-lg rounded-xl overflow-hidden border border-destructive">
-        <CardHeader className="p-4 sm:p-6 bg-card">
+        <CardHeader className="p-3 sm:p-4 bg-card">
           {purifierContextName && (
             <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wider -mb-1">
               {purifierContextName}
             </p>
           )}
-          <CardTitle className="font-headline text-lg sm:text-xl text-center font-semibold text-destructive-foreground">
+          <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-destructive-foreground">
             {plan.name} Plan
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6 flex-grow">
+        <CardContent className="p-3 sm:p-4 flex-grow">
           <p className="text-center text-destructive">Pricing not available for {tenure.displayName}.</p>
         </CardContent>
       </Card>
@@ -76,18 +76,18 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
           {plan.pillText}
         </Badge>
       )}
-      <CardHeader className="p-4 sm:p-6 bg-card">
+      <CardHeader className="p-3 sm:p-4 bg-card">
         {purifierContextName && (
             <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wider -mb-1">
               {purifierContextName}
             </p>
           )}
-        <CardTitle className="font-headline text-lg sm:text-xl text-center font-semibold text-foreground">
+        <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-foreground">
           {plan.name} Plan
         </CardTitle>
         <p className="text-xs text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
         <div className="text-center mt-2">
-          <span className="text-3xl sm:text-4xl font-bold font-headline text-dynamic-accent">
+          <span className="text-2xl sm:text-3xl font-bold font-headline text-dynamic-accent">
             ₹{Math.round(displayPricePerMonth)}
           </span>
           <span className="text-sm text-muted-foreground">/mo</span>
@@ -103,8 +103,8 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
           {priceDetail.payingMonths && priceDetail.payingMonths < tenure.durationMonths ? ` (pay for ${priceDetail.payingMonths} months)` : ''}
         </p>
       </CardHeader>
-      <CardContent className="p-4 sm:p-6 flex-grow">
-        <ul className="space-y-1.5">
+      <CardContent className="p-3 sm:p-4 flex-grow">
+        <ul className="space-y-1">
           {featuresToShow.map((feature, index) => (
             <li key={index} className="flex items-start text-sm text-foreground">
               <CheckCircle className="w-4 h-4 mr-2 text-dynamic-accent flex-shrink-0 mt-0.5" />

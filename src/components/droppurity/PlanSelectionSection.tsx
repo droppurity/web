@@ -53,7 +53,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     setCurrentImageIndex(0); 
     startAutoScrollTimer(); 
     return () => clearAutoScrollTimer(); 
-  }, [allImages]); // Changed dependency from [purifier, allImages.length]
+  }, [allImages]);
 
 
   const handleThumbnailClick = (index: number) => {
@@ -79,8 +79,8 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
 
   return (
     <Card className={`shadow-xl overflow-hidden border-0 ${imageDisplayThemeClass}`}>
-      <CardContent className="p-4 sm:p-6">
-        <div className="relative aspect-square mb-4">
+      <CardContent className="p-3 sm:p-4">
+        <div className="relative aspect-square mb-3">
           <Image
             src={mainDisplayImage}
             alt={purifier.name}
@@ -116,14 +116,14 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
                       key={index}
                       onClick={() => handleThumbnailClick(index)}
                       className={cn(
-                        "w-14 h-14 sm:w-16 sm:h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-1",
+                        "w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden border-2 transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-1",
                         index === currentImageIndex
                           ? 'border-dynamic-accent ring-dynamic-accent'
                           : 'border-border hover:border-muted-foreground focus:ring-ring'
                       )}
                       aria-label={`View image ${index + 1} of ${purifier.name}`}
                     >
-                      <Image src={img} alt={`${purifier.name} thumbnail ${index + 1}`} width={64} height={64} className="object-contain w-full h-full" />
+                      <Image src={img} alt={`${purifier.name} thumbnail ${index + 1}`} width={56} height={56} className="object-contain w-full h-full" />
                     </button>
                   ))}
                 </div>
@@ -209,13 +209,13 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
     return 'theme-blue';
   }, [selectedPurifier.accentColor]);
 
-  const stickyCardTopClass = 'top-[7rem]';
+  const stickyCardTopClass = 'top-[8rem]';
 
 
   return (
-    <div ref={ref} className={`py-6 sm:py-10 bg-background ${overallThemeClass}`}>
+    <div ref={ref} className={`py-4 sm:py-6 bg-background ${overallThemeClass}`}>
       <div className="container mx-auto px-4">
-        <header className="text-center mb-6 sm:mb-10">
+        <header className="text-center mb-4 sm:mb-6">
             <h2 className="text-3xl sm:text-4xl font-bold font-headline text-foreground flex items-center justify-center">
               <Droplet className="w-8 h-8 sm:w-10 sm:h-10 text-primary mr-2" />
               Choose Your Droppurity Plan
@@ -227,7 +227,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 
         <div className={cn(
-            "sticky bg-background py-0.5 shadow-lg mb-6 sm:mb-10 z-40",
+            "sticky bg-background py-0.5 shadow-lg mb-4 sm:mb-6 z-40",
             isHeaderDominant && "z-[51]"
           )}
           style={{ top: '0' }}>
@@ -241,21 +241,21 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
           <div className="lg:col-span-2">
             <PurifierImageDisplay purifier={selectedPurifier} />
             <div className="hidden lg:block"> 
-                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-4 lg:mt-6" displayMode="list" />
+                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-3 lg:mt-4" displayMode="list" />
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <Card className={`shadow-xl sticky ${stickyCardTopClass}`}>
-              <CardHeader>
+              <CardHeader className="p-4">
                 <CardTitle className="font-headline text-xl text-foreground">Flexible Rental Plans</CardTitle>
                 <p className="text-sm text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6 space-y-6">
+              <CardContent className="p-4 space-y-4">
 
                 <Separator />
                 <div>
@@ -332,4 +332,5 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
+
 

@@ -57,7 +57,7 @@ export default function KeyFeaturesDisplay({ purifier, className, displayMode }:
       ) : ( // displayMode === 'list'
         <div className="px-2">
           <h4 className="text-md font-semibold text-foreground mb-2">Key Features</h4>
-          <ul className="space-y-1.5">
+          <ul className="space-y-1">
             {features.map(feature => {
               const IconComponent = feature.icon || Check;
               return (
