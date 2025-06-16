@@ -16,7 +16,7 @@ export default function PurifierSelector({
   onSelectPurifier,
 }: PurifierSelectorProps) {
   return (
-    <div className="w-full flex items-start gap-1 md:gap-1.5 overflow-x-auto md:flex-wrap md:justify-center no-scrollbar py-0.5">
+    <div className="w-full flex items-start gap-1 md:gap-1.5 overflow-x-auto md:flex-wrap md:justify-center no-scrollbar pt-4 pb-1">
       {purifiers.map((purifier) => {
         const isSelected = purifier.id === selectedPurifierId;
         const TaglineIcon = purifier.taglineIcon;
@@ -43,8 +43,8 @@ export default function PurifierSelector({
               variant={"outline"}
               onClick={() => onSelectPurifier(purifier.id)}
               className={`h-auto shadow-sm transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 w-full sm:w-auto
-                px-2 py-1.5 md:px-2.5 md:py-0.5  // Adjusted padding for mobile height
-                mt-4 // Increased margin-top for tagline space
+                px-2 py-1.5 md:px-2.5 md:py-0.5
+                mt-6 // Increased margin-top for tagline space
                 ${isSelected 
                   ? 'bg-gradient-to-br from-gradient-start to-gradient-end text-dynamic-accent-foreground border-dynamic-accent ring-2 ring-dynamic-accent' 
                   : 'bg-light-dynamic-accent text-dynamic-accent border-dynamic-accent/40 hover:bg-dynamic-accent/20 hover:text-dynamic-accent hover:border-dynamic-accent/60'
