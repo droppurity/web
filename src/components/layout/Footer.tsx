@@ -35,12 +35,12 @@ const footerSections = [
 ];
 
 const socialLinks = [
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: MessageCircle, href: '#', label: 'WhatsApp' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
+  { icon: Twitter, href: '#', label: 'Droppurity Twitter' },
+  { icon: Linkedin, href: '#', label: 'Droppurity LinkedIn' },
+  { icon: Facebook, href: '#', label: 'Droppurity Facebook' },
+  { icon: Instagram, href: '#', label: 'Droppurity Instagram' },
+  { icon: MessageCircle, href: '#', label: 'Droppurity WhatsApp' },
+  { icon: Youtube, href: '#', label: 'Droppurity YouTube' },
 ];
 
 export default function Footer() {
