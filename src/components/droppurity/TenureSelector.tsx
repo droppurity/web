@@ -21,17 +21,17 @@ export default function TenureSelector({
   return (
     <div className="w-full max-w-lg mx-auto">
       <Tabs value={selectedTenureId} onValueChange={onSelectTenure} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-muted/50 p-1 rounded-lg h-auto gap-1">
+        <TabsList className="grid w-full grid-cols-3 bg-muted/50 pt-4 pb-1 px-1 rounded-lg h-auto gap-1">
           {tenureOptions.map((option) => (
             <div key={option.id} className="relative">
               <TabsTrigger
                 value={option.id}
-                className="w-full data-[state=active]:bg-dynamic-accent data-[state=active]:text-dynamic-accent-foreground data-[state=active]:shadow-md rounded-md px-3 py-2 text-sm transition-all"
+                className="w-full data-[state=active]:bg-dynamic-accent data-[state=active]:text-dynamic-accent-foreground data-[state=active]:shadow-md rounded-md px-3 py-2 text-sm transition-all mt-5"
               >
                 {option.displayName}
               </TabsTrigger>
               {option.offerPillText && (
-                <span className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400 text-yellow-900 shadow-md whitespace-nowrap">
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 z-10 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400 text-yellow-900 shadow-md whitespace-nowrap">
                   {option.offerPillText}
                 </span>
               )}
