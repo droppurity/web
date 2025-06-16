@@ -35,12 +35,12 @@ const footerSections = [
 ];
 
 const socialLinks = [
-  { icon: Twitter, href: '#', label: 'Droppurity Twitter' },
-  { icon: Linkedin, href: '#', label: 'Droppurity LinkedIn' },
-  { icon: Facebook, href: '#', label: 'Droppurity Facebook' },
-  { icon: Instagram, href: '#', label: 'Droppurity Instagram' },
-  { icon: MessageCircle, href: '#', label: 'Droppurity WhatsApp' },
-  { icon: Youtube, href: '#', label: 'Droppurity YouTube' },
+  { icon: Twitter, href: 'https://x.com/droppurity_placeholder', label: 'Droppurity Twitter' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/droppurity_placeholder', label: 'Droppurity LinkedIn' },
+  { icon: Facebook, href: 'https://facebook.com/droppurity_placeholder', label: 'Droppurity Facebook' },
+  { icon: Instagram, href: 'https://instagram.com/droppurity_placeholder', label: 'Droppurity Instagram' },
+  { icon: MessageCircle, href: 'https://wa.me/YOUR_WHATSAPP_NUMBER', label: 'Droppurity WhatsApp' },
+  { icon: Youtube, href: 'https://youtube.com/@droppurity_placeholder', label: 'Droppurity YouTube' },
 ];
 
 export default function Footer() {
@@ -140,7 +140,7 @@ export default function Footer() {
         <div className="border-t border-primary-foreground/30 pt-8 flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="flex space-x-5">
             {socialLinks.map((social) => (
-              <Link key={social.label} href={social.href} aria-label={social.label} className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">
+              <Link key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label} className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">
                 <social.icon className="w-6 h-6" />
               </Link>
             ))}
