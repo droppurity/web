@@ -26,7 +26,7 @@ export default function TenureSelector({
             <div key={option.id} className="relative">
               <TabsTrigger
                 value={option.id}
-                className="w-full data-[state=active]:bg-dynamic-accent data-[state=active]:text-dynamic-accent-foreground data-[state=active]:shadow-md rounded-md px-3 py-2 text-sm transition-all mt-5"
+                className="w-full data-[state=active]:bg-dynamic-accent data-[state=active]:text-dynamic-accent-foreground data-[state=active]:shadow-md rounded-md px-2.5 py-1.5 text-xs transition-all mt-4"
               >
                 {option.displayName}
               </TabsTrigger>
@@ -40,12 +40,11 @@ export default function TenureSelector({
         </TabsList>
       </Tabs>
       {selectedOption?.lockInNote && (
-        <div className="flex items-center justify-center text-xs text-muted-foreground mt-2">
-          <Lock className="w-3 h-3 mr-1" />
+        <div className="flex items-center justify-center text-[10px] text-muted-foreground mt-1.5">
+          <Lock className="w-2.5 h-2.5 mr-1" />
           <span>{selectedOption.lockInNote}</span>
         </div>
       )}
     </div>
   );
 }
-

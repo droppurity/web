@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import React, { useState, useMemo, useEffect, forwardRef, useRef } from 'react';
@@ -43,7 +42,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
   const startAutoScrollTimer = () => {
     clearAutoScrollTimer();
     if (allImages.length > 1) {
-      autoScrollTimerRef.current = setInterval(() => {
+      autoScrollTimerRef.current = window.setInterval(() => { // Ensure window.setInterval for browser
         setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
       }, 4000); 
     }
@@ -53,7 +52,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     setCurrentImageIndex(0); 
     startAutoScrollTimer(); 
     return () => clearAutoScrollTimer(); 
-  }, [allImages]);
+  }, [allImages]); // Dependency on allImages
 
 
   const handleThumbnailClick = (index: number) => {
@@ -79,8 +78,8 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
 
   return (
     <Card className={`shadow-xl overflow-hidden border-0 ${imageDisplayThemeClass}`}>
-      <CardContent className="p-3 sm:p-4">
-        <div className="relative aspect-square mb-3">
+      <CardContent className="p-2 sm:p-3">
+        <div className="relative aspect-square mb-2">
           <Image
             src={mainDisplayImage}
             alt={purifier.name}
@@ -97,33 +96,33 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
           )}
         </div>
         {allImages.length > 1 && (
-           <div className="mt-2">
+           <div className="mt-1.5">
             <div className="flex items-center justify-between">
               <Button
                 onClick={prevImage}
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-1"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-1 h-auto w-auto"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
 
               <div className="flex-grow overflow-hidden px-1 mx-1">
-                <div className="flex items-center justify-center space-x-2 overflow-x-auto pb-1 no-scrollbar">
+                <div className="flex items-center justify-center space-x-1.5 overflow-x-auto pb-1 no-scrollbar">
                   {allImages.map((img, index) => (
                     <button
                       key={index}
                       onClick={() => handleThumbnailClick(index)}
                       className={cn(
-                        "w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden border-2 transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-1",
+                        "w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-1",
                         index === currentImageIndex
                           ? 'border-dynamic-accent ring-dynamic-accent'
                           : 'border-border hover:border-muted-foreground focus:ring-ring'
                       )}
                       aria-label={`View image ${index + 1} of ${purifier.name}`}
                     >
-                      <Image src={img} alt={`${purifier.name} thumbnail ${index + 1}`} width={56} height={56} className="object-contain w-full h-full" />
+                      <Image src={img} alt={`${purifier.name} thumbnail ${index + 1}`} width={48} height={48} className="object-contain w-full h-full" />
                     </button>
                   ))}
                 </div>
@@ -133,10 +132,10 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
                 onClick={nextImage}
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-1"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-1 h-auto w-auto"
                 aria-label="Next image"
               >
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
           </div>
@@ -213,21 +212,21 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 
   return (
-    <div ref={ref} className={`py-4 sm:py-6 bg-background ${overallThemeClass}`}>
+    <div ref={ref} className={`py-2 sm:py-3 bg-background ${overallThemeClass}`}>
       <div className="container mx-auto px-4">
-        <header className="text-center mb-4 sm:mb-6">
+        <header className="text-center mb-3 sm:mb-4">
             <h2 className="text-3xl sm:text-4xl font-bold font-headline text-foreground flex items-center justify-center">
               <Droplet className="w-8 h-8 sm:w-10 sm:h-10 text-primary mr-2" />
               Choose Your Droppurity Plan
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mt-2">
+            <p className="text-base sm:text-lg text-muted-foreground mt-1">
               Select the right purifier, plan, and tenure for your needs.
             </p>
         </header>
 
 
         <div className={cn(
-            "sticky bg-background py-0.5 shadow-lg mb-4 sm:mb-6 z-40",
+            "sticky bg-background py-0.5 shadow-lg mb-3 sm:mb-4 z-40",
             isHeaderDominant && "z-[51]"
           )}
           style={{ top: '0' }}>
@@ -241,39 +240,38 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4">
           <div className="lg:col-span-2">
             <PurifierImageDisplay purifier={selectedPurifier} />
             <div className="hidden lg:block"> 
-                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-3 lg:mt-4" displayMode="list" />
+                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-2 lg:mt-3" displayMode="list" />
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <Card className={`shadow-xl sticky ${stickyCardTopClass}`}>
-              <CardHeader className="p-4">
-                <CardTitle className="font-headline text-xl text-foreground">Flexible Rental Plans</CardTitle>
-                <p className="text-sm text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
+              <CardHeader className="p-3">
+                <CardTitle className="font-headline text-lg text-foreground">Flexible Rental Plans</CardTitle>
+                <p className="text-xs text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
               </CardHeader>
-              <CardContent className="p-4 space-y-4">
+              <CardContent className="p-3 space-y-3">
 
                 <Separator />
                 <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-base sm:text-lg font-semibold text-foreground">Step 1: Choose Your Plan</h3>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground">Step 1: Choose Your Plan</h3>
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
                           variant="outline"
-                          size="sm"
                           className={cn(
-                            "text-xs border-dynamic-accent",
+                            "h-auto px-2 py-1 text-xs border-dynamic-accent",
                             "text-dynamic-accent bg-transparent",
                             "hover:bg-gradient-to-br hover:from-gradient-start hover:to-gradient-end hover:text-dynamic-accent-foreground hover:border-transparent",
                             "focus-visible:bg-gradient-to-br focus-visible:from-gradient-start focus-visible:to-gradient-end focus-visible:text-dynamic-accent-foreground focus-visible:border-transparent"
                           )}
                         >
-                          <HelpCircle className="w-3.5 h-3.5 mr-1" /> Help me choose
+                          <HelpCircle className="w-3 h-3 mr-1" /> Help me choose
                         </Button>
                       </DialogTrigger>
                       <HelpMeChooseDialog />
@@ -289,8 +287,8 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                 <Separator />
 
                 <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-base sm:text-lg font-semibold text-foreground">Step 2: Choose Your Tenure</h3>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground">Step 2: Choose Your Tenure</h3>
                   </div>
                   <TenureSelector
                     tenureOptions={tenureOptions}
@@ -332,5 +330,3 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
-
-

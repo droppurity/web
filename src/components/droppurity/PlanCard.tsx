@@ -24,17 +24,17 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
   if (!priceDetail) {
     return (
       <Card className="flex flex-col shadow-lg rounded-xl overflow-hidden border border-destructive">
-        <CardHeader className="p-3 sm:p-4 bg-card">
+        <CardHeader className="p-2 sm:p-3 bg-card">
           {purifierContextName && (
-            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wider -mb-1">
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide -mb-0.5">
               {purifierContextName}
             </p>
           )}
-          <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-destructive-foreground">
+          <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-destructive-foreground">
             {plan.name} Plan
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-4 flex-grow">
+        <CardContent className="p-2 sm:p-3 flex-grow">
           <p className="text-center text-destructive">Pricing not available for {tenure.displayName}.</p>
         </CardContent>
       </Card>
@@ -76,55 +76,55 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
           {plan.pillText}
         </Badge>
       )}
-      <CardHeader className="p-3 sm:p-4 bg-card">
+      <CardHeader className="p-2 sm:p-3 bg-card">
         {purifierContextName && (
-            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wider -mb-1">
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide -mb-0.5">
               {purifierContextName}
             </p>
           )}
-        <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-foreground">
+        <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-foreground">
           {plan.name} Plan
         </CardTitle>
-        <p className="text-xs text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
-        <div className="text-center mt-2">
-          <span className="text-2xl sm:text-3xl font-bold font-headline text-dynamic-accent">
+        <p className="text-[10px] text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
+        <div className="text-center mt-1.5">
+          <span className="text-xl sm:text-2xl font-bold font-headline text-dynamic-accent">
             ₹{Math.round(displayPricePerMonth)}
           </span>
-          <span className="text-sm text-muted-foreground">/mo</span>
+          <span className="text-xs text-muted-foreground">/mo</span>
         </div>
         
         {savingsAmount > 0 && (
-          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-medium">
+          <Badge variant="outline" className="mx-auto mt-1.5 border-yellow-400 bg-yellow-50 text-yellow-700 text-[10px] font-medium">
             Savings of ₹{Math.round(savingsAmount)}!
           </Badge>
         )}
-         <p className="text-xs text-muted-foreground text-center mt-1">
+         <p className="text-[10px] text-muted-foreground text-center mt-0.5">
           Total ₹{Math.round(totalBilled)} for {tenure.displayName}
           {priceDetail.payingMonths && priceDetail.payingMonths < tenure.durationMonths ? ` (pay for ${priceDetail.payingMonths} months)` : ''}
         </p>
       </CardHeader>
-      <CardContent className="p-3 sm:p-4 flex-grow">
-        <ul className="space-y-1">
+      <CardContent className="p-2 sm:p-3 flex-grow">
+        <ul className="space-y-0.5">
           {featuresToShow.map((feature, index) => (
-            <li key={index} className="flex items-start text-sm text-foreground">
-              <CheckCircle className="w-4 h-4 mr-2 text-dynamic-accent flex-shrink-0 mt-0.5" />
+            <li key={index} className="flex items-start text-xs text-foreground">
+              <CheckCircle className="w-3.5 h-3.5 mr-2 text-dynamic-accent flex-shrink-0 mt-px" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="grid grid-cols-2 gap-2 sm:gap-3 p-4 bg-muted/20 mt-auto">
+      <CardFooter className="grid grid-cols-2 gap-1.5 sm:gap-2 p-3 bg-muted/20 mt-auto">
         <Button 
             size="sm" 
             variant="outline" 
-            className="w-full border-dynamic-accent text-dynamic-accent hover:bg-dynamic-accent/10 text-xs sm:text-sm" 
+            className="w-full border-dynamic-accent text-dynamic-accent hover:bg-dynamic-accent/10 text-xs" 
             onClick={handleKnowMore}
         >
-          <Info className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" /> Know More
+          <Info className="mr-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5" /> Know More
         </Button>
         <Button 
             size="sm" 
-            className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 text-xs sm:text-sm" 
+            className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 text-xs" 
             onClick={handleSubscribe}
         >
            Subscribe Now

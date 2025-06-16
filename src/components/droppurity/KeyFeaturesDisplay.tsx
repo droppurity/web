@@ -56,13 +56,13 @@ export default function KeyFeaturesDisplay({ purifier, className, displayMode }:
         )
       ) : ( // displayMode === 'list'
         <div className="px-2">
-          <h4 className="text-md font-semibold text-foreground mb-2">Key Features</h4>
-          <ul className="space-y-1">
+          <h4 className="text-sm font-semibold text-foreground mb-1.5">Key Features</h4>
+          <ul className="space-y-0.5">
             {features.map(feature => {
               const IconComponent = feature.icon || Check;
               return (
-                <li key={feature.id} className="flex items-start text-sm text-muted-foreground">
-                  <IconComponent className="w-4 h-4 mr-2 text-dynamic-accent flex-shrink-0 mt-0.5" />
+                <li key={feature.id} className="flex items-start text-xs text-muted-foreground">
+                  <IconComponent className="w-3.5 h-3.5 mr-2 text-dynamic-accent flex-shrink-0 mt-px" />
                   <span>{feature.name}</span>
                 </li>
               );
