@@ -39,7 +39,7 @@ const socialLinks = [
   { icon: Linkedin, href: 'https://linkedin.com/company/droppurity_placeholder', label: 'Droppurity LinkedIn' },
   { icon: Facebook, href: 'https://facebook.com/droppurity_placeholder', label: 'Droppurity Facebook' },
   { icon: Instagram, href: 'https://instagram.com/droppurity_placeholder', label: 'Droppurity Instagram' },
-  { icon: MessageCircle, href: 'https://wa.me/YOUR_WHATSAPP_NUMBER', label: 'Droppurity WhatsApp' },
+  { icon: MessageCircle, href: 'https://wa.me/917979784087', label: 'Droppurity WhatsApp' },
   { icon: Youtube, href: 'https://youtube.com/@droppurity_placeholder', label: 'Droppurity YouTube' },
 ];
 
