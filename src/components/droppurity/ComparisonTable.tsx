@@ -17,21 +17,21 @@ interface TableHeaderItem {
 interface TableRowData {
   concern: {
     title: string;
-    description: string;
+    description: string; // Keep this one relatively short too
     icon?: LucideIcon;
   };
   traditional: {
-    text: string | string[];
+    text: string | string[]; // Can be a single string or an array for bullet-like points
     icon: LucideIcon;
     iconColor?: string;
   };
   droppuritySolution: {
-    text: string | string[];
+    text: string;
     icon: LucideIcon;
     iconColor?: string;
   };
   droppurityAdvantage: {
-    text: string | string[];
+    text: string;
     icon: LucideIcon;
     iconColor?: string;
   };
@@ -48,49 +48,49 @@ const tableData: TableRowData[] = [
   {
     concern: {
       title: 'Water Safety',
-      description: 'Is my water truly safe from all invisible threats like bacteria, viruses, heavy metals, and pesticides?',
+      description: 'Is my water truly safe from invisible threats like bacteria, viruses, and heavy metals?',
     },
     traditional: {
       text: [
-        'Cans: Uncertain source, potential handling contamination, inconsistent quality.',
-        'Basic Filters: Limited removal of dissolved solids, chemicals, and no virus protection.',
-        'Boiling: Kills germs but doesn\'t remove heavy metals or dissolved impurities.'
+        'Cans: Uncertain source, contamination risks.',
+        'Basic Filters: Limited impurity removal.',
+        'Boiling: Kills germs only, not all impurities.'
       ],
       icon: AlertTriangle,
       iconColor: 'text-destructive',
     },
     droppuritySolution: {
-      text: 'Multi-stage RO+UV+UF purification (with optional Copper/Alkaline) tackles a wide spectrum of impurities effectively.',
+      text: 'Advanced multi-stage purification (RO+UV+UF options) for broad-spectrum impurity removal.',
       icon: ShieldCheck,
       iconColor: 'text-primary',
     },
     droppurityAdvantage: {
-      text: 'Comprehensive protection ensures every glass is pure, healthy, and safe. Peace of mind guaranteed.',
+      text: 'Comprehensive protection for pure, healthy, and safe water. Guaranteed peace of mind.',
       icon: CheckCircle2,
       iconColor: 'text-green-600',
     },
   },
   {
     concern: {
-      title: 'Cost & Investment',
-      description: 'Quality purifiers are expensive upfront, and ongoing maintenance adds up significantly.',
+      title: 'High Costs',
+      description: 'Purifiers are expensive upfront, and annual maintenance adds up significantly.',
     },
     traditional: {
       text: [
-        'High initial cost for good RO units (₹15,000-₹25,000).',
-        'Annual Maintenance Contracts (AMCs) add ₹4,000-₹6,000 yearly.',
-        'Unexpected repair bills can be substantial.'
+        'High initial cost (₹15k-₹25k).',
+        'Yearly AMCs (₹4k-₹6k).',
+        'Unexpected repair bills.'
       ],
       icon: AlertTriangle,
       iconColor: 'text-destructive',
     },
     droppuritySolution: {
-      text: 'Zero upfront cost for the purifier. Affordable monthly subscription covering ALL maintenance, filter changes, and repairs.',
+      text: 'Zero upfront cost. Affordable monthly subscription covering ALL maintenance and repairs.',
       icon: ShieldCheck,
       iconColor: 'text-primary',
     },
     droppurityAdvantage: {
-      text: 'Predictable, low expenses. No surprise costs. Access premium purification technology without a large investment.',
+      text: 'Predictable, low expenses. Premium purification without large investment.',
       icon: CheckCircle2,
       iconColor: 'text-green-600',
     },
@@ -101,38 +101,38 @@ const tableData: TableRowData[] = [
       description: 'Tracking service schedules and filter changes is a chore I often forget or delay.',
     },
     traditional: {
-      text: 'User responsibility to track, schedule, and pay for service. Neglect leads to poor water quality or device damage.',
+      text: 'User responsibility to track, schedule & pay. Neglect impacts water quality.',
       icon: AlertTriangle,
       iconColor: 'text-destructive',
     },
     droppuritySolution: {
-      text: 'Proactive, scheduled maintenance and filter replacements are included in your plan. We manage it all for you.',
+      text: 'Proactive, scheduled maintenance & filter replacements included. We manage it all.',
       icon: ShieldCheck,
       iconColor: 'text-primary',
     },
     droppurityAdvantage: {
-      text: 'Completely hassle-free ownership. Consistently pure water without the mental load or effort.',
+      text: 'Completely hassle-free. Consistently pure water without the mental load.',
       icon: CheckCircle2,
       iconColor: 'text-green-600',
     },
   },
   {
     concern: {
-      title: 'Water Quality & Health',
-      description: 'I want water that retains essential minerals, not just "empty" or "dead" RO water.',
+      title: 'Water Quality (Minerals)',
+      description: 'I want water that retains essential minerals, not just "empty" RO water.',
     },
     traditional: {
-      text: 'Standard RO can strip essential minerals, affecting taste and health benefits. Canned water quality and mineral content can be inconsistent.',
+      text: 'Standard RO can strip minerals. Canned water quality is inconsistent.',
       icon: AlertTriangle,
       iconColor: 'text-destructive',
     },
     droppuritySolution: {
-      text: 'Advanced purifiers with mineral retention technology. Options for Alkaline or Copper infusion for enhanced health benefits.',
+      text: 'Mineral retention tech. Optional Alkaline/Copper for enhanced health benefits.',
       icon: ShieldCheck,
       iconColor: 'text-primary',
     },
     droppurityAdvantage: {
-      text: 'Enjoy water that\'s not just pure, but also healthy, tastes great, and supports your well-being.',
+      text: 'Enjoy water that\'s pure, healthy, tastes great, and supports well-being.',
       icon: CheckCircle2,
       iconColor: 'text-green-600',
     },
@@ -140,20 +140,20 @@ const tableData: TableRowData[] = [
   {
     concern: {
       title: 'Lifestyle Flexibility',
-      description: 'What if I move to a new home? Or if my family\'s water needs change over time?',
+      description: 'What if I move or my family\'s water needs change over time?',
     },
     traditional: {
-      text: 'Selling or relocating an owned purifier is cumbersome. Stuck with one model even if needs or water conditions change.',
+      text: 'Relocating owned purifiers is cumbersome. Stuck with one model.',
       icon: AlertTriangle,
       iconColor: 'text-destructive',
     },
     droppuritySolution: {
-      text: 'Free relocation assistance. Flexible plans allow you to easily upgrade/downgrade your purifier or plan as your needs evolve.',
+      text: 'Free relocation. Easily upgrade/downgrade purifier or plan as needs evolve.',
       icon: ShieldCheck,
       iconColor: 'text-primary',
     },
     droppurityAdvantage: {
-      text: 'Ultimate convenience that adapts to your life. No long-term commitment to a single device or plan.',
+      text: 'Ultimate convenience that adapts to your life. No long-term device lock-in.',
       icon: CheckCircle2,
       iconColor: 'text-green-600',
     },
@@ -213,11 +213,11 @@ export default function ComparisonTable() {
                     className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex items-start gap-1.5 sm:gap-2 ${header.isHighlighted ? 'bg-primary/5' : 'bg-card'}`}
                   >
                     {ItemIcon && <ItemIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 mt-0.5 ${item.iconColor || 'text-muted-foreground'}`} />}
-                    <span className="text-[11px] sm:text-xs text-muted-foreground leading-snug">
+                    <div className="text-[11px] sm:text-xs text-muted-foreground leading-snug">
                       {Array.isArray(item.text)
-                        ? item.text.map((line, lineIdx) => <span key={lineIdx} className="block mb-1">{line}</span>)
+                        ? item.text.map((line, lineIdx) => <span key={lineIdx} className="block mb-0.5">{line}</span>)
                         : item.text}
-                    </span>
+                    </div>
                   </div>
                 );
               })}
@@ -225,7 +225,7 @@ export default function ComparisonTable() {
           ))}
         </Card>
          <p className="text-center text-xs text-muted-foreground mt-4">
-            * Comparison based on typical market offerings for RO purifiers and general water can services. Droppurity features and plans may vary.
+            * Based on typical market offerings. Features may vary.
         </p>
       </div>
     </section>
