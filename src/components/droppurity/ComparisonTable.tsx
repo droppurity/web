@@ -15,6 +15,7 @@ interface TableHeaderItem {
   iconColor?: string;
   isHighlighted?: boolean;
   className?: string;
+  dataAiHint?: string;
 }
 
 interface TableRowData {
@@ -36,7 +37,10 @@ interface TableRowData {
   };
 }
 
-const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
+const getFilenameFromUrl = (url: string): string => {
+  const parts = url.split('/');
+  return parts[parts.length -1];
+}
 
 const tableHeaders: TableHeaderItem[] = [
   { id: 'feature', title: 'Feature Comparison', className: "md:w-[25%]" },
@@ -57,7 +61,7 @@ const tableHeaders: TableHeaderItem[] = [
   { 
     id: 'droppurity', 
     title: 'Droppurity', 
-    imageSrc: '/logo.png', // Using your actual logo
+    imageSrc: '/jadu/logo.png', // Using your actual logo from the new path
     className: "md:w-[18.75%] bg-primary/10",
     isHighlighted: true,
   },
@@ -74,49 +78,49 @@ const tableHeaders: TableHeaderItem[] = [
 
 const tableData: TableRowData[] = [
   {
-    feature: { name: 'Safe Drinking Water', icon: ShieldCheck },
-    waterCan: { supported: false, text: 'Source Unknown' },
-    otherPurifiers: { supported: false, text: 'Limited Purification' },
-    droppurity: { supported: true, text: '100% Safe Water' },
+    feature: { name: 'Water Safety', icon: ShieldCheck },
+    waterCan: { supported: false, text: 'Variable Quality' },
+    otherPurifiers: { supported: false, text: 'Inconsistent Purity' },
+    droppurity: { supported: true, text: 'Assured Safe Water' },
   },
   {
-    feature: { name: 'Multistage Purification', icon: CheckCircle2 },
-    waterCan: { supported: false },
-    otherPurifiers: { supported: false, text: 'Often Basic Filters' },
+    feature: { name: 'Purification Stages', icon: CheckCircle2 },
+    waterCan: { supported: false, text: 'None/Minimal' },
+    otherPurifiers: { supported: false, text: 'Basic Filtration' },
     droppurity: { supported: true, text: 'RO+UV+UF+Minerals' },
   },
   {
-    feature: { name: 'Zero Upfront Cost', icon: CheckCircle2 },
-    waterCan: { supported: true, text: 'Per Can Cost' },
-    otherPurifiers: { supported: false, text: 'High Initial Cost' },
-    droppurity: { supported: true, text: 'Subscription Model' },
+    feature: { name: 'Upfront Cost', icon: CheckCircle2 },
+    waterCan: { supported: true, text: 'Per Can Charge' },
+    otherPurifiers: { supported: false, text: 'High Initial Buy' },
+    droppurity: { supported: true, text: 'Zero Down Payment' },
   },
   {
-    feature: { name: 'Free Maintenance & Service', icon: CheckCircle2 },
-    waterCan: { supported: true, text: 'No Maintenance' },
-    otherPurifiers: { supported: false, text: 'Paid AMC' },
-    droppurity: { supported: true, text: 'Fully Covered' },
+    feature: { name: 'Maintenance', icon: CheckCircle2 },
+    waterCan: { supported: true, text: 'Not Applicable' },
+    otherPurifiers: { supported: false, text: 'Costly AMC' },
+    droppurity: { supported: true, text: 'Free, Lifetime' },
   },
   {
-    feature: { name: 'Tech Enabled Features', icon: CheckCircle2 },
-    waterCan: { supported: false },
-    otherPurifiers: { supported: false, text: 'Rarely Smart' },
+    feature: { name: 'Tech Features', icon: CheckCircle2 },
+    waterCan: { supported: false, text: 'None' },
+    otherPurifiers: { supported: false, text: 'Limited/None' },
     droppurity: { supported: true, text: 'Smart Monitoring*' },
   },
   {
-    feature: { name: 'Relocation & Upgrade', icon: CheckCircle2 },
+    feature: { name: 'Relocation/Upgrade', icon: CheckCircle2 },
     waterCan: { supported: false, text: 'Not Applicable' },
-    otherPurifiers: { supported: false, text: 'Costly / Difficult' },
-    droppurity: { supported: true, text: 'Free & Easy' },
+    otherPurifiers: { supported: false, text: 'Difficult/Costly' },
+    droppurity: { supported: true, text: 'Easy & Free' },
   },
 ];
 
 
 export default function ComparisonTable() {
   return (
-    <section className="py-8 sm:py-12 bg-secondary/30">
+    <section className="py-6 sm:py-8 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6 sm:mb-10 text-foreground">
+        <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6 sm:mb-8 text-foreground">
           Addressing Your Water Worries: The Droppurity Difference
         </h2>
         <Card className="shadow-xl overflow-hidden border-border">
@@ -181,18 +185,18 @@ export default function ComparisonTable() {
                <div className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
                   <Check className="w-5 h-5 text-green-600 mb-0.5" />
                   <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">
-                     {row.feature.name === 'Zero Upfront Cost' ? 'Pay as you go' :
-                      row.feature.name === 'Free Maintenance & Service' ? 'No hidden fees' :
-                      row.feature.name === 'Tech Enabled Features' ? 'Smart alerts*' :
-                      row.feature.name === 'Relocation & Upgrade' ? 'Adapts to you' :
-                      'Peace of mind'}
+                     {row.feature.name === 'Upfront Cost' ? 'Pay as you use' :
+                      row.feature.name === 'Maintenance' ? 'No hidden fees' :
+                      row.feature.name === 'Tech Features' ? 'Smart alerts*' :
+                      row.feature.name === 'Relocation/Upgrade' ? 'Adapts with you' :
+                      'Pure peace of mind'}
                   </p>
               </div>
             </div>
           ))}
         </Card>
-         <p className="text-center text-xs text-muted-foreground mt-4">
-            * Features may vary based on plan and model. Lifetime refers to active subscription.
+         <p className="text-center text-xs text-muted-foreground mt-3">
+            * Features may vary by plan/model. Lifetime refers to active subscription period.
         </p>
       </div>
     </section>

@@ -15,13 +15,17 @@ const navItems = [
   { href: '/contact', label: 'Contact Us' },
 ];
 
-const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
+const getFilenameFromUrl = (url: string): string => {
+  const parts = url.split('/');
+  return parts[parts.length -1];
+}
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const logoFilename = getFilenameFromUrl("/logo.png");
+  const logoPath = "/jadu/logo.png";
+  const logoFilename = getFilenameFromUrl(logoPath);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +51,7 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center">
-            <Image src="/logo.png" alt={logoFilename} width={134} height={36} className="object-contain" priority />
+            <Image src={logoPath} alt={logoFilename} width={134} height={36} className="object-contain" priority />
           </Link>
 
           {/* Desktop Navigation */}
@@ -75,7 +79,7 @@ export default function Header() {
                   <div className="flex items-center p-4 border-b">
                     <SheetTitle asChild>
                       <Link href="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                         <Image src="/logo.png" alt={logoFilename} width={134} height={36} className="object-contain" />
+                         <Image src={logoPath} alt={logoFilename} width={134} height={36} className="object-contain" />
                       </Link>
                     </SheetTitle>
                   </div>
