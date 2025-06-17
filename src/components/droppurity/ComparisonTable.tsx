@@ -20,7 +20,7 @@ interface TableHeaderItem {
 
 interface TableRowData {
   feature: string;
-  featureKey: string;
+  // featureKey: string; // Removed to de-emphasize SMART acronym
   items: Array<{
     text: string | string[];
     icon?: LucideIcon;
@@ -45,52 +45,52 @@ const tableHeaders: TableHeaderItem[] = [
 const tableData: TableRowData[] = [
   {
     feature: 'SAFE Drinking Water',
-    featureKey: 'S',
+    // featureKey: 'S',
     items: [
-      { text: 'Unfit for drinking', icon: XCircle, iconColor: 'text-destructive' },
-      { text: 'Under or Over Purified Water', icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: 'Perfectly purified water', icon: CheckCircle2, iconColor: 'text-green-600' },
-      { text: 'Pure & healthy drinking water' },
+      { text: 'Quality can be inconsistent and unreliable.', icon: XCircle, iconColor: 'text-destructive' },
+      { text: 'May result in under or over-purified water.', icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: 'Ensures perfectly purified and healthy water.', icon: CheckCircle2, iconColor: 'text-green-600' },
+      { text: 'Confidence in every drop: pure & safe.' },
     ],
   },
   {
     feature: 'MULTISTAGE Purification',
-    featureKey: 'M',
+    // featureKey: 'M',
     items: [
-      { text: 'Unknown process', icon: XCircle, iconColor: 'text-destructive' },
-      { text: 'Options Available At High Costs', icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: 'RO + UV with Copper or Alkaline filter', icon: CheckCircle2, iconColor: 'text-green-600' },
-      { text: 'Advanced purification at best prices' },
+      { text: 'Purification process often unknown or minimal.', icon: XCircle, iconColor: 'text-destructive' },
+      { text: 'Advanced stages often come at high extra costs.', icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: 'Advanced RO + UV (+ optional Copper/Alkaline) for comprehensive purification.', icon: CheckCircle2, iconColor: 'text-green-600' },
+      { text: 'Multi-barrier protection for superior water quality.' },
     ],
   },
   {
     feature: 'AFFORDABLE Prices',
-    featureKey: 'A',
+    // featureKey: 'A',
     items: [
-      { text: ['₹2 - ₹4/litre', 'No maintenance'], icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: ['₹20,000 to purchase', '₹5,000/year to maintain'], icon: XCircle, iconColor: 'text-destructive' },
-      { text: ['Starts at ₹1/litre', 'FREE maintenance'], icon: CheckCircle2, iconColor: 'text-green-600' },
-      { text: ['ZERO upfront cost', 'Lifetime FREE maintenance'] },
+      { text: ['Estimated ₹2 - ₹4 per litre.', 'No direct maintenance cost, but quality varies.'], icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: ['High upfront purchase cost (e.g., ₹15,000-₹25,000).', 'Annual maintenance costs (e.g., ₹4,000-₹6,000).'], icon: XCircle, iconColor: 'text-destructive' },
+      { text: ['Subscription starts from as low as ₹1/litre.', 'Includes FREE lifetime maintenance & filter changes.'], icon: CheckCircle2, iconColor: 'text-green-600' },
+      { text: 'No large upfront investment, predictable low monthly costs.' },
     ],
   },
   {
     feature: 'RELIABLE Service',
-    featureKey: 'R',
+    // featureKey: 'R',
     items: [
-      { text: 'Hassle to order, replace, transport', icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: 'Manual coordination', icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: 'App for easy recharge & service requests', icon: CheckCircle2, iconColor: 'text-green-600' },
-      { text: 'Tech-enabled service' },
+      { text: 'Involves hassle of ordering, transport, and replacement.', icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: 'Often requires manual coordination for service & repairs.', icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: 'Convenient app for plan management & service requests.', icon: CheckCircle2, iconColor: 'text-green-600' },
+      { text: 'Hassle-free service and support at your fingertips.' },
     ],
   },
   {
     feature: 'TECH Enabled Features',
-    featureKey: 'T',
+    // featureKey: 'T',
     items: [
-      { text: 'NA', icon: AlertTriangle, iconColor: 'text-orange-500' },
-      { text: 'NA', icon: XCircle, iconColor: 'text-destructive' },
-      { text: 'One-click tracking of consumption, water quality & filter health', icon: CheckCircle2, iconColor: 'text-green-600' },
-      { text: 'IoT enabled SMART purifiers' },
+      { text: 'Generally no tech integration.', icon: AlertTriangle, iconColor: 'text-orange-500' },
+      { text: 'Limited or no smart features typically available.', icon: XCircle, iconColor: 'text-destructive' },
+      { text: 'Smart features for monitoring water quality & usage (select models).', icon: CheckCircle2, iconColor: 'text-green-600' },
+      { text: 'Modern convenience with smart technology integration.' },
     ],
   },
 ];
@@ -106,7 +106,7 @@ export default function ComparisonTable() {
           <div className="grid grid-cols-[1.5fr_repeat(4,_1fr)] border-b border-border bg-muted/20">
             {/* Header Row */}
             <div className="p-3 sm:p-4 text-center flex flex-col justify-end items-start sm:items-center">
-              <h3 className="text-lg sm:text-xl font-bold text-foreground">Choose Smart</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-foreground">Feature Comparison</h3>
             </div>
             {tableHeaders.map((header) => (
               <div
@@ -134,12 +134,12 @@ export default function ComparisonTable() {
           {/* Data Rows */}
           {tableData.map((row, rowIndex) => (
             <div
-              key={row.featureKey}
+              key={row.feature} // Changed key to feature as featureKey is removed
               className={`grid grid-cols-[1.5fr_repeat(4,_1fr)] items-stretch ${rowIndex < tableData.length - 1 ? 'border-b border-border' : ''}`}
             >
               <div className="p-3 sm:p-4 flex flex-col justify-center border-r border-border">
                 <div className="flex items-center">
-                  <span className="text-xl sm:text-2xl font-bold text-primary mr-1.5 sm:mr-2">{row.featureKey}</span>
+                  {/* <span className="text-xl sm:text-2xl font-bold text-primary mr-1.5 sm:mr-2">{row.featureKey}</span> Removed featureKey display */}
                   <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">{row.feature}</span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function ComparisonTable() {
                 const ItemIcon = item.icon;
                 return (
                   <div
-                    key={`${row.featureKey}-${itemIndex}`}
+                    key={`${row.feature}-${itemIndex}`} // Adjusted key
                     className={`p-3 sm:p-4 border-l border-border flex items-start sm:items-center ${header.isDroppurityColumn ? 'bg-primary/10' : 'bg-card'}`}
                   >
                     {ItemIcon && <ItemIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-1.5 flex-shrink-0 mt-px sm:mt-0 ${item.iconColor || 'text-muted-foreground'}`} />}
@@ -167,3 +167,4 @@ export default function ComparisonTable() {
     </section>
   );
 }
+
