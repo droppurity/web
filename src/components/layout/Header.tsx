@@ -24,7 +24,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const logoPath = "/jadu/logo.png";
+  const logoPath = "/logo.png"; // Changed from /jadu/logo.png
   const logoFilename = getFilenameFromUrl(logoPath);
 
   useEffect(() => {

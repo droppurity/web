@@ -61,7 +61,7 @@ const tableHeaders: TableHeaderItem[] = [
   { 
     id: 'droppurity', 
     title: 'Droppurity', 
-    imageSrc: '/jadu/logo.png', // Using your actual logo from the new path
+    imageSrc: '/logo.png', // Changed from /jadu/logo.png
     className: "md:w-[18.75%] bg-primary/10",
     isHighlighted: true,
   },

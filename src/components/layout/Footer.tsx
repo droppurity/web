@@ -54,7 +54,7 @@ export default function Footer() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  const logoPath = "/jadu/logo.png";
+  const logoPath = "/logo.png"; // Changed from /jadu/logo.png
   const logoFilename = getFilenameFromUrl(logoPath);
 
   return (
