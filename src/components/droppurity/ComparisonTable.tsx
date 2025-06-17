@@ -2,163 +2,115 @@
 "use client";
 
 import Image from 'next/image';
-import { AlertTriangle, CheckCircle2, ShieldCheck, Sparkles, Droplet, HelpCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, ShieldCheck, Sparkles, Droplet, HelpCircle, X, Check } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 interface TableHeaderItem {
   id: string;
   title: string;
+  subTitle?: string;
   icon?: LucideIcon;
+  imageSrc?: string;
   iconColor?: string;
   isHighlighted?: boolean;
+  className?: string;
 }
 
 interface TableRowData {
-  concern: {
-    title: string;
-    description: string; // Keep this one relatively short too
+  feature: {
+    name: string;
     icon?: LucideIcon;
   };
-  traditional: {
-    text: string | string[]; // Can be a single string or an array for bullet-like points
-    icon: LucideIcon;
-    iconColor?: string;
+  waterCan: {
+    supported: boolean;
+    text?: string;
   };
-  droppuritySolution: {
-    text: string;
-    icon: LucideIcon;
-    iconColor?: string;
+  otherPurifiers: {
+    supported: boolean;
+    text?: string;
   };
-  droppurityAdvantage: {
-    text: string;
-    icon: LucideIcon;
-    iconColor?: string;
+  droppurity: {
+    supported: boolean;
+    text?: string;
   };
 }
 
+const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
+
 const tableHeaders: TableHeaderItem[] = [
-  { id: 'concern', title: 'Your Water Concern', icon: HelpCircle, iconColor: 'text-foreground/80' },
-  { id: 'traditional', title: 'Common Approaches & Downsides', icon: AlertTriangle, iconColor: 'text-amber-600' },
-  { id: 'solution', title: 'The Droppurity Solution', icon: Droplet, iconColor: 'text-primary', isHighlighted: true },
-  { id: 'advantage', title: 'Your Clear Advantage', icon: Sparkles, iconColor: 'text-green-600', isHighlighted: true },
+  { id: 'feature', title: 'Feature Comparison', className: "md:w-[25%]" },
+  { 
+    id: 'waterCan', 
+    title: 'Water Can', 
+    imageSrc: 'https://placehold.co/80x80.png', 
+    className: "md:w-[18.75%]",
+    dataAiHint: "water can"
+  },
+  { 
+    id: 'otherPurifiers', 
+    title: 'Other Purifiers', 
+    imageSrc: 'https://placehold.co/80x80.png', 
+    className: "md:w-[18.75%]",
+    dataAiHint: "generic purifier"
+  },
+  { 
+    id: 'droppurity', 
+    title: 'Droppurity', 
+    imageSrc: '/logo.png', // Using your actual logo
+    className: "md:w-[18.75%] bg-primary/10",
+    isHighlighted: true,
+  },
+  { 
+    id: 'droppurityAdvantage', 
+    title: 'Droppurity Advantage', 
+    subTitle:'(Free for Lifetime)', 
+    icon: Sparkles, 
+    iconColor: 'text-green-600', 
+    className: "md:w-[18.75%] bg-green-500/10",
+    isHighlighted: true,
+  },
 ];
 
 const tableData: TableRowData[] = [
   {
-    concern: {
-      title: 'Water Safety',
-      description: 'Is my water truly safe from invisible threats like bacteria, viruses, and heavy metals?',
-    },
-    traditional: {
-      text: [
-        'Cans: Uncertain source, contamination risks.',
-        'Basic Filters: Limited impurity removal.',
-        'Boiling: Kills germs only, not all impurities.'
-      ],
-      icon: AlertTriangle,
-      iconColor: 'text-destructive',
-    },
-    droppuritySolution: {
-      text: 'Advanced multi-stage purification (RO+UV+UF options) for broad-spectrum impurity removal.',
-      icon: ShieldCheck,
-      iconColor: 'text-primary',
-    },
-    droppurityAdvantage: {
-      text: 'Comprehensive protection for pure, healthy, and safe water. Guaranteed peace of mind.',
-      icon: CheckCircle2,
-      iconColor: 'text-green-600',
-    },
+    feature: { name: 'Safe Drinking Water', icon: ShieldCheck },
+    waterCan: { supported: false, text: 'Source Unknown' },
+    otherPurifiers: { supported: false, text: 'Limited Purification' },
+    droppurity: { supported: true, text: '100% Safe Water' },
   },
   {
-    concern: {
-      title: 'High Costs',
-      description: 'Purifiers are expensive upfront, and annual maintenance adds up significantly.',
-    },
-    traditional: {
-      text: [
-        'High initial cost (₹15k-₹25k).',
-        'Yearly AMCs (₹4k-₹6k).',
-        'Unexpected repair bills.'
-      ],
-      icon: AlertTriangle,
-      iconColor: 'text-destructive',
-    },
-    droppuritySolution: {
-      text: 'Zero upfront cost. Affordable monthly subscription covering ALL maintenance and repairs.',
-      icon: ShieldCheck,
-      iconColor: 'text-primary',
-    },
-    droppurityAdvantage: {
-      text: 'Predictable, low expenses. Premium purification without large investment.',
-      icon: CheckCircle2,
-      iconColor: 'text-green-600',
-    },
+    feature: { name: 'Multistage Purification', icon: CheckCircle2 },
+    waterCan: { supported: false },
+    otherPurifiers: { supported: false, text: 'Often Basic Filters' },
+    droppurity: { supported: true, text: 'RO+UV+UF+Minerals' },
   },
   {
-    concern: {
-      title: 'Maintenance Hassle',
-      description: 'Tracking service schedules and filter changes is a chore I often forget or delay.',
-    },
-    traditional: {
-      text: 'User responsibility to track, schedule & pay. Neglect impacts water quality.',
-      icon: AlertTriangle,
-      iconColor: 'text-destructive',
-    },
-    droppuritySolution: {
-      text: 'Proactive, scheduled maintenance & filter replacements included. We manage it all.',
-      icon: ShieldCheck,
-      iconColor: 'text-primary',
-    },
-    droppurityAdvantage: {
-      text: 'Completely hassle-free. Consistently pure water without the mental load.',
-      icon: CheckCircle2,
-      iconColor: 'text-green-600',
-    },
+    feature: { name: 'Zero Upfront Cost', icon: CheckCircle2 },
+    waterCan: { supported: true, text: 'Per Can Cost' },
+    otherPurifiers: { supported: false, text: 'High Initial Cost' },
+    droppurity: { supported: true, text: 'Subscription Model' },
   },
   {
-    concern: {
-      title: 'Water Quality (Minerals)',
-      description: 'I want water that retains essential minerals, not just "empty" RO water.',
-    },
-    traditional: {
-      text: 'Standard RO can strip minerals. Canned water quality is inconsistent.',
-      icon: AlertTriangle,
-      iconColor: 'text-destructive',
-    },
-    droppuritySolution: {
-      text: 'Mineral retention tech. Optional Alkaline/Copper for enhanced health benefits.',
-      icon: ShieldCheck,
-      iconColor: 'text-primary',
-    },
-    droppurityAdvantage: {
-      text: 'Enjoy water that\'s pure, healthy, tastes great, and supports well-being.',
-      icon: CheckCircle2,
-      iconColor: 'text-green-600',
-    },
+    feature: { name: 'Free Maintenance & Service', icon: CheckCircle2 },
+    waterCan: { supported: true, text: 'No Maintenance' },
+    otherPurifiers: { supported: false, text: 'Paid AMC' },
+    droppurity: { supported: true, text: 'Fully Covered' },
   },
   {
-    concern: {
-      title: 'Lifestyle Flexibility',
-      description: 'What if I move or my family\'s water needs change over time?',
-    },
-    traditional: {
-      text: 'Relocating owned purifiers is cumbersome. Stuck with one model.',
-      icon: AlertTriangle,
-      iconColor: 'text-destructive',
-    },
-    droppuritySolution: {
-      text: 'Free relocation. Easily upgrade/downgrade purifier or plan as needs evolve.',
-      icon: ShieldCheck,
-      iconColor: 'text-primary',
-    },
-    droppurityAdvantage: {
-      text: 'Ultimate convenience that adapts to your life. No long-term device lock-in.',
-      icon: CheckCircle2,
-      iconColor: 'text-green-600',
-    },
+    feature: { name: 'Tech Enabled Features', icon: CheckCircle2 },
+    waterCan: { supported: false },
+    otherPurifiers: { supported: false, text: 'Rarely Smart' },
+    droppurity: { supported: true, text: 'Smart Monitoring*' },
+  },
+  {
+    feature: { name: 'Relocation & Upgrade', icon: CheckCircle2 },
+    waterCan: { supported: false, text: 'Not Applicable' },
+    otherPurifiers: { supported: false, text: 'Costly / Difficult' },
+    droppurity: { supported: true, text: 'Free & Easy' },
   },
 ];
+
 
 export default function ComparisonTable() {
   return (
@@ -169,18 +121,29 @@ export default function ComparisonTable() {
         </h2>
         <Card className="shadow-xl overflow-hidden border-border">
           {/* Header Row - Desktop */}
-          <div className="hidden md:grid grid-cols-[1.75fr_repeat(3,_1fr)] border-b border-border bg-muted/30">
+          <div className="hidden md:grid grid-cols-[25%_18.75%_18.75%_18.75%_18.75%] border-b border-border bg-muted/30">
             {tableHeaders.map((header) => {
               const HeaderIcon = header.icon;
               return (
                 <div
                   key={header.id}
-                  className={`p-3 sm:p-4 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? 'bg-primary/10' : ''}`}
+                  className={`p-3 sm:p-4 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? header.className : ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
                 >
-                  {HeaderIcon && (
+                  {header.imageSrc && (
+                    <Image 
+                      src={header.imageSrc} 
+                      alt={getFilenameFromUrl(header.imageSrc)}
+                      width={header.id === 'droppurity' ? 60 : 40} 
+                      height={header.id === 'droppurity' ? 20 : 40} 
+                      className={`mb-1.5 ${header.id === 'droppurity' ? 'object-contain h-5 w-auto' : 'rounded-full'}`}
+                      data-ai-hint={header.dataAiHint || (header.id === 'droppurity' ? "company logo" : "product image")}
+                    />
+                  )}
+                  {HeaderIcon && !header.imageSrc && (
                     <HeaderIcon className={`w-6 h-6 sm:w-7 sm:h-7 mb-1 ${header.iconColor || 'text-foreground'}`} />
                   )}
-                  <p className="text-xs sm:text-sm font-semibold text-foreground">{header.title}</p>
+                  <p className="text-xs sm:text-sm font-semibold text-foreground leading-tight">{header.title}</p>
+                  {header.subTitle && <p className="text-[10px] text-muted-foreground leading-tight">{header.subTitle}</p>}
                 </div>
               );
             })}
@@ -190,42 +153,46 @@ export default function ComparisonTable() {
           {tableData.map((row, rowIndex) => (
             <div
               key={rowIndex}
-              className={`grid grid-cols-1 md:grid-cols-[1.75fr_repeat(3,_1fr)] items-stretch ${rowIndex < tableData.length - 1 ? 'border-b border-border' : ''}`}
+              className={`grid grid-cols-1 md:grid-cols-[25%_18.75%_18.75%_18.75%_18.75%] items-stretch ${rowIndex < tableData.length - 1 ? 'border-b border-border' : ''}`}
             >
-              {/* Concern Column */}
+              {/* Feature Column */}
               <div className="p-3 sm:p-4 border-b md:border-b-0 md:border-r border-border bg-muted/10">
-                <div className="flex items-start gap-2 sm:gap-2.5">
-                   {row.concern.icon && <row.concern.icon className="w-5 h-5 text-foreground/80 mt-px flex-shrink-0 hidden sm:block" />}
-                   <div>
-                    <h4 className="text-sm sm:text-[15px] font-semibold text-foreground mb-0.5">{row.concern.title}</h4>
-                    <p className="text-[11px] sm:text-xs text-muted-foreground leading-snug">{row.concern.description}</p>
-                   </div>
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                   {row.feature.icon && <row.feature.icon className="w-4 h-4 text-primary mt-px flex-shrink-0" />}
+                   <h4 className="text-xs sm:text-sm font-medium text-foreground">{row.feature.name}</h4>
                 </div>
               </div>
 
-              {/* Other Columns Data */}
-              {([row.traditional, row.droppuritySolution, row.droppurityAdvantage] as const).map((item, itemIndex) => {
-                const header = tableHeaders[itemIndex + 1]; // Offset by 1 as first header is 'concern'
-                const ItemIcon = item.icon;
+              {/* Other Columns Data (WaterCan, OtherPurifiers, Droppurity) */}
+              {(['waterCan', 'otherPurifiers', 'droppurity'] as const).map((colKey, itemIndex) => {
+                const item = row[colKey];
+                const header = tableHeaders[itemIndex + 1]; 
                 return (
                   <div
-                    key={`${rowIndex}-${itemIndex}`}
-                    className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex items-start gap-1.5 sm:gap-2 ${header.isHighlighted ? 'bg-primary/5' : 'bg-card'}`}
+                    key={`${rowIndex}-${colKey}`}
+                    className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${header.isHighlighted ? header.className : 'bg-card'}`}
                   >
-                    {ItemIcon && <ItemIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 mt-0.5 ${item.iconColor || 'text-muted-foreground'}`} />}
-                    <div className="text-[11px] sm:text-xs text-muted-foreground leading-snug">
-                      {Array.isArray(item.text)
-                        ? item.text.map((line, lineIdx) => <span key={lineIdx} className="block mb-0.5">{line}</span>)
-                        : item.text}
-                    </div>
+                    {item.supported ? <Check className="w-5 h-5 text-green-600 mb-0.5" /> : <X className="w-5 h-5 text-destructive mb-0.5" />}
+                    {item.text && <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{item.text}</p>}
                   </div>
                 );
               })}
+              {/* Droppurity Advantage Column */}
+               <div className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
+                  <Check className="w-5 h-5 text-green-600 mb-0.5" />
+                  <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">
+                     {row.feature.name === 'Zero Upfront Cost' ? 'Pay as you go' :
+                      row.feature.name === 'Free Maintenance & Service' ? 'No hidden fees' :
+                      row.feature.name === 'Tech Enabled Features' ? 'Smart alerts*' :
+                      row.feature.name === 'Relocation & Upgrade' ? 'Adapts to you' :
+                      'Peace of mind'}
+                  </p>
+              </div>
             </div>
           ))}
         </Card>
          <p className="text-center text-xs text-muted-foreground mt-4">
-            * Based on typical market offerings. Features may vary.
+            * Features may vary based on plan and model. Lifetime refers to active subscription.
         </p>
       </div>
     </section>

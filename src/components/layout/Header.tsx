@@ -15,10 +15,13 @@ const navItems = [
   { href: '/contact', label: 'Contact Us' },
 ];
 
+const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
+
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const logoFilename = getFilenameFromUrl("/logo.png");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,13 +47,13 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center">
-            <Image src="/logo.png" alt="Droppurity Logo" width={134} height={36} className="object-contain" priority />
+            <Image src="/logo.png" alt={logoFilename} width={134} height={36} className="object-contain" priority />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-4">
+          <nav className="hidden md:flex gap-1">
             {navItems.map((item) => (
-              <Button key={item.label} variant="ghost" asChild>
+              <Button key={item.label} variant="ghost" asChild className="text-sm px-3 py-1.5 h-auto">
                 <Link href={item.href} className="text-foreground">
                   {item.label}
                 </Link>
@@ -72,16 +75,16 @@ export default function Header() {
                   <div className="flex items-center p-4 border-b">
                     <SheetTitle asChild>
                       <Link href="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                         <Image src="/logo.png" alt="Droppurity Logo" width={134} height={36} className="object-contain" />
+                         <Image src="/logo.png" alt={logoFilename} width={134} height={36} className="object-contain" />
                       </Link>
                     </SheetTitle>
                   </div>
-                  <nav className="flex flex-col gap-2 p-4 flex-grow overflow-y-auto">
+                  <nav className="flex flex-col gap-1 p-4 flex-grow overflow-y-auto">
                     {navItems.map((item) => (
                       <Button
                         key={item.label}
                         variant="ghost"
-                        className="justify-start text-lg py-3"
+                        className="justify-start text-base py-2.5"
                         asChild
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
