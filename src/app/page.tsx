@@ -130,9 +130,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ComparisonTable />
-
       <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
+
+      <ComparisonTable />
 
       {/* Call to Action Section */}
       <section className="py-4 sm:py-6 bg-background">
