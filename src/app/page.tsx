@@ -91,7 +91,7 @@ export default function HomePage() {
               alt="hero.png"
               layout="fill"
               objectFit="cover"
-              className="rounded-xl shadow-lg object-bottom"
+              className="rounded-xl shadow-lg"
               priority
             />
             <div className="absolute inset-0 flex items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
