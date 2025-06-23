@@ -54,24 +54,24 @@ export default function ReferralDialog() {
       </DialogHeader>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
         <div>
-          <Label htmlFor="customerId" className="text-foreground">Your Customer ID</Label>
-          <Input id="customerId" {...register("customerId")} placeholder="e.g., DP12345" className="mt-1" />
-          {errors.customerId && <p className="text-xs text-destructive mt-1">{errors.customerId.message}</p>}
-        </div>
-        <div>
           <Label htmlFor="friendName" className="text-foreground">Friend's Full Name</Label>
           <Input id="friendName" {...register("friendName")} placeholder="John Doe" className="mt-1" />
           {errors.friendName && <p className="text-xs text-destructive mt-1">{errors.friendName.message}</p>}
-        </div>
-         <div>
-          <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
-          <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" />
-          {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
         </div>
         <div>
           <Label htmlFor="friendAddress" className="text-foreground">Friend's Address</Label>
           <Textarea id="friendAddress" {...register("friendAddress")} placeholder="Complete address for installation" rows={3} className="mt-1" />
           {errors.friendAddress && <p className="text-xs text-destructive mt-1">{errors.friendAddress.message}</p>}
+        </div>
+        <div>
+          <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
+          <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" />
+          {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
+        </div>
+        <div>
+          <Label htmlFor="customerId" className="text-foreground">Your Customer ID</Label>
+          <Input id="customerId" {...register("customerId")} placeholder="e.g., DP12345" className="mt-1" />
+          {errors.customerId && <p className="text-xs text-destructive mt-1">{errors.customerId.message}</p>}
         </div>
         <DialogFooter>
           <DialogClose asChild>
