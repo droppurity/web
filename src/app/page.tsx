@@ -57,26 +57,29 @@ export default function HomePage() {
   return (
     <div className="flex flex-col pt-3 sm:pt-4">
       {/* Hero Section */}
-      <section className="relative py-10 sm:py-16">
-        <Image
-          src="https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080"
-          alt={getFilenameFromUrl("https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080")}
-          layout="fill"
-          objectFit="cover"
-          className="z-0"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/30 z-10" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 sm:mb-3">
-            Pure Water, <span className="text-blue-300">Pure Life.</span>
-          </h1>
-          <p className="text-sm sm:text-base text-gray-200 max-w-md sm:max-w-lg mx-auto mb-4 sm:mb-6">
-            Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
-          </p>
-          <Button asChild size="lg">
-            <Link href="/plans">Explore Our Plans</Link>
-          </Button>
+      <section className="py-10 sm:py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-3 sm:mb-4">
+                Pure Water, Pure Life.
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-6 sm:mb-8">
+                Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
+            </p>
+            <Button asChild size="lg" className="mb-8 sm:mb-10">
+                <Link href="/plans">Explore Our Plans</Link>
+            </Button>
+        </div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative h-56 sm:h-72 md:h-96 w-full">
+                <Image
+                    src="https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt={getFilenameFromUrl("https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080")}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-xl shadow-lg"
+                    priority
+                />
+            </div>
         </div>
       </section>
 
