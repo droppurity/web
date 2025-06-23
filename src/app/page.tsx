@@ -100,7 +100,7 @@ export default function HomePage() {
                 <p className="text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild size="sm" className="mt-32 lg:mt-12 lg:h-11 lg:px-8">
+                <Button asChild size="sm" className="mt-40 lg:mt-12 text-xs h-9 px-4 lg:text-sm lg:h-11 lg:px-8">
                   <Link href="/plans">Explore Our Plans</Link>
                 </Button>
               </div>
@@ -112,11 +112,11 @@ export default function HomePage() {
       {/* Features Overview Section */}
       <section className="py-4 sm:py-6 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-md px-4 sm:px-0">
+          <div className="mx-auto max-w-md md:max-w-4xl px-4 sm:px-0">
             <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
               Why Choose Droppurity?
             </h2>
-            <div className="grid md:grid-cols-3 gap-2 sm:gap-3">
+            <div className="grid md:grid-cols-3 gap-3 lg:gap-6">
               {features.map((feature, index) => (
                 <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <CardHeader className="items-center text-center p-1.5 sm:p-2">
@@ -237,3 +237,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    
