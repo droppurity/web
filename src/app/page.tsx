@@ -85,7 +85,7 @@ export default function HomePage() {
           </div>
 
           {/* Desktop Layout: Overlapped */}
-          <div className="hidden lg:block relative aspect-video w-full">
+          <div className="hidden lg:block relative aspect-[4/3] w-full">
             <Image
               src="/hero.png"
               alt="hero.png"
