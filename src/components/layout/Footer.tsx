@@ -3,37 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Twitter, Linkedin, Facebook, Instagram, Youtube, MessageCircle, ArrowUpCircle } from 'lucide-react';
 
-const footerSections = [
-  {
-    title: 'Premium Drinking Water',
-    links: [
-      { label: 'Home', href: '/' },
-      { label: 'Plans', href: '/plans' },
-      { label: 'How it works', href: '/#how-it-works' },
-      { label: 'Droppurity Advantage', href: '/about#advantage' },
-      { label: 'Customer Stories', href: '/#testimonials' },
-      { label: 'Our Products', href: '/plans' },
-    ],
-  },
-  {
-    title: 'Explore',
-    links: [
-      { label: 'About', href: '/about' },
-      { label: 'Careers', href: '#' },
-      { label: 'Blog', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Terms',
-    links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Use', href: '#' },
-    ],
-  },
-];
-
 const socialLinks = [
   { icon: Twitter, href: 'https://x.com/droppurity_placeholder', label: 'Droppurity Twitter' },
   { icon: Linkedin, href: 'https://linkedin.com/company/droppurity_placeholder', label: 'Droppurity LinkedIn' },
@@ -54,17 +23,18 @@ export default function Footer() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  const logoPath = "/logo.png"; // Changed from /jadu/logo.png
+  const logoPath = "/logo.png";
   const logoFilename = getFilenameFromUrl(logoPath);
 
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+          
           {/* Column 1: Logo and Address */}
-          <div className="md:col-span-2 lg:col-span-1 space-y-3">
+          <div className="sm:col-span-2 md:col-span-1 space-y-3">
             <Link href="/" className="flex items-center">
-              <Image src={logoPath} alt={logoFilename} width={150} height={40} className="object-contain" />
+              <Image src={logoPath} alt={logoFilename} width={150} height={40} className="object-contain brightness-0 invert-[1]" />
             </Link>
             <p className="text-xs text-primary-foreground/80">
               Smart Purifiers on Rent. Free Maintenance for Life.
@@ -95,42 +65,41 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Columns 2, 3: Link Sections */}
-          {footerSections.slice(0, 2).map((section) => (
-            <div key={section.title} className="space-y-3">
-              <h3 className="text-base font-semibold text-yellow-300">{section.title}</h3>
-              <ul className="space-y-1.5">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href} className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* Column 2: Premium Drinking Water */}
+          <div className="space-y-3">
+            <h3 className="text-base font-semibold text-yellow-300">Premium Drinking Water</h3>
+            <ul className="space-y-1.5">
+              <li><Link href="/" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Home</Link></li>
+              <li><Link href="/plans" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Plans</Link></li>
+              <li><Link href="/#how-it-works" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">How it works</Link></li>
+              <li><Link href="/about#advantage" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Droppurity Advantage</Link></li>
+              <li><Link href="/#testimonials" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Customer Stories</Link></li>
+              <li><Link href="/plans" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Our Products</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Explore */}
+          <div className="space-y-3">
+            <h3 className="text-base font-semibold text-yellow-300">Explore</h3>
+            <ul className="space-y-1.5">
+              <li><Link href="/about" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">About</Link></li>
+              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Careers</Link></li>
+              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Blog</Link></li>
+              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">FAQs</Link></li>
+              <li><Link href="/contact" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Terms and Refer */}
+          <div className="space-y-6">
+            <div className="space-y-3">
+                <h3 className="text-base font-semibold text-yellow-300">Terms</h3>
+                <ul className="space-y-1.5">
+                  <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Terms of Use</Link></li>
+                </ul>
             </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            {/* Column 1 (continued or new content): Terms */}
-             {footerSections.slice(2).map((section) => (
-                <div key={section.title} className="space-y-3 lg:col-start-1">
-                  <h3 className="text-base font-semibold text-yellow-300">{section.title}</h3>
-                  <ul className="space-y-1.5">
-                    {section.links.map((link) => (
-                      <li key={link.label}>
-                        <Link href={link.href} className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-            ))}
-
-            {/* Column 2 (continued or new content): Refer & Earn */}
-            <div className="space-y-3 lg:col-start-2">
+            <div className="space-y-3">
                 <h3 className="text-base font-semibold text-yellow-300">Refer & Earn</h3>
                 <ul className="space-y-1.5">
                     <li>
@@ -140,8 +109,9 @@ export default function Footer() {
                     </li>
                 </ul>
             </div>
-        </div>
+          </div>
 
+        </div>
 
         {/* Social Media and Scroll to Top */}
         <div className="border-t border-primary-foreground/30 pt-6 flex flex-col sm:flex-row justify-between items-center gap-5">
