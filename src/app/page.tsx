@@ -133,23 +133,28 @@ export default function HomePage() {
       <section className="py-4 sm:py-6 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-            Simple Steps to Pure Water
+            Try Before You Buy: Our Simple Process
           </h2>
-          <div className="grid md:grid-cols-3 gap-2 sm:gap-3 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
             <div className="flex flex-col items-center">
-              <div className="bg-primary text-primary-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-bold mb-1 sm:mb-1">1</div>
-              <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Choose Your Purifier</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">Select from our range of high-quality purifiers.</p>
+              <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">📅</div>
+              <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Book a Free Demo</h3>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">Schedule a time that works for you.</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-primary text-primary-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-bold mb-1 sm:mb-1">2</div>
-              <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Pick a Plan</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">Opt for a flexible tenure that suits your budget.</p>
+              <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">🛠️</div>
+              <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Get It Installed</h3>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">Pay a refundable deposit & start your 7-day trial.</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-primary text-primary-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-bold mb-1 sm:mb-1">3</div>
+              <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">❤️</div>
+              <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Love It or Leave It</h3>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">Choose a plan or get a 100% refund.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">✨</div>
               <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Enjoy Pure Water</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">We handle installation and maintenance for free.</p>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">With free lifetime maintenance on us.</p>
             </div>
           </div>
         </div>
