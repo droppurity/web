@@ -57,19 +57,20 @@ export default function HomePage() {
   return (
     <div className="flex flex-col pt-3 sm:pt-4">
       {/* Hero Section */}
-      <section className="py-10 sm:py-12">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="pt-10 sm:pt-12 pb-10 bg-background">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-3 sm:mb-4">
                 Pure Water, Pure Life.
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-6 sm:mb-8">
                 Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
             </p>
-            <Button asChild size="lg" className="mb-8 sm:mb-10">
+            <Button asChild size="lg">
                 <Link href="/plans">Explore Our Plans</Link>
             </Button>
         </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* The negative margin pulls the image up to overlap with the content above. */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-16">
             <div className="relative h-56 sm:h-72 md:h-96 w-full">
                 <Image
                     src="https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080"
