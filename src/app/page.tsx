@@ -93,14 +93,14 @@ export default function HomePage() {
               priority
             />
             <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
-              <div className="w-4/5 lg:w-1/2 p-6 sm:p-8 lg:p-12">
+              <div className="w-2/3 lg:w-1/2 p-6 sm:p-8 lg:p-12">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 lg:mb-6">
                   Pure Water, Pure Life.
                 </h1>
                 <p className="text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild size="sm" className="mt-52 lg:mt-8 lg:h-11 lg:px-8">
+                <Button asChild size="sm" className="mt-72 lg:mt-8 lg:h-11 lg:px-8">
                   <Link href="/plans">Explore Our Plans</Link>
                 </Button>
               </div>
