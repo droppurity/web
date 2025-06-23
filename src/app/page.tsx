@@ -134,7 +134,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-4 sm:py-6 bg-secondary/30">
+      <section id="how-it-works" className="py-4 sm:py-6 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
             Try Before You Buy: Our Simple Process
@@ -189,10 +189,12 @@ export default function HomePage() {
       </section>
 
       <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
-      <ComparisonTable />
+      <section id="droppurity-advantage">
+        <ComparisonTable />
+      </section>
 
       {/* Refer and Earn Section */}
-      <section className="py-4 sm:py-6 bg-secondary/30">
+      <section id="refer-and-earn" className="py-4 sm:py-6 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="shadow-xl overflow-hidden bg-gradient-to-r from-primary/80 via-primary to-blue-600 text-primary-foreground">
             <div className="flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 gap-6">

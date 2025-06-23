@@ -72,8 +72,7 @@ export default function Footer() {
               <li><Link href="/" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Home</Link></li>
               <li><Link href="/plans" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Plans</Link></li>
               <li><Link href="/#how-it-works" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">How it works</Link></li>
-              <li><Link href="/about#advantage" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Droppurity Advantage</Link></li>
-              <li><Link href="/#testimonials" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Customer Stories</Link></li>
+              <li><Link href="/#droppurity-advantage" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Droppurity Advantage</Link></li>
               <li><Link href="/plans" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Our Products</Link></li>
             </ul>
           </div>
@@ -103,7 +102,7 @@ export default function Footer() {
                 <h3 className="text-base font-semibold text-yellow-300">Refer & Earn</h3>
                 <ul className="space-y-1.5">
                     <li>
-                        <Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
+                        <Link href="/#refer-and-earn" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
                             Refer now
                         </Link>
                     </li>
