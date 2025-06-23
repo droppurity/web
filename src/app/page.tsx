@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Shield, Sparkles } from 'lucide-react';
+import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee } from 'lucide-react';
 import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import { useState, useEffect, useRef } from 'react';
@@ -28,6 +28,29 @@ const features = [
     title: "Healthy Water",
     description: "Retains essential minerals, ensuring your water is not just pure, but healthy too.",
     color: "text-yellow-500",
+  },
+];
+
+const highlights = [
+  {
+    icon: ShieldCheck,
+    line1: "Lifetime Free",
+    line2: "Maintenance",
+  },
+  {
+    icon: CalendarDays,
+    line1: "7-Day",
+    line2: "Risk-Free Trial",
+  },
+  {
+    icon: Clock,
+    line1: "48-Hour",
+    line2: "Installation",
+  },
+  {
+    icon: IndianRupee,
+    line1: "Plans Starting",
+    line2: "From ₹299/mo",
   },
 ];
 
@@ -127,6 +150,30 @@ export default function HomePage() {
               <div className="bg-primary text-primary-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-bold mb-1 sm:mb-1">3</div>
               <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Enjoy Pure Water</h3>
               <p className="text-[11px] sm:text-xs text-muted-foreground">We handle installation and maintenance for free.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights Section */}
+      <section className="py-4 sm:py-6 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-xl bg-gradient-to-r from-violet-100/60 via-blue-100/60 to-cyan-100/60 p-4 sm:p-6 shadow-sm border border-black/5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-2 sm:gap-x-4">
+              {highlights.map((highlight, index) => {
+                const Icon = highlight.icon;
+                return (
+                  <div key={index} className="flex items-center gap-2 sm:gap-3 justify-center">
+                    <div className="bg-primary/10 p-2 sm:p-2.5 rounded-full flex-shrink-0">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-foreground text-xs sm:text-sm leading-tight">{highlight.line1}</p>
+                      <p className="text-muted-foreground text-[11px] sm:text-xs leading-tight">{highlight.line2}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
