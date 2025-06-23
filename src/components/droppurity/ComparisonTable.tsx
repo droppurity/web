@@ -44,31 +44,31 @@ const getFilenameFromUrl = (url: string): string => {
 
 const tableHeaders: TableHeaderItem[] = [
   { id: 'feature', title: 'Feature Comparison' },
-  { 
-    id: 'waterCan', 
-    title: 'Water Can', 
-    imageSrc: '/jar.png', 
+  {
+    id: 'waterCan',
+    title: 'Water Can',
+    imageSrc: '/jar.png',
     dataAiHint: "water can"
   },
-  { 
-    id: 'otherPurifiers', 
-    title: 'Other Purifiers', 
-    imageSrc: '/otherro.png', 
+  {
+    id: 'otherPurifiers',
+    title: 'Other Purifiers',
+    imageSrc: '/otherro.png',
     dataAiHint: "other ro purifier"
   },
-  { 
-    id: 'droppurity', 
-    title: 'Droppurity', 
+  {
+    id: 'droppurity',
+    title: 'Droppurity',
     imageSrc: '/logo.png',
     className: "bg-primary/10",
     isHighlighted: true,
   },
-  { 
-    id: 'droppurityAdvantage', 
-    title: 'Droppurity Advantage', 
-    subTitle:'(Free for Lifetime)', 
-    icon: Sparkles, 
-    iconColor: 'text-green-600', 
+  {
+    id: 'droppurityAdvantage',
+    title: 'Droppurity Advantage',
+    subTitle:'(Free for Lifetime)',
+    icon: Sparkles,
+    iconColor: 'text-green-600',
     className: "bg-green-500/10",
     isHighlighted: true,
   },
@@ -134,11 +134,11 @@ export default function ComparisonTable() {
                   className={`p-1 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? header.className : ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
                 >
                   {header.imageSrc && (
-                    <Image 
-                      src={header.imageSrc} 
+                    <Image
+                      src={header.imageSrc}
                       alt={getFilenameFromUrl(header.imageSrc)}
-                      width={header.id === 'droppurity' ? 40 : 28} 
-                      height={header.id === 'droppurity' ? 14 : 28} 
+                      width={header.id === 'droppurity' ? 60 : 28}
+                      height={header.id === 'droppurity' ? 20 : 28}
                       className={`mb-0.5 ${header.id === 'droppurity' ? 'object-contain' : 'rounded-full'}`}
                       data-ai-hint={header.dataAiHint || (header.id === 'droppurity' ? "company logo" : "product image")}
                     />
@@ -170,7 +170,7 @@ export default function ComparisonTable() {
               {/* Other Columns Data (WaterCan, OtherPurifiers, Droppurity) */}
               {(['waterCan', 'otherPurifiers', 'droppurity'] as const).map((colKey, itemIndex) => {
                 const item = row[colKey];
-                const header = tableHeaders[itemIndex + 1]; 
+                const header = tableHeaders[itemIndex + 1];
                 return (
                   <div
                     key={`${rowIndex}-${colKey}`}
