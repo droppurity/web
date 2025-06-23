@@ -47,7 +47,7 @@ const tableHeaders: TableHeaderItem[] = [
   { 
     id: 'waterCan', 
     title: 'Water Can', 
-    imageSrc: 'https://placehold.co/80x80.png', 
+    imageSrc: '/jar.png', 
     dataAiHint: "water can"
   },
   { 
