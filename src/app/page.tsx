@@ -9,6 +9,8 @@ import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, Indian
 import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import { useState, useEffect, useRef } from 'react';
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ReferralDialog from "@/components/droppurity/ReferralDialog";
 
 const features = [
   {
@@ -98,7 +100,7 @@ export default function HomePage() {
                 <p className="text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild size="sm" className="mt-44 lg:mt-8 lg:h-11 lg:px-8">
+                <Button asChild size="sm" className="mt-52 lg:mt-8 lg:h-11 lg:px-8">
                   <Link href="/plans">Explore Our Plans</Link>
                 </Button>
               </div>
@@ -205,9 +207,14 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-              <Button asChild size="lg" className="bg-yellow-400 text-yellow-900 hover:bg-yellow-500 flex-shrink-0 mt-4 md:mt-0">
-                <Link href="/contact">Refer Now</Link>
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="bg-yellow-400 text-yellow-900 hover:bg-yellow-500 flex-shrink-0 mt-4 md:mt-0">
+                    Refer Now
+                  </Button>
+                </DialogTrigger>
+                <ReferralDialog />
+              </Dialog>
             </div>
           </Card>
         </div>

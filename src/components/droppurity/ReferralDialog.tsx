@@ -1,0 +1,87 @@
+
+"use client";
+
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+
+const referralFormSchema = z.object({
+  customerId: z.string().min(1, { message: "Please enter your Customer ID." }),
+  friendName: z.string().min(2, { message: "Friend's name must be at least 2 characters." }),
+  friendAddress: z.string().min(10, { message: "Please provide a valid address." }),
+  friendMobile: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit mobile number." }),
+});
+
+type ReferralFormValues = z.infer<typeof referralFormSchema>;
+
+export default function ReferralDialog() {
+  const { toast } = useToast();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ReferralFormValues>({
+    resolver: zodResolver(referralFormSchema),
+  });
+
+  const onSubmit: SubmitHandler<ReferralFormValues> = (data) => {
+    console.log("Referral Data:", data);
+    toast({
+      title: "Referral Sent!",
+      description: "Thank you for referring your friend. We'll be in touch with them shortly.",
+    });
+    reset();
+    // Consider using a DialogClose inside the submit button logic if you want it to close automatically.
+    // For now, the user can click the "Cancel" or "X" button.
+  };
+
+  return (
+    <DialogContent className="sm:max-w-[480px]">
+      <DialogHeader>
+        <DialogTitle>Refer a Friend</DialogTitle>
+        <DialogDescription>
+          Fill in the details below. Once your friend subscribes, your account will be credited with a free month!
+        </DialogDescription>
+      </DialogHeader>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
+        <div>
+          <Label htmlFor="customerId" className="text-foreground">Your Customer ID</Label>
+          <Input id="customerId" {...register("customerId")} placeholder="e.g., DP12345" className="mt-1" />
+          {errors.customerId && <p className="text-xs text-destructive mt-1">{errors.customerId.message}</p>}
+        </div>
+        <div>
+          <Label htmlFor="friendName" className="text-foreground">Friend's Full Name</Label>
+          <Input id="friendName" {...register("friendName")} placeholder="John Doe" className="mt-1" />
+          {errors.friendName && <p className="text-xs text-destructive mt-1">{errors.friendName.message}</p>}
+        </div>
+         <div>
+          <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
+          <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" />
+          {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
+        </div>
+        <div>
+          <Label htmlFor="friendAddress" className="text-foreground">Friend's Address</Label>
+          <Textarea id="friendAddress" {...register("friendAddress")} placeholder="Complete address for installation" rows={3} className="mt-1" />
+          {errors.friendAddress && <p className="text-xs text-destructive mt-1">{errors.friendAddress.message}</p>}
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button type="submit" className="bg-primary hover:bg-primary/90">
+            Submit Referral
+          </Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
+  );
+}
