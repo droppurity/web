@@ -61,7 +61,7 @@ const tableHeaders: TableHeaderItem[] = [
   { 
     id: 'droppurity', 
     title: 'Droppurity', 
-    imageSrc: '/logo.png', // Changed from /jadu/logo.png
+    imageSrc: '/logo.png',
     className: "md:w-[18.75%] bg-primary/10",
     isHighlighted: true,
   },
@@ -118,9 +118,9 @@ const tableData: TableRowData[] = [
 
 export default function ComparisonTable() {
   return (
-    <section className="py-6 sm:py-8 bg-secondary/30">
+    <section className="py-4 sm:py-6 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6 sm:mb-8 text-foreground">
+        <h2 className="text-lg sm:text-xl font-semibold text-center mb-4 sm:mb-6 text-foreground">
           Addressing Your Water Worries: The Droppurity Difference
         </h2>
         <Card className="shadow-xl overflow-hidden border-border">
@@ -131,22 +131,22 @@ export default function ComparisonTable() {
               return (
                 <div
                   key={header.id}
-                  className={`p-3 sm:p-4 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? header.className : ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
+                  className={`p-2 sm:p-3 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? header.className : ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
                 >
                   {header.imageSrc && (
                     <Image 
                       src={header.imageSrc} 
                       alt={getFilenameFromUrl(header.imageSrc)}
-                      width={header.id === 'droppurity' ? 60 : 40} 
-                      height={header.id === 'droppurity' ? 20 : 40} 
-                      className={`mb-1.5 ${header.id === 'droppurity' ? 'object-contain h-5 w-auto' : 'rounded-full'}`}
+                      width={header.id === 'droppurity' ? 50 : 35} 
+                      height={header.id === 'droppurity' ? 17 : 35} 
+                      className={`mb-1 ${header.id === 'droppurity' ? 'object-contain h-4 w-auto' : 'rounded-full'}`}
                       data-ai-hint={header.dataAiHint || (header.id === 'droppurity' ? "company logo" : "product image")}
                     />
                   )}
                   {HeaderIcon && !header.imageSrc && (
-                    <HeaderIcon className={`w-6 h-6 sm:w-7 sm:h-7 mb-1 ${header.iconColor || 'text-foreground'}`} />
+                    <HeaderIcon className={`w-5 h-5 sm:w-6 sm:h-6 mb-1 ${header.iconColor || 'text-foreground'}`} />
                   )}
-                  <p className="text-xs sm:text-sm font-semibold text-foreground leading-tight">{header.title}</p>
+                  <p className="text-[11px] sm:text-xs font-semibold text-foreground leading-tight">{header.title}</p>
                   {header.subTitle && <p className="text-[10px] text-muted-foreground leading-tight">{header.subTitle}</p>}
                 </div>
               );
@@ -160,10 +160,10 @@ export default function ComparisonTable() {
               className={`grid grid-cols-1 md:grid-cols-[25%_18.75%_18.75%_18.75%_18.75%] items-stretch ${rowIndex < tableData.length - 1 ? 'border-b border-border' : ''}`}
             >
               {/* Feature Column */}
-              <div className="p-3 sm:p-4 border-b md:border-b-0 md:border-r border-border bg-muted/10">
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                   {row.feature.icon && <row.feature.icon className="w-4 h-4 text-primary mt-px flex-shrink-0" />}
-                   <h4 className="text-xs sm:text-sm font-medium text-foreground">{row.feature.name}</h4>
+              <div className="p-2 sm:p-3 border-b md:border-b-0 md:border-r border-border bg-muted/10">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                   {row.feature.icon && <row.feature.icon className="w-3.5 h-3.5 text-primary mt-px flex-shrink-0" />}
+                   <h4 className="text-[11px] sm:text-xs font-medium text-foreground">{row.feature.name}</h4>
                 </div>
               </div>
 
@@ -174,16 +174,16 @@ export default function ComparisonTable() {
                 return (
                   <div
                     key={`${rowIndex}-${colKey}`}
-                    className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${header.isHighlighted ? header.className : 'bg-card'}`}
+                    className={`p-2 sm:p-3 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${header.isHighlighted ? header.className : 'bg-card'}`}
                   >
-                    {item.supported ? <Check className="w-5 h-5 text-green-600 mb-0.5" /> : <X className="w-5 h-5 text-destructive mb-0.5" />}
+                    {item.supported ? <Check className="w-4 h-4 text-green-600 mb-0.5" /> : <X className="w-4 h-4 text-destructive mb-0.5" />}
                     {item.text && <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{item.text}</p>}
                   </div>
                 );
               })}
               {/* Droppurity Advantage Column */}
-               <div className={`p-3 sm:p-4 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
-                  <Check className="w-5 h-5 text-green-600 mb-0.5" />
+               <div className={`p-2 sm:p-3 border-b md:border-b-0 md:border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
+                  <Check className="w-4 h-4 text-green-600 mb-0.5" />
                   <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">
                      {row.feature.name === 'Upfront Cost' ? 'Pay as you use' :
                       row.feature.name === 'Maintenance' ? 'No hidden fees' :
@@ -195,7 +195,7 @@ export default function ComparisonTable() {
             </div>
           ))}
         </Card>
-         <p className="text-center text-xs text-muted-foreground mt-3">
+         <p className="text-center text-[11px] text-muted-foreground mt-2">
             * Features may vary by plan/model. Lifetime refers to active subscription period.
         </p>
       </div>
