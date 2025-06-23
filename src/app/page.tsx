@@ -56,16 +56,15 @@ export default function HomePage() {
   return (
     <div className="flex flex-col pt-3 sm:pt-4">
       {/* Hero Section */}
-      <section className="py-12 sm:py-16 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="relative aspect-video lg:aspect-[16/9] w-full">
+      <section className="bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="relative aspect-[3/4] lg:aspect-[16/9] w-full">
             <Image
               src="/hero.png"
               alt="hero.png"
               layout="fill"
               objectFit="cover"
-              className="rounded-xl shadow-lg lg:object-[center_35%]"
+              className="rounded-xl shadow-lg object-top lg:object-[center_35%]"
               priority
             />
             <div className="absolute inset-0 flex items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
@@ -82,7 +81,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          
         </div>
       </section>
 
