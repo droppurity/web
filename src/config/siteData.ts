@@ -128,7 +128,7 @@ export const purifiers: Purifier[] = [
      thumbnailImages: [
         '/2.png',
         '/11.png',
-        '/12.png',
+        '/4.png',
     ],
     storageCapacity: '10 Litre Storage',
     keyFeatures: [ ...commonFeaturesList, alkalineSpecificFeature ],
