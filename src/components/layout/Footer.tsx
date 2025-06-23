@@ -82,9 +82,9 @@ export default function Footer() {
             <h3 className="text-base font-semibold text-yellow-300">Explore</h3>
             <ul className="space-y-1.5">
               <li><Link href="/about" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">About</Link></li>
-              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Careers</Link></li>
-              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Blog</Link></li>
-              <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">FAQs</Link></li>
+              <li><Link href="/careers" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Careers</Link></li>
+              <li><Link href="/blog" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Blog</Link></li>
+              <li><Link href="/faq" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">FAQs</Link></li>
               <li><Link href="/contact" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link></li>
             </ul>
           </div>
@@ -94,8 +94,8 @@ export default function Footer() {
             <div className="space-y-3">
                 <h3 className="text-base font-semibold text-yellow-300">Terms</h3>
                 <ul className="space-y-1.5">
-                  <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="#" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Terms of Use</Link></li>
+                  <li><Link href="/privacy" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Terms of Use</Link></li>
                 </ul>
             </div>
             <div className="space-y-3">
