@@ -53,8 +53,8 @@ const tableHeaders: TableHeaderItem[] = [
   { 
     id: 'otherPurifiers', 
     title: 'Other Purifiers', 
-    imageSrc: 'https://placehold.co/80x80.png', 
-    dataAiHint: "generic purifier"
+    imageSrc: '/otherro.png', 
+    dataAiHint: "other ro purifier"
   },
   { 
     id: 'droppurity', 
