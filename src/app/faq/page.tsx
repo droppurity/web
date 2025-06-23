@@ -21,8 +21,12 @@ const faqs = [
         answer: "We guarantee installation within 48 hours of your booking and successful payment of the security deposit."
     },
     {
-        question: "What happens if I move to a new house?",
-        answer: "We offer free relocation services. Just inform us a few days in advance, and we'll move and reinstall your purifier at your new address for free."
+        question: "Are there any installation charges?",
+        answer: "No, installation is completely free. We only require a fully refundable security deposit at the time of installation."
+    },
+    {
+        question: "Do you charge for relocating the purifier if I move?",
+        answer: "Not at all. We provide free relocation and re-installation services for our active subscribers. Just let us know a few days before you move, and we'll handle the rest."
     }
 ]
 
