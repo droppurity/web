@@ -58,21 +58,20 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="py-12 sm:py-16 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Text content on the left for desktop, top for mobile */}
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-4 sm:mb-6">
+          
+          {/* Mobile Layout: Stacked */}
+          <div className="lg:hidden">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold text-primary mb-4">
                 Pure Water, Pure Life.
               </h1>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8">
+              <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-6">
                 Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
               </p>
-              <Button asChild size="lg" className="mx-auto lg:mx-0 flex w-fit">
+              <Button asChild size="lg" className="mx-auto flex w-fit">
                 <Link href="/plans">Explore Our Plans</Link>
               </Button>
             </div>
-
-            {/* Image on the right for desktop, bottom for mobile */}
             <div className="relative w-full aspect-video">
               <Image
                 src="/hero.png"
@@ -84,6 +83,32 @@ export default function HomePage() {
               />
             </div>
           </div>
+
+          {/* Desktop Layout: Overlapped */}
+          <div className="hidden lg:block relative aspect-[16/7] w-full">
+            <Image
+              src="/hero.png"
+              alt="hero.png"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl shadow-lg"
+              priority
+            />
+            <div className="absolute inset-0 flex items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
+              <div className="w-1/2 p-12">
+                <h1 className="text-5xl font-bold text-white mb-6">
+                  Pure Water, Pure Life.
+                </h1>
+                <p className="text-lg text-gray-200 max-w-xl mb-8">
+                  Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
+                </p>
+                <Button asChild size="lg">
+                  <Link href="/plans">Explore Our Plans</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </section>
 
@@ -136,7 +161,6 @@ export default function HomePage() {
       </section>
 
       <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
-
       <ComparisonTable />
 
       {/* Call to Action Section */}
