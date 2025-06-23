@@ -60,12 +60,11 @@ export default function HomePage() {
       <section className="relative py-6 sm:py-10 bg-gradient-to-br from-primary/20 via-background to-background">
         <div className="absolute inset-0 opacity-30">
           <Image
-            src="https://placehold.co/1200x600.png"
-            alt={getFilenameFromUrl("https://placehold.co/1200x600.png")}
+            src="https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt={getFilenameFromUrl("https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080")}
             layout="fill"
             objectFit="cover"
             className="opacity-50"
-            data-ai-hint="pure water"
             priority
           />
         </div>
