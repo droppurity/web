@@ -109,7 +109,7 @@ export const purifiers: Purifier[] = [
     plans: generatePlansForPurifier('ro-plus', 0),
     image: '/5.png',
     thumbnailImages: [
-        '/6.png',
+        '/2.png',
         '/7.png',
         '/8.png',
     ],
@@ -126,7 +126,7 @@ export const purifiers: Purifier[] = [
     plans: generatePlansForPurifier('alkaline', 75),
     image: '/9.png',
      thumbnailImages: [
-        '/10.png',
+        '/2.png',
         '/11.png',
         '/12.png',
     ],
