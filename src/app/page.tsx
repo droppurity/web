@@ -116,7 +116,7 @@ export default function HomePage() {
             <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
               Why Choose Droppurity?
             </h2>
-            <div className="grid md:grid-cols-3 gap-3 lg:gap-6">
+            <div className="grid md:grid-cols-3 gap-4 lg:gap-8">
               {features.map((feature, index) => (
                 <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <CardHeader className="items-center text-center p-1.5 sm:p-2">
@@ -237,5 +237,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-    
