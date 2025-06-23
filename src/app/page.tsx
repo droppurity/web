@@ -38,7 +38,7 @@ export default function HomePage() {
   useEffect(() => {
     const handleScroll = () => {
       if (planSectionRef.current) {
-        const sectionTop = planSectiondRef.current.offsetTop;
+        const sectionTop = planSectionRef.current.offsetTop;
         const headerHeight = 56; 
         
         if (window.scrollY >= sectionTop - headerHeight) {
