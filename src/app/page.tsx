@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee } from 'lucide-react';
+import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift } from 'lucide-react';
 import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import { useState, useEffect, useRef } from 'react';
@@ -91,14 +91,14 @@ export default function HomePage() {
               priority
             />
             <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
-              <div className="w-3/5 lg:w-1/2 p-6 sm:p-8 lg:p-12">
+              <div className="w-4/5 lg:w-1/2 p-6 sm:p-8 lg:p-12">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 lg:mb-6">
                   Pure Water, Pure Life.
                 </h1>
                 <p className="text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild size="sm" className="mt-32 lg:mt-8 lg:h-11 lg:px-8">
+                <Button asChild size="sm" className="mt-44 lg:mt-8 lg:h-11 lg:px-8">
                   <Link href="/plans">Explore Our Plans</Link>
                 </Button>
               </div>
@@ -110,21 +110,23 @@ export default function HomePage() {
       {/* Features Overview Section */}
       <section className="py-4 sm:py-6 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-            Why Choose Droppurity?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-2 sm:gap-3">
-            {features.map((feature, index) => (
-              <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardHeader className="items-center text-center p-1.5 sm:p-2">
-                  <feature.icon className={`w-5 h-5 sm:w-6 sm:h-6 mb-1 sm:mb-1 ${feature.color}`} />
-                  <CardTitle className="text-[11px] sm:text-xs font-headline">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center p-1.5 sm:p-2 pt-0">
-                  <p className="text-[11px] sm:text-xs text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="mx-auto max-w-md">
+            <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
+              Why Choose Droppurity?
+            </h2>
+            <div className="grid md:grid-cols-3 gap-2 sm:gap-3">
+              {features.map((feature, index) => (
+                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardHeader className="items-center text-center p-1.5 sm:p-2">
+                    <feature.icon className={`w-5 h-5 sm:w-6 sm:h-6 mb-1 sm:mb-1 ${feature.color}`} />
+                    <CardTitle className="text-[11px] sm:text-xs font-headline">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center p-1.5 sm:p-2 pt-0">
+                    <p className="text-[11px] sm:text-xs text-muted-foreground">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -186,6 +188,30 @@ export default function HomePage() {
 
       <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
       <ComparisonTable />
+
+      {/* Refer and Earn Section */}
+      <section className="py-4 sm:py-6 bg-secondary/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="shadow-xl overflow-hidden bg-gradient-to-r from-primary/80 via-primary to-blue-600 text-primary-foreground">
+            <div className="flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 gap-6">
+              <div className="flex items-center gap-4 text-center md:text-left">
+                <div className="bg-white/20 p-3 rounded-full hidden md:block">
+                  <Gift className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold font-headline">Refer a Friend & Earn!</h2>
+                  <p className="text-sm text-primary-foreground/90 max-w-md mt-1">
+                    Share the gift of pure water. When your friend subscribes, you get a <strong>FREE month of our Basic Plan</strong> (worth ₹449)!
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="lg" className="bg-yellow-400 text-yellow-900 hover:bg-yellow-500 flex-shrink-0 mt-4 md:mt-0">
+                <Link href="/contact">Refer Now</Link>
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </section>
 
       {/* Call to Action Section */}
       <section className="py-4 sm:py-6 bg-background">
