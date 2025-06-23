@@ -56,30 +56,34 @@ export default function HomePage() {
   return (
     <div className="flex flex-col pt-3 sm:pt-4">
       {/* Hero Section */}
-      <section className="pt-10 sm:pt-12 pb-10 bg-background">
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-3 sm:mb-4">
+      <section className="py-12 sm:py-16 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Text content on the left for desktop, top for mobile */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-4 sm:mb-6">
                 Pure Water, Pure Life.
-            </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-6 sm:mb-8">
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8">
                 Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
-            </p>
-            <Button asChild size="lg">
+              </p>
+              <Button asChild size="lg" className="mx-auto lg:mx-0 flex w-fit">
                 <Link href="/plans">Explore Our Plans</Link>
-            </Button>
-        </div>
-        {/* The negative margin pulls the image up to overlap with the content above. */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-16">
-            <div className="relative h-56 sm:h-72 md:h-96 w-full">
-                <Image
-                    src="/hero.png"
-                    alt="hero.png"
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-xl shadow-lg"
-                    priority
-                />
+              </Button>
             </div>
+
+            {/* Image on the right for desktop, bottom for mobile */}
+            <div className="relative w-full aspect-video">
+              <Image
+                src="/hero.png"
+                alt="hero.png"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-xl shadow-lg"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </section>
 
