@@ -59,47 +59,21 @@ export default function HomePage() {
       <section className="py-12 sm:py-16 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Mobile Layout: Stacked */}
-          <div className="lg:hidden">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-primary mb-4">
-                Pure Water, Pure Life.
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-6">
-                Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
-              </p>
-              <Button asChild size="lg" className="mx-auto flex w-fit">
-                <Link href="/plans">Explore Our Plans</Link>
-              </Button>
-            </div>
-            <div className="relative w-full aspect-video">
-              <Image
-                src="/hero.png"
-                alt="hero.png"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-xl shadow-lg"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Desktop Layout: Overlapped */}
-          <div className="hidden lg:block relative aspect-[16/9] w-full">
+          <div className="relative aspect-video lg:aspect-[16/9] w-full">
             <Image
               src="/hero.png"
               alt="hero.png"
               layout="fill"
               objectFit="cover"
-              className="rounded-xl shadow-lg object-[center_35%]"
+              className="rounded-xl shadow-lg lg:object-[center_35%]"
               priority
             />
             <div className="absolute inset-0 flex items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
-              <div className="w-1/2 p-12">
-                <h1 className="text-5xl font-bold text-white mb-6">
+              <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 lg:mb-6">
                   Pure Water, Pure Life.
                 </h1>
-                <p className="text-lg text-gray-200 max-w-xl mb-8">
+                <p className="text-base lg:text-lg text-gray-200 max-w-xl mb-6 lg:mb-8">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
                 <Button asChild size="lg">
