@@ -34,8 +34,7 @@ const features = [
 export default function HomePage() {
   const planSectionRef = useRef<HTMLDivElement>(null);
   const [makePlanSectionHeaderDominant, setMakePlanSectionHeaderDominant] = useState(false);
-  const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
-
+  
   useEffect(() => {
     const handleScroll = () => {
       if (planSectionRef.current) {
@@ -73,8 +72,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-16">
             <div className="relative h-56 sm:h-72 md:h-96 w-full">
                 <Image
-                    src="https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080"
-                    alt={getFilenameFromUrl("https://images.unsplash.com/photo-1617404962988-b0d6a45b2d20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmlua2luZyUyMHdhdGVyfGVufDB8fHx8MTc1MDY1MjI3MHww&ixlib=rb-4.1.0&q=80&w=1080")}
+                    src="/hero.png"
+                    alt="hero.png"
                     layout="fill"
                     objectFit="cover"
                     className="rounded-xl shadow-lg"
