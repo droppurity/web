@@ -57,7 +57,7 @@ export default function HomePage() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:pb-12">
           <div className="relative aspect-[3/4] lg:aspect-[16/9] w-full">
             <Image
               src="/hero.png"
