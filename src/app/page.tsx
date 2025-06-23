@@ -100,7 +100,7 @@ export default function HomePage() {
                 <p className="text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild size="sm" className="mt-8 lg:mt-8 lg:h-11 lg:px-8">
+                <Button asChild size="sm" className="mt-12 lg:mt-8 lg:h-11 lg:px-8">
                   <Link href="/plans">Explore Our Plans</Link>
                 </Button>
               </div>
