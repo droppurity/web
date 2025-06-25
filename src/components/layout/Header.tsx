@@ -51,7 +51,7 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center">
-            <Image src={logoPath} alt={logoFilename} width={134} height={36} className="object-contain" priority />
+            <Image src={logoPath} alt={logoFilename} width={72} height={36} className="object-contain" priority />
           </Link>
 
           {/* Desktop Navigation */}
@@ -79,7 +79,7 @@ export default function Header() {
                   <div className="flex items-center p-4 border-b">
                     <SheetTitle asChild>
                       <Link href="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                         <Image src={logoPath} alt={logoFilename} width={134} height={36} className="object-contain" />
+                         <Image src={logoPath} alt={logoFilename} width={72} height={36} className="object-contain" />
                       </Link>
                     </SheetTitle>
                   </div>
