@@ -137,7 +137,7 @@ export default function ComparisonTable() {
                     <Image
                       src={header.imageSrc}
                       alt={getFilenameFromUrl(header.imageSrc)}
-                      width={header.id === 'droppurity' ? 55 : 28}
+                      width={header.id === 'droppurity' ? 50 : 28}
                       height={header.id === 'droppurity' ? 20 : 28}
                       className={`mb-0.5 ${header.id === 'droppurity' ? 'object-contain' : 'rounded-full'}`}
                       data-ai-hint={header.dataAiHint || (header.id === 'droppurity' ? "company logo" : "product image")}
