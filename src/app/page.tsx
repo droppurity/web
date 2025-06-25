@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -85,22 +84,22 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="relative aspect-[3/4] lg:aspect-[16/9] w-full">
             <Image
-              src="/hero.png"
-              alt="hero.png"
+              src="/1.png"
+              alt="1.png"
               layout="fill"
               objectFit="cover"
               className="rounded-xl shadow-lg object-top lg:object-[center_35%]"
               priority
             />
             <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
-              <div className="w-7/12 sm:w-1/2 lg:w-1/2 p-6 sm:p-8 lg:p-12">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 lg:mb-6">
+              <div className="w-9/12 sm:w-7/12 lg:w-1/2 p-4 sm:p-8 lg:p-12">
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4 lg:mb-6">
                   Pure Water, Pure Life.
                 </h1>
-                <p className="text-base lg:text-lg text-gray-200 max-w-xl">
+                <p className="text-sm sm:text-base lg:text-lg text-gray-200 max-w-xl">
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
-                <Button asChild className="mt-40 lg:mt-12 h-auto text-xs px-4 py-1.5 lg:text-sm lg:px-8 lg:py-2">
+                <Button asChild className="mt-8 sm:mt-10 lg:mt-12 h-auto text-xs px-4 py-1.5 lg:text-sm lg:px-8 lg:py-2">
                   <Link href="/plans">
                     <div className="flex flex-col items-center leading-tight">
                       <span>Explore Our Plans</span>
