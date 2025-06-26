@@ -62,22 +62,16 @@ export default function HomePage() {
   const planSectionRef = useRef<HTMLDivElement>(null);
   const [makePlanSectionHeaderDominant, setMakePlanSectionHeaderDominant] = useState(false);
   const [isTrialDialogOpen, setIsTrialDialogOpen] = useState(false);
+  const popupShownThisLoad = useRef(false);
 
-  // Restore auto-trigger logic for free trial popup
+  // Auto-trigger logic for free trial popup, appears once per page load.
   useEffect(() => {
-    const popupShownKey = 'droppurity_trial_popup_shown';
-    const popupShown = sessionStorage.getItem(popupShownKey);
-
-    if (popupShown) {
-      return;
-    }
-
     const showPopup = () => {
-      // Double-check before showing to avoid race conditions
-      if (!sessionStorage.getItem(popupShownKey)) {
-        setIsTrialDialogOpen(true);
-        sessionStorage.setItem(popupShownKey, 'true');
-      }
+      // Only show if it hasn't been shown in this page load.
+      if (popupShownThisLoad.current) return;
+      popupShownThisLoad.current = true;
+      
+      setIsTrialDialogOpen(true);
     };
 
     // Define clearable timers
