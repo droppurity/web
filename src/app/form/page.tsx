@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { saveSubscription } from '@/app/actions/subscribe';
-import { Loader2, MapPin } from 'lucide-react';
+import { Loader2, MapPin, ExternalLink } from 'lucide-react';
 
 const subscriptionFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -47,6 +47,8 @@ export default function SubscriptionFormPage() {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch, trigger } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionFormSchema),
   });
+
+  const locationValue = watch('location');
 
   const selectedPurifier = purifiers.find(p => p.id === selectedPurifierId);
   const selectedPlan = availablePlans.find(p => p.id === selectedPlanId);
@@ -195,14 +197,35 @@ export default function SubscriptionFormPage() {
               </div>
               
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <Label htmlFor="location">Geolocation Link</Label>
-                  <Button type="button" variant="outline" size="sm" className="h-auto px-2 py-1 text-xs" onClick={handleFetchLocation} disabled={isFetchingLocation || isSubmitting}>
+                <div className="flex justify-between items-center">
+                  <Label>Geolocation Link</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-auto px-2 py-1 text-xs"
+                    onClick={handleFetchLocation}
+                    disabled={isFetchingLocation || isSubmitting}
+                  >
                     {isFetchingLocation ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <MapPin className="mr-1 h-3 w-3" />}
                     Auto-fetch
                   </Button>
                 </div>
-                <Input id="location" {...register("location")} placeholder="Click Auto-fetch to get location link" className="mt-1" disabled={isSubmitting} readOnly />
+                 <div className="mt-1">
+                    {locationValue ? (
+                        <Button asChild variant="outline" className="w-full justify-start text-left font-normal">
+                        <a href={locationValue} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                            <ExternalLink className="mr-2 h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">Location captured. Click to verify.</span>
+                        </a>
+                        </Button>
+                    ) : (
+                        <div className="flex h-10 w-full items-center rounded-md border border-input bg-background px-3 py-2 text-sm text-muted-foreground">
+                            Click 'Auto-fetch' to get location link
+                        </div>
+                    )}
+                </div>
+                <input type="hidden" {...register("location")} />
                 {errors.location && <p className="text-xs text-destructive mt-1">{errors.location.message}</p>}
               </div>
 
