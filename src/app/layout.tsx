@@ -26,6 +26,35 @@ export default function RootLayout({
   const siteTitle = "Droppurity: Smart Water Purifiers on Rent | Lifetime Free Maintenance";
   const siteDescription = "Get a Droppurity smart RO water purifier on rent. Enjoy pure, healthy water with zero down payment, lifetime free maintenance, and a 7-day risk-free trial. Plans from ₹299/mo.";
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Droppurity",
+    "url": siteUrl,
+    "logo": `${siteUrl}/logo.png`,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-79797-84087",
+      "contactType": "Customer Service",
+      "email": "official@droppurity.in"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Plot No. 21, Adarsh Nagar, Opp. Shivaji Chowk, Khadgaon Road",
+      "addressLocality": "WADI, NAGPUR",
+      "postalCode": "440023",
+      "addressRegion": "MH",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://x.com/droppurity_placeholder",
+      "https://linkedin.com/company/droppurity_placeholder",
+      "https://facebook.com/droppurity_placeholder",
+      "https://instagram.com/droppurity_placeholder",
+      "https://youtube.com/@droppurity_placeholder"
+    ]
+  };
+
   return (
     <html lang="en">
       <head>
@@ -36,6 +65,9 @@ export default function RootLayout({
         <meta name="author" content="Droppurity" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Google-specific SEO */}
+        <meta name="google-site-verification" content="YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -52,6 +84,12 @@ export default function RootLayout({
         <meta name="twitter:title" content={siteTitle} />
         <meta name="twitter:description" content={siteDescription} />
         <meta name="twitter:image" content={ogImageUrl} />
+
+        {/* Structured Data (JSON-LD) for Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
 
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
