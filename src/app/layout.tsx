@@ -80,11 +80,11 @@ export const metadata: Metadata = {
         "addressCountry": "IN"
       },
       "sameAs": [
-        "https://x.com/droppurity_placeholder",
-        "https://linkedin.com/company/droppurity_placeholder",
-        "https://facebook.com/droppurity_placeholder",
-        "https://instagram.com/droppurity_placeholder",
-        "https://youtube.com/@droppurity_placeholder"
+        "https://x.com/droppurity",
+        "https://linkedin.com/company/droppurity",
+        "https://facebook.com/droppurity",
+        "https://instagram.com/droppurity",
+        "https://youtube.com/@droppurity"
       ]
     })
   }

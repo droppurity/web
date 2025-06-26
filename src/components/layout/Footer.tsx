@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { Twitter, Linkedin, Facebook, Instagram, Youtube, MessageCircle, ArrowUpCircle } from 'lucide-react';
 
 const socialLinks = [
-  { icon: Twitter, href: 'https://x.com/droppurity_placeholder', label: 'Droppurity Twitter' },
-  { icon: Linkedin, href: 'https://linkedin.com/company/droppurity_placeholder', label: 'Droppurity LinkedIn' },
-  { icon: Facebook, href: 'https://facebook.com/droppurity_placeholder', label: 'Droppurity Facebook' },
-  { icon: Instagram, href: 'https://instagram.com/droppurity_placeholder', label: 'Droppurity Instagram' },
+  { icon: Twitter, href: 'https://x.com/droppurity', label: 'Droppurity Twitter' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/droppurity', label: 'Droppurity LinkedIn' },
+  { icon: Facebook, href: 'https://facebook.com/droppurity', label: 'Droppurity Facebook' },
+  { icon: Instagram, href: 'https://instagram.com/droppurity', label: 'Droppurity Instagram' },
   { icon: MessageCircle, href: 'https://wa.me/917979784087', label: 'Droppurity WhatsApp' },
-  { icon: Youtube, href: 'https://youtube.com/@droppurity_placeholder', label: 'Droppurity YouTube' },
+  { icon: Youtube, href: 'https://youtube.com/@droppurity', label: 'Droppurity YouTube' },
 ];
 
 const getFilenameFromUrl = (url: string): string => {
