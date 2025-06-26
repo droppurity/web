@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -83,21 +82,20 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl shadow-lg overflow-hidden">
-
-            {/* Text Content - Order is first for mobile `flex-col` */}
-            <div className="bg-card lg:bg-transparent p-6 text-center lg:text-left lg:w-1/2 lg:absolute lg:z-10 lg:top-0 lg:left-0 lg:h-full lg:flex lg:flex-col lg:justify-center lg:p-12">
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-primary lg:text-white mb-2 sm:mb-4 lg:mb-6">
+          <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
+            {/* Text Content - On top for mobile */}
+            <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
+              <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-4">
                 Pure Water, Pure Life.
               </h1>
-              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground lg:text-gray-200 max-w-xl mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
                 Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
               </p>
-              <Button asChild className="mt-4 sm:mt-6 lg:mt-8 h-auto text-xs px-4 py-1.5 lg:text-sm lg:px-8 lg:py-2 mx-auto lg:mx-0">
+              <Button asChild className="mt-4 sm:mt-6 h-auto text-xs px-4 py-1.5 mx-auto">
                 <Link href="/plans">
                   <div className="flex flex-col items-center leading-tight">
                     <span>Explore Our Plans</span>
-                    <span className="mt-1 font-normal opacity-90 text-[10px] lg:text-xs">
+                    <span className="mt-1 font-normal opacity-90 text-[10px]">
                       Starting from ₹299/mo
                     </span>
                   </div>
@@ -105,18 +103,49 @@ export default function HomePage() {
               </Button>
             </div>
 
-            {/* Image Content - Order is second for mobile `flex-col` */}
-            <div className="relative aspect-[4/3] lg:aspect-auto lg:absolute lg:inset-0">
-              <Image
-                src="/hero.png"
-                alt="hero.png"
-                layout="fill"
-                objectFit="cover"
-                className="object-top lg:object-[center_35%]"
-                priority
-              />
-              {/* Desktop-only gradient overlay */}
-              <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+            {/* Combined Image and Desktop Text */}
+            <div className="relative aspect-[4/3] lg:aspect-[16/9] w-full rounded-b-xl lg:rounded-xl overflow-hidden">
+               {/* Desktop Text Content - Overlay */}
+              <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
+                <h1 className="text-5xl font-bold text-white mb-6">
+                  Pure Water, Pure Life.
+                </h1>
+                <p className="text-lg text-gray-200 max-w-xl">
+                  Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
+                </p>
+                <Button asChild className="mt-8 h-auto text-sm px-8 py-2 self-start">
+                  <Link href="/plans">
+                    <div className="flex flex-col items-center leading-tight">
+                      <span>Explore Our Plans</span>
+                      <span className="mt-1 font-normal opacity-90 text-xs">
+                        Starting from ₹299/mo
+                      </span>
+                    </div>
+                  </Link>
+                </Button>
+              </div>
+
+              {/* Image */}
+              <div className="relative w-full h-full">
+                <Image
+                  src="/herom.png"
+                  alt="herom.png"
+                  layout="fill"
+                  objectFit="cover"
+                  className="block lg:hidden"
+                  priority
+                />
+                <Image
+                  src="/hero.png"
+                  alt="hero.png"
+                  layout="fill"
+                  objectFit="cover"
+                  className="hidden lg:block lg:object-[center_35%]"
+                  priority
+                />
+                 {/* Desktop-only gradient overlay */}
+                <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -252,5 +281,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-    
