@@ -92,7 +92,7 @@ export default function HomePage() {
               className="rounded-xl shadow-lg object-top lg:object-[center_35%]"
               priority
             />
-            <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-r from-black/60 via-black/30 to-transparent rounded-xl">
+            <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-b from-black/60 to-transparent lg:bg-gradient-to-r lg:from-black/60 lg:via-black/30 lg:to-transparent rounded-xl">
               <div className="w-11/12 sm:w-7/12 lg:w-1/2 p-4 sm:p-8 lg:p-12">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-2 sm:mb-4 lg:mb-6">
                   Pure Water, Pure Life.
