@@ -1,9 +1,11 @@
+
 "use client";
 
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 import {
   DialogContent,
   DialogHeader,
@@ -42,6 +44,7 @@ interface SubscriptionDialogProps {
 
 export default function SubscriptionDialog({ purifierContextName, planName, tenure, onSubscriptionSuccess }: SubscriptionDialogProps) {
   const { toast } = useToast();
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
 
@@ -100,18 +103,24 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
     if (result.success) {
       toast({
         title: "Subscription successful!",
-        description: "We have received your details and will contact you shortly.",
+        description: "Redirecting you to the confirmation page.",
       });
-      reset();
-      onSubscriptionSuccess();
+      
+      const queryParams = new URLSearchParams({
+        purifierName: data.purifierName,
+        planName: data.planName,
+        tenure: data.tenure,
+      }).toString();
+      
+      router.push(`/thank-you?${queryParams}`);
     } else {
       toast({
         variant: "destructive",
         title: "Subscription failed",
         description: result.message || "An unexpected error occurred.",
       });
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
