@@ -129,7 +129,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
                 Pay only a refundable security deposit after successful installation.
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto pr-3 -mr-2">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto px-3 -mr-2">
               <input type="hidden" {...register("purifierName")} />
               <input type="hidden" {...register("planName")} />
               <input type="hidden" {...register("tenure")} />
