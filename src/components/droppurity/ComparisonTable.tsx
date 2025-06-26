@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -177,14 +176,14 @@ export default function ComparisonTable() {
                     className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${header.isHighlighted ? header.className : 'bg-card'}`}
                   >
                     {item.supported ? <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" /> : <X className="w-3.5 h-3.5 text-destructive mb-0.5" />}
-                    {item.text && <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug">{item.text}</p>}
+                    {item.text && <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug break-words">{item.text}</p>}
                   </div>
                 );
               })}
               {/* Droppurity Advantage Column */}
                <div className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
                   <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" />
-                  <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug">
+                  <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug break-words">
                      {row.feature.name === 'Upfront Cost' ? 'Pay as you use' :
                       row.feature.name === 'Maintenance' ? 'No hidden fees' :
                       row.feature.name === 'Tech Features' ? 'Smart alerts*' :
