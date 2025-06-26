@@ -23,7 +23,8 @@ const subscriptionFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: 'Please enter a valid 10-digit Indian mobile number.' }),
-  location: z.string().min(10, { message: 'Location must be at least 10 characters.' }),
+  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }),
+  address: z.string().min(10, { message: 'Please enter a full installation address.' }),
   purifierName: z.string({ required_error: 'Please select a purifier.' }).min(1, 'Please select a purifier.'),
   planName: z.string({ required_error: 'Please select a plan.' }).min(1, 'Please select a plan.'),
   tenure: z.string({ required_error: 'Please select a tenure.' }).min(1, 'Please select a tenure.'),
@@ -75,19 +76,36 @@ export default function SubscriptionFormPage() {
 
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
-    navigator.geolocation?.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const locationString = `Lat: ${latitude.toFixed(5)}, Lon: ${longitude.toFixed(5)}`;
-        setValue('location', locationString, { shouldValidate: true });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const { latitude, longitude } = position.coords;
+            const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+            setValue('location', locationUrl, { shouldValidate: true });
+            setIsFetchingLocation(false);
+            toast({
+            title: "Location Fetched!",
+            description: "A geolocation link has been generated.",
+            });
+        },
+        (error) => {
+            setIsFetchingLocation(false);
+            toast({
+            variant: "destructive",
+            title: "Location Error",
+            description: "Could not fetch location. Please grant permission.",
+            });
+            console.error("Geolocation error:", error);
+        }
+        );
+    } else {
         setIsFetchingLocation(false);
-        toast({ title: 'Location Fetched!', description: 'Your coordinates have been filled in.' });
-      },
-      (error) => {
-        setIsFetchingLocation(false);
-        toast({ variant: 'destructive', title: 'Location Error', description: 'Could not fetch location. Please grant permission or enter it manually.' });
-      }
-    );
+        toast({
+            variant: "destructive",
+            title: "Unsupported Browser",
+            description: "Your browser does not support Geolocation.",
+        });
+    }
   };
 
   const onSubmit: SubmitHandler<SubscriptionFormValues> = async (data) => {
@@ -175,17 +193,25 @@ export default function SubscriptionFormPage() {
                 <Input id="phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
               </div>
+              
               <div>
-                <div className="flex justify-between items-center">
-                  <Label htmlFor="location">Installation Address</Label>
+                <div className="flex justify-between items-center mb-1">
+                  <Label htmlFor="location">Geolocation Link</Label>
                   <Button type="button" variant="outline" size="sm" className="h-auto px-2 py-1 text-xs" onClick={handleFetchLocation} disabled={isFetchingLocation || isSubmitting}>
                     {isFetchingLocation ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <MapPin className="mr-1 h-3 w-3" />}
                     Auto-fetch
                   </Button>
                 </div>
-                <Textarea id="location" {...register("location")} placeholder="Your full address for installation..." rows={3} className="mt-1" disabled={isSubmitting} />
+                <Input id="location" {...register("location")} placeholder="Click Auto-fetch to get location link" className="mt-1" disabled={isSubmitting} readOnly />
                 {errors.location && <p className="text-xs text-destructive mt-1">{errors.location.message}</p>}
               </div>
+
+              <div>
+                <Label htmlFor="address">Installation Address</Label>
+                <Textarea id="address" {...register("address")} placeholder="Your full address for installation (e.g., Flat No, Building, Street, Landmark...)" rows={3} className="mt-1" disabled={isSubmitting} />
+                {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
+              </div>
+
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Submit & Subscribe
