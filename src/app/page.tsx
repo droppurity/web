@@ -62,6 +62,47 @@ export default function HomePage() {
   const planSectionRef = useRef<HTMLDivElement>(null);
   const [makePlanSectionHeaderDominant, setMakePlanSectionHeaderDominant] = useState(false);
   const [isTrialDialogOpen, setIsTrialDialogOpen] = useState(false);
+
+  // Restore auto-trigger logic for free trial popup
+  useEffect(() => {
+    const popupShownKey = 'droppurity_trial_popup_shown';
+    const popupShown = sessionStorage.getItem(popupShownKey);
+
+    if (popupShown) {
+      return;
+    }
+
+    const showPopup = () => {
+      // Double-check before showing to avoid race conditions
+      if (!sessionStorage.getItem(popupShownKey)) {
+        setIsTrialDialogOpen(true);
+        sessionStorage.setItem(popupShownKey, 'true');
+      }
+    };
+
+    // Define clearable timers
+    const timers = [
+      setTimeout(showPopup, 2000),
+      setTimeout(showPopup, 10000),
+      setTimeout(showPopup, 20000),
+      setTimeout(showPopup, 50000),
+    ];
+
+    const handleScroll = () => {
+      // Show popup after user has scrolled a bit
+      if (window.scrollY > 300) {
+        showPopup();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Cleanup function to clear timers and remove event listener
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Empty dependency array ensures this runs only once on mount
   
   useEffect(() => {
     const handleScroll = () => {
@@ -89,7 +130,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
               {/* Text Content - On top for mobile */}
-              <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
+              <div className="bg-secondary/30 p-6 text-center lg:hidden rounded-t-xl">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-4">
                   Pure Water, Pure Life.
                 </h1>
@@ -128,7 +169,7 @@ export default function HomePage() {
                   <p className="text-lg text-gray-200 max-w-xl">
                     Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                   </p>
-                  <div className="flex items-center gap-4 mt-8">
+                  <div className="flex flex-col items-start gap-4 mt-8">
                     <Button asChild className="h-auto text-sm px-8 py-2 self-start">
                       <Link href="/plans">
                         <div className="flex flex-col items-center leading-tight">
