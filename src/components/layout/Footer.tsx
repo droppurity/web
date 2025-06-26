@@ -34,7 +34,7 @@ export default function Footer() {
           {/* Column 1: Logo and Address */}
           <div className="sm:col-span-2 md:col-span-1 space-y-3">
             <Link href="/" className="flex items-center">
-              <Image src={logoPath} alt={logoFilename} width={100} height={50} className="object-contain" />
+              <Image src={logoPath} alt={logoFilename} width={100} height={40} className="object-contain" />
             </Link>
             <p className="text-xs text-primary-foreground/80">
               Smart Purifiers on Rent. Free Maintenance for Life.
