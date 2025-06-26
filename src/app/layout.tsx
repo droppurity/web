@@ -32,7 +32,7 @@ export default function RootLayout({
         {/* Basic SEO Tags */}
         <title>{siteTitle}</title>
         <meta name="description" content={siteDescription} />
-        <meta name="keywords" content="water purifier on rent, RO on rent, subscription water purifier, Droppurity, free maintenance, zero down payment, smart water purifier, RO+UV+UF, alkaline water, copper water" />
+        <meta name="keywords" content="drop, drop aqua, puja ro water, ganga, gangotri, pani, ro pani, saaf pani, best ro purifier, ro purifier near me, best ro purifier in bokaro, ro in chas, ro in ranchi, ro in jamshedpur, ro in patna, ro in jharkhad, ro in west bengal, cheap and best ro purifier, best ro filer, filter on rent, rent ro" />
         <meta name="author" content="Droppurity" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
