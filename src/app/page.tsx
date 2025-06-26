@@ -11,6 +11,7 @@ import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ReferralDialog from "@/components/droppurity/ReferralDialog";
+import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 
 const features = [
   {
@@ -264,6 +265,8 @@ export default function HomePage() {
           </Card>
         </div>
       </section>
+
+      <TestimonialsSection />
 
       {/* Call to Action Section */}
       <section className="py-4 sm:py-6 bg-background">
