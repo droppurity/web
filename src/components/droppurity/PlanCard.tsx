@@ -1,4 +1,3 @@
-
 "use client";
 
 import type { Plan, TenureOption, PlanPriceDetail } from "@/lib/types";
@@ -7,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import SubscriptionDialog from "./SubscriptionDialog";
 
 interface PlanCardProps {
   plan: Plan;
@@ -16,6 +18,7 @@ interface PlanCardProps {
 
 export default function PlanCard({ plan, tenure, purifierContextName }: PlanCardProps) {
   const { toast } = useToast();
+  const [isSubDialogOpen, setIsSubDialogOpen] = useState(false);
 
   const priceDetail: PlanPriceDetail | undefined = plan.tenurePricing[tenure.id];
 
@@ -53,13 +56,6 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
     const costAtBaseRate = basePriceDetailForSavingsCalc.pricePerMonth * tenure.durationMonths;
     savingsAmount = costAtBaseRate - totalBilled;
   }
-
-  const handleSubscribe = () => {
-    toast({
-      title: "Subscribed!",
-      description: `You've chosen the ${fullPlanNameForMessages} plan for ${tenure.displayName}.`,
-    });
-  };
 
   const handleKnowMore = () => {
      toast({
@@ -122,13 +118,24 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
         >
           <Info className="mr-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5" /> Know More
         </Button>
-        <Button 
-            size="sm" 
-            className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 text-xs" 
-            onClick={handleSubscribe}
-        >
-           Subscribe Now
-        </Button>
+        <Dialog open={isSubDialogOpen} onOpenChange={setIsSubDialogOpen}>
+            <DialogTrigger asChild>
+                <Button 
+                    size="sm" 
+                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 text-xs"
+                >
+                   Subscribe Now
+                </Button>
+            </DialogTrigger>
+            {isSubDialogOpen && (
+                <SubscriptionDialog
+                    purifierContextName={purifierContextName}
+                    planName={plan.name}
+                    tenure={tenure}
+                    onSubscriptionSuccess={() => setIsSubDialogOpen(false)}
+                />
+            )}
+        </Dialog>
       </CardFooter>
     </div>
   );
