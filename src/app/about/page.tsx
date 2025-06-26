@@ -1,8 +1,7 @@
 
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Target, Droplet } from 'lucide-react';
+import { Users, Target, Droplet, User } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About Droppurity',
@@ -83,17 +82,24 @@ export default function AboutPage() {
         </section>
         
         <section className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-semibold font-headline text-foreground mb-4">Meet the (Placeholder) Team</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold font-headline text-foreground mb-4">Meet the Team</h2>
             <p className="text-muted-foreground max-w-lg mx-auto mb-8 text-sm sm:text-base">
                 Our dedicated team of experts is passionate about water quality and customer satisfaction.
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-                {[1,2,3,4].map(i => (
-                    <Card key={i} className="shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <CardContent className="p-4">
-                            <Image src={`https://placehold.co/150x150.png`} alt={`Portrait of placeholder team member ${i}`} width={120} height={120} className="rounded-full mx-auto mb-4 border-4 border-background" data-ai-hint="person portrait" />
-                            <h3 className="font-semibold text-foreground text-lg">Team Member {i}</h3>
-                            <p className="text-sm text-primary">Role / Title</p>
+                {[
+                    { name: 'Alice Johnson', role: 'CEO & Founder' },
+                    { name: 'Bob Williams', role: 'Head of Engineering' },
+                    { name: 'Charlie Brown', role: 'Marketing Director' },
+                    { name: 'Diana Miller', role: 'Operations Manager' },
+                ].map((member, i) => (
+                    <Card key={i} className="shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+                        <CardContent className="p-6 flex flex-col items-center justify-center">
+                            <div className="bg-primary/10 p-4 rounded-full mb-4">
+                                <User className="w-10 h-10 text-primary" />
+                            </div>
+                            <h3 className="font-semibold text-foreground text-lg">{member.name}</h3>
+                            <p className="text-sm text-primary">{member.role}</p>
                         </CardContent>
                     </Card>
                 ))}
