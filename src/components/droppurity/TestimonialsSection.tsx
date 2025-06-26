@@ -35,8 +35,7 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 export default function TestimonialsSection() {
-  const writeReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJF-QZ5cGF1DsR8c_1Y_p8Z8A";
-  const allReviewsUrl = "https://www.google.com/search?q=drop+purity+Reviews";
+  const googleBusinessProfileUrl = "https://g.co/kgs/NZijxvy";
 
   return (
     <section className="py-8 sm:py-12 bg-secondary/30">
@@ -68,12 +67,12 @@ export default function TestimonialsSection() {
 
         <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg">
-            <a href={writeReviewUrl} target="_blank" rel="noopener noreferrer">
+            <a href={googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer">
               Write a Review on Google
             </a>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-card">
-             <a href={allReviewsUrl} target="_blank" rel="noopener noreferrer">
+             <a href={googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer">
               Read All Reviews
             </a>
           </Button>
