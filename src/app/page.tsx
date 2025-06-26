@@ -84,8 +84,8 @@ export default function HomePage() {
     const timers = [
       setTimeout(showPopup, 2000),
       setTimeout(showPopup, 10000),
-      setTimeout(showPopup, 20000),
-      setTimeout(showPopup, 50000),
+      setTimeout(showPopup, 30000),
+      setTimeout(showPopup, 60000),
     ];
 
     const handleScroll = () => {
