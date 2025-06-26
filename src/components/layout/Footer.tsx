@@ -23,7 +23,7 @@ export default function Footer() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  const logoPath = "/logof.png";
+  const logoPath = "/logo.png";
   const logoFilename = getFilenameFromUrl(logoPath);
 
   return (
@@ -34,7 +34,7 @@ export default function Footer() {
           {/* Column 1: Logo and Address */}
           <div className="sm:col-span-2 md:col-span-1 space-y-3">
             <Link href="/" className="flex items-center">
-              <Image src={logoPath} alt={logoFilename} width={100} height={39.5} className="object-contain" />
+              <Image src={logoPath} alt={logoFilename} width={100} height={39.5} className="object-contain brightness-0 invert-[1]" />
             </Link>
             <p className="text-xs text-primary-foreground/80">
               Smart Purifiers on Rent. Free Maintenance for Life.
