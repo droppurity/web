@@ -93,7 +93,7 @@ export default function HomePage() {
               priority
             />
             <div className="absolute inset-0 flex items-start lg:items-center bg-gradient-to-b from-black/60 to-transparent lg:bg-gradient-to-r lg:from-black/60 lg:via-black/30 lg:to-transparent rounded-xl">
-              <div className="w-11/12 sm:w-7/12 lg:w-1/2 p-4 sm:p-8 lg:p-12">
+              <div className="w-11/12 sm:w-7/12 lg:w-1/2 px-4 pb-4 pt-8 sm:px-8 sm:pb-8 sm:pt-12 lg:p-12">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-2 sm:mb-4 lg:mb-6">
                   Pure Water, Pure Life.
                 </h1>
