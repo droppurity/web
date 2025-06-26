@@ -1,16 +1,18 @@
 
 "use client";
 
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { saveContact } from '@/app/actions/contact';
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -23,17 +25,29 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export default function ContactPage() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
   });
 
-  const onSubmit: SubmitHandler<ContactFormValues> = (data) => {
-    console.log(data); 
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. We'll get back to you soon.",
-    });
-    reset();
+  const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
+    setIsSubmitting(true);
+    const result = await saveContact(data);
+    setIsSubmitting(false);
+
+    if (result.success) {
+      toast({
+        title: "Message Sent!",
+        description: "Thanks for reaching out. We'll get back to you soon.",
+      });
+      reset();
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Submission Failed",
+        description: result.message || "An unexpected error occurred.",
+      });
+    }
   };
 
   return (
@@ -58,25 +72,26 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div>
                   <Label htmlFor="name" className="text-foreground text-sm">Full Name</Label>
-                  <Input id="name" {...register("name")} placeholder="John Doe" className="mt-1" />
+                  <Input id="name" {...register("name")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
                   {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
                 </div>
                 <div>
                   <Label htmlFor="email" className="text-foreground text-sm">Email Address</Label>
-                  <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" />
+                  <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
                   {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
                 </div>
                 <div>
                   <Label htmlFor="subject" className="text-foreground text-sm">Subject</Label>
-                  <Input id="subject" {...register("subject")} placeholder="Inquiry about RO+ Purifier" className="mt-1" />
+                  <Input id="subject" {...register("subject")} placeholder="Inquiry about RO+ Purifier" className="mt-1" disabled={isSubmitting} />
                   {errors.subject && <p className="text-xs text-destructive mt-1">{errors.subject.message}</p>}
                 </div>
                 <div>
                   <Label htmlFor="message" className="text-foreground text-sm">Message</Label>
-                  <Textarea id="message" {...register("message")} placeholder="Your message here..." rows={4} className="mt-1" />
+                  <Textarea id="message" {...register("message")} placeholder="Your message here..." rows={4} className="mt-1" disabled={isSubmitting} />
                   {errors.message && <p className="text-xs text-destructive mt-1">{errors.message.message}</p>}
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm py-2.5">
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm py-2.5" disabled={isSubmitting}>
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Send Message
                 </Button>
               </form>
