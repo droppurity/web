@@ -130,7 +130,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
               {/* Text Content - On top for mobile */}
-              <div className="bg-secondary/30 p-6 text-center lg:hidden rounded-t-xl">
+              <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-4">
                   Pure Water, Pure Life.
                 </h1>
@@ -148,7 +148,7 @@ export default function HomePage() {
                       </div>
                     </Link>
                   </Button>
-                  <Button variant="outline" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-xs px-4 py-1.5">
+                  <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-xs px-4 py-1.5">
                      <div className="flex flex-col items-center leading-tight">
                        <span>Book a Free Trial</span>
                         <span className="mt-1 font-normal opacity-90 text-[10px]">
@@ -180,7 +180,7 @@ export default function HomePage() {
                         </div>
                       </Link>
                     </Button>
-                    <Button variant="outline" onClick={() => setIsTrialDialogOpen(true)} className="bg-white/90 text-primary hover:bg-white h-auto text-sm px-8 py-2 self-start border-primary">
+                    <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-sm px-8 py-2 self-start">
                        <div className="flex flex-col items-center leading-tight">
                          <span>Book a Free Trial</span>
                           <span className="mt-1 font-normal opacity-90 text-xs">
