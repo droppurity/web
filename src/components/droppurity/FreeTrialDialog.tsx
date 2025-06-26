@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -19,9 +20,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { saveFreeTrial } from '@/app/actions/freeTrial';
 import { Loader2, MapPin, ExternalLink } from 'lucide-react';
-import { purifiers, tenureOptions, defaultPurifierId, defaultPlanId, defaultTenureId } from '@/config/siteData';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { Plan } from '@/lib/types';
 
 const freeTrialFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -29,9 +27,9 @@ const freeTrialFormSchema = z.object({
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit Indian mobile number." }),
   location: z.string().url({ message: "Please auto-fetch a valid location link." }),
   address: z.string().min(10, { message: "Please enter a full installation address." }),
-  purifierName: z.string({ required_error: 'Please select a purifier.' }).min(1, 'Please select a purifier.'),
-  planName: z.string({ required_error: 'Please select a plan.' }).min(1, 'Please select a plan.'),
-  tenure: z.string({ required_error: 'Please select a tenure.' }).min(1, 'Please select a tenure.'),
+  purifierName: z.string(),
+  planName: z.string(),
+  tenure: z.string(),
 });
 
 type FreeTrialFormValues = z.infer<typeof freeTrialFormSchema>;
@@ -47,47 +45,21 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const [selectedPurifierId, setSelectedPurifierId] = useState<string>(defaultPurifierId);
-  const [selectedPlanId, setSelectedPlanId] = useState<string>(defaultPlanId);
-  const [selectedTenureId, setSelectedTenureId] = useState<string>(defaultTenureId);
-  const [availablePlans, setAvailablePlans] = useState<Plan[]>([]);
+  const trialPurifierName = "Droppurity RO+";
+  const trialPlanName = "Basic";
+  const trialTenure = "28 days";
 
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch, trigger } = useForm<FreeTrialFormValues>({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm<FreeTrialFormValues>({
     resolver: zodResolver(freeTrialFormSchema),
     defaultValues: {
-      purifierName: purifiers.find(p => p.id === defaultPurifierId)?.name,
-      planName: purifiers.find(p => p.id === defaultPurifierId)?.plans.find(pl => pl.id === defaultPlanId)?.name,
-      tenure: tenureOptions.find(t => t.id === defaultTenureId)?.displayName,
+      purifierName: trialPurifierName,
+      planName: trialPlanName,
+      tenure: trialTenure,
     }
   });
   
   const locationValue = watch('location');
   
-  const selectedPurifier = purifiers.find(p => p.id === selectedPurifierId);
-  const selectedPlan = availablePlans.find(p => p.id === selectedPlanId);
-  const selectedTenure = tenureOptions.find(t => t.id === selectedTenureId);
-
-  useEffect(() => {
-    if (selectedPurifier) {
-      setAvailablePlans(selectedPurifier.plans);
-      const defaultPlan = selectedPurifier.plans.find(p => p.id.includes('basic')) || selectedPurifier.plans[0];
-      setSelectedPlanId(defaultPlan?.id || '');
-      setValue('purifierName', selectedPurifier.name);
-      setValue('planName', defaultPlan?.name || '');
-      trigger('purifierName');
-    }
-  }, [selectedPurifier, setValue, trigger]);
-  
-  useEffect(() => {
-      setValue('planName', selectedPlan?.name || '');
-      trigger('planName');
-  }, [selectedPlan, setValue, trigger]);
-
-  useEffect(() => {
-      setValue('tenure', selectedTenure?.displayName || '');
-      trigger('tenure');
-  }, [selectedTenure, setValue, trigger]);
-
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
     if (navigator.geolocation) {
@@ -145,49 +117,22 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-xl" onInteractOutside={(e) => { if (isSubmitting) e.preventDefault(); }}>
         {!showSuccess ? (
           <>
             <DialogHeader>
               <DialogTitle>Book a 7-Day Risk-Free Trial</DialogTitle>
               <DialogDescription>
-                Fill in your details below to get a Droppurity purifier installed. Pay only a refundable security deposit.
+                You are booking a trial for the <strong>{trialPurifierName} - {trialPlanName} Plan (25L/day)</strong>.
+                <br />
+                Pay only a refundable security deposit after successful installation.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto pr-3 -mr-2">
-              <div className="grid sm:grid-cols-3 gap-3">
-                  <div className="space-y-1">
-                      <Label>Purifier</Label>
-                      <Select onValueChange={setSelectedPurifierId} value={selectedPurifierId} disabled={isSubmitting}>
-                          <SelectTrigger><SelectValue placeholder="Select Purifier" /></SelectTrigger>
-                          <SelectContent>
-                              {purifiers.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
-                          </SelectContent>
-                      </Select>
-                      {errors.purifierName && <p className="text-xs text-destructive mt-1">{errors.purifierName.message}</p>}
-                  </div>
-                  <div className="space-y-1">
-                      <Label>Plan</Label>
-                      <Select onValueChange={setSelectedPlanId} value={selectedPlanId} disabled={!selectedPurifierId || isSubmitting}>
-                          <SelectTrigger><SelectValue placeholder="Select Plan" /></SelectTrigger>
-                          <SelectContent>
-                              {availablePlans.map(p => <SelectItem key={p.id} value={p.id}>{p.name} ({p.limits.replace('Upto ', '')})</SelectItem>)}
-                          </SelectContent>
-                      </Select>
-                       {errors.planName && <p className="text-xs text-destructive mt-1">{errors.planName.message}</p>}
-                  </div>
-                   <div className="space-y-1">
-                      <Label>Tenure</Label>
-                      <Select onValueChange={setSelectedTenureId} value={selectedTenureId} disabled={isSubmitting}>
-                          <SelectTrigger><SelectValue placeholder="Select Tenure" /></SelectTrigger>
-                          <SelectContent>
-                              {tenureOptions.map(t => <SelectItem key={t.id} value={t.id}>{t.displayName}</SelectItem>)}
-                          </SelectContent>
-                      </Select>
-                       {errors.tenure && <p className="text-xs text-destructive mt-1">{errors.tenure.message}</p>}
-                  </div>
-              </div>
+              <input type="hidden" {...register("purifierName")} />
+              <input type="hidden" {...register("planName")} />
+              <input type="hidden" {...register("tenure")} />
               <div>
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" {...register("name")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
