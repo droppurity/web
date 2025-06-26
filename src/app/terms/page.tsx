@@ -1,5 +1,14 @@
 
+import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+
+export const metadata: Metadata = {
+  title: 'Terms of Use',
+  description: 'Review the terms and conditions for using the Droppurity website and services.',
+  alternates: {
+    canonical: '/terms',
+  },
+};
 
 export default function TermsOfUsePage() {
   return (

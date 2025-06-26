@@ -1,5 +1,14 @@
 
+import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export const metadata: Metadata = {
+  title: 'Careers at Droppurity',
+  description: 'Join the Droppurity team and help us on our mission to provide pure and healthy water for everyone. Explore current job openings.',
+  alternates: {
+    canonical: '/careers',
+  },
+};
 
 export default function CareersPage() {
   return (

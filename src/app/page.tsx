@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -129,7 +130,7 @@ export default function HomePage() {
               <div className="relative w-full h-full">
                 <Image
                   src="/herom.png"
-                  alt="herom.png"
+                  alt="Droppurity water purifier in a modern kitchen setting, mobile view"
                   layout="fill"
                   objectFit="cover"
                   className="block lg:hidden"
@@ -137,7 +138,7 @@ export default function HomePage() {
                 />
                 <Image
                   src="/hero.png"
-                  alt="hero.png"
+                  alt="Droppurity water purifier in a modern kitchen setting with a family"
                   layout="fill"
                   objectFit="cover"
                   className="hidden lg:block lg:object-[center_35%]"

@@ -1,11 +1,18 @@
 
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Target, Droplet } from 'lucide-react';
 
-export default function AboutPage() {
-  const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
+export const metadata: Metadata = {
+  title: 'About Droppurity',
+  description: 'Learn about Droppurity\'s mission to provide clean, safe, and healthy drinking water solutions for everyone.',
+  alternates: {
+    canonical: '/about',
+  },
+};
 
+export default function AboutPage() {
   return (
     <div className="py-6 sm:py-10 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +31,7 @@ export default function AboutPage() {
               <div className="md:w-1/2">
                 <Image
                   src="https://placehold.co/800x600.png"
-                  alt={getFilenameFromUrl("https://placehold.co/800x600.png")}
+                  alt="Droppurity team collaborating"
                   width={800}
                   height={600}
                   className="object-cover h-full w-full"
@@ -94,7 +101,7 @@ export default function AboutPage() {
                 {[1,2,3,4].map(i => (
                     <Card key={i} className="shadow-md">
                         <CardContent className="pt-4">
-                            <Image src={`https://placehold.co/150x150.png`} alt={getFilenameFromUrl(`https://placehold.co/150x150.png`)} width={100} height={100} className="rounded-full mx-auto mb-2.5" data-ai-hint="person portrait" />
+                            <Image src={`https://placehold.co/150x150.png`} alt={`Portrait of placeholder team member ${i}`} width={100} height={100} className="rounded-full mx-auto mb-2.5" data-ai-hint="person portrait" />
                             <h3 className="font-semibold text-foreground text-sm">Team Member {i}</h3>
                             <p className="text-[10px] text-primary">Role / Title</p>
                         </CardContent>

@@ -1,5 +1,14 @@
 
+import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export const metadata: Metadata = {
+  title: 'Droppurity Blog',
+  description: 'Read the latest news, updates, and articles from the Droppurity team about water purity, health, and our products.',
+  alternates: {
+    canonical: '/blog',
+  },
+};
 
 export default function BlogPage() {
   return (

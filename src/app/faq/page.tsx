@@ -1,4 +1,5 @@
 
+import type { Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,
@@ -6,6 +7,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+  title: 'Frequently Asked Questions (FAQ)',
+  description: 'Find answers to common questions about Droppurity\'s services, including our 7-day trial, free maintenance, installation, and more.',
+  alternates: {
+    canonical: '/faq',
+  },
+};
 
 const faqs = [
     {

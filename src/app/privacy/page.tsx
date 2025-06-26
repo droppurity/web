@@ -1,5 +1,14 @@
 
+import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Read the Droppurity privacy policy to understand how we collect, use, and protect your personal information.',
+  alternates: {
+    canonical: '/privacy',
+  },
+};
 
 export default function PrivacyPolicyPage() {
   return (
