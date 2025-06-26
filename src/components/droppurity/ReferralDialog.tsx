@@ -33,6 +33,7 @@ type ReferralFormValues = z.infer<typeof referralFormSchema>;
 export default function ReferralDialog() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ReferralFormValues>({
     resolver: zodResolver(referralFormSchema),
   });
@@ -43,13 +44,8 @@ export default function ReferralDialog() {
     setIsSubmitting(false);
 
     if (result.success) {
-      toast({
-        title: "Referral Sent!",
-        description: "Thank you for referring your friend. We'll be in touch with them shortly.",
-      });
+      setIsSuccess(true);
       reset();
-      // The dialog must be closed manually by the user using the 'Cancel' or 'X' button.
-      // Programmatic closing would require controlling the Dialog state from its parent component.
     } else {
       toast({
         variant: "destructive",
@@ -59,45 +55,67 @@ export default function ReferralDialog() {
     }
   };
 
+  const handleCloseAndReset = () => {
+    setIsSuccess(false);
+  };
+
   return (
-    <DialogContent className="sm:max-w-[480px]">
-      <DialogHeader>
-        <DialogTitle>Refer a Friend</DialogTitle>
-        <DialogDescription>
-          Fill in the details below. Once your friend subscribes, your account will be credited with a free month!
-        </DialogDescription>
-      </DialogHeader>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
-        <div>
-          <Label htmlFor="friendName" className="text-foreground">Friend's Full Name</Label>
-          <Input id="friendName" {...register("friendName")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
-          {errors.friendName && <p className="text-xs text-destructive mt-1">{errors.friendName.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="friendAddress" className="text-foreground">Friend's Address</Label>
-          <Textarea id="friendAddress" {...register("friendAddress")} placeholder="Complete address for installation" rows={3} className="mt-1" disabled={isSubmitting} />
-          {errors.friendAddress && <p className="text-xs text-destructive mt-1">{errors.friendAddress.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
-          <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
-          {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="customerId" className="text-foreground">Your Customer ID</Label>
-          <Input id="customerId" {...register("customerId")} placeholder="e.g., DP12345" className="mt-1" disabled={isSubmitting} />
-          {errors.customerId && <p className="text-xs text-destructive mt-1">{errors.customerId.message}</p>}
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="button" variant="outline" disabled={isSubmitting}>Cancel</Button>
-          </DialogClose>
-          <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Submit Referral
-          </Button>
-        </DialogFooter>
-      </form>
+    <DialogContent className="sm:max-w-[480px]" onEscapeKeyDown={handleCloseAndReset} onPointerDownOutside={handleCloseAndReset}>
+      {isSuccess ? (
+        <>
+          <DialogHeader>
+            <DialogTitle>Referral Submitted!</DialogTitle>
+            <DialogDescription>
+              Thank you for referring. If your friend installs and buys a plan, you will get one month free.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" onClick={handleCloseAndReset}>Done</Button>
+            </DialogClose>
+          </DialogFooter>
+        </>
+      ) : (
+        <>
+          <DialogHeader>
+            <DialogTitle>Refer a Friend</DialogTitle>
+            <DialogDescription>
+              Fill in the details below. Once your friend subscribes, your account will be credited with a free month!
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
+            <div>
+              <Label htmlFor="friendName" className="text-foreground">Friend's Full Name</Label>
+              <Input id="friendName" {...register("friendName")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
+              {errors.friendName && <p className="text-xs text-destructive mt-1">{errors.friendName.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="friendAddress" className="text-foreground">Friend's Address</Label>
+              <Textarea id="friendAddress" {...register("friendAddress")} placeholder="Complete address for installation" rows={3} className="mt-1" disabled={isSubmitting} />
+              {errors.friendAddress && <p className="text-xs text-destructive mt-1">{errors.friendAddress.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
+              <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
+              {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="customerId" className="text-foreground">Your Customer ID</Label>
+              <Input id="customerId" {...register("customerId")} placeholder="e.g., DP12345" className="mt-1" disabled={isSubmitting} />
+              {errors.customerId && <p className="text-xs text-destructive mt-1">{errors.customerId.message}</p>}
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="button" variant="outline" disabled={isSubmitting}>Cancel</Button>
+              </DialogClose>
+              <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Submit Referral
+              </Button>
+            </DialogFooter>
+          </form>
+        </>
+      )}
     </DialogContent>
   );
 }
