@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Plan, TenureOption, PlanPriceDetail } from "@/lib/types";
@@ -27,17 +28,17 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
   if (!priceDetail) {
     return (
       <Card className="flex flex-col shadow-lg rounded-xl overflow-hidden border border-destructive">
-        <CardHeader className="p-2 sm:p-3 bg-card">
+        <CardHeader className="p-4 bg-card">
           {purifierContextName && (
-            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide -mb-0.5">
+            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wide mb-1">
               {purifierContextName}
             </p>
           )}
-          <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-destructive-foreground">
+          <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-destructive-foreground">
             {plan.name} Plan
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2 sm:p-3 flex-grow">
+        <CardContent className="p-4 flex-grow">
           <p className="text-center text-destructive">Pricing not available for {tenure.displayName}.</p>
         </CardContent>
       </Card>
@@ -66,63 +67,63 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
   }
 
   return (
-    <div className={`flex flex-col rounded-xl overflow-hidden ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : ''}`}>
+    <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
       {plan.recommended && plan.pillText && !purifierContextName && ( 
         <Badge variant="default" className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dynamic-accent text-dynamic-accent-foreground px-3 py-1 text-xs z-10">
           {plan.pillText}
         </Badge>
       )}
-      <CardHeader className="p-2 sm:p-3 bg-card">
+      <CardHeader className="p-4 bg-card">
         {purifierContextName && (
-            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide -mb-0.5">
+            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wide mb-1">
               {purifierContextName}
             </p>
           )}
-        <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-foreground">
+        <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-foreground">
           {plan.name} Plan
         </CardTitle>
-        <p className="text-[10px] text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
-        <div className="text-center mt-1.5">
-          <span className="text-xl sm:text-2xl font-bold font-headline text-dynamic-accent">
+        <p className="text-sm text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
+        <div className="text-center mt-2">
+          <span className="text-2xl sm:text-3xl font-bold font-headline text-dynamic-accent">
             ₹{Math.round(displayPricePerMonth)}
           </span>
-          <span className="text-xs text-muted-foreground">/mo</span>
+          <span className="text-sm text-muted-foreground">/mo</span>
         </div>
         
         {savingsAmount > 0 && (
-          <Badge variant="outline" className="mx-auto mt-1.5 border-yellow-400 bg-yellow-50 text-yellow-700 text-[10px] font-medium">
+          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-medium">
             Savings of ₹{Math.round(savingsAmount)}!
           </Badge>
         )}
-         <p className="text-[10px] text-muted-foreground text-center mt-0.5">
+         <p className="text-xs text-muted-foreground text-center mt-1">
           Total ₹{Math.round(totalBilled)} for {tenure.displayName}
           {priceDetail.payingMonths && priceDetail.payingMonths < tenure.durationMonths ? ` (pay for ${priceDetail.payingMonths} months)` : ''}
         </p>
       </CardHeader>
-      <CardContent className="p-2 sm:p-3 flex-grow">
-        <ul className="space-y-0.5">
+      <CardContent className="p-4 flex-grow">
+        <ul className="space-y-1.5">
           {featuresToShow.map((feature, index) => (
-            <li key={index} className="flex items-start text-xs text-foreground">
-              <CheckCircle className="w-3.5 h-3.5 mr-2 text-dynamic-accent flex-shrink-0 mt-px" />
+            <li key={index} className="flex items-start text-sm text-foreground">
+              <CheckCircle className="w-4 h-4 mr-2 text-dynamic-accent flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="grid grid-cols-2 gap-1.5 sm:gap-2 p-3 bg-muted/20 mt-auto">
+      <CardFooter className="grid grid-cols-2 gap-2 sm:gap-3 p-4 bg-muted/40 mt-auto">
         <Button 
             size="sm" 
             variant="outline" 
-            className="w-full border-dynamic-accent text-dynamic-accent hover:bg-dynamic-accent/10 text-xs" 
+            className="w-full border-dynamic-accent text-dynamic-accent hover:bg-dynamic-accent/10" 
             onClick={handleKnowMore}
         >
-          <Info className="mr-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5" /> Know More
+          <Info className="mr-1.5 h-4 w-4" /> Know More
         </Button>
         <Dialog open={isSubDialogOpen} onOpenChange={setIsSubDialogOpen}>
             <DialogTrigger asChild>
                 <Button 
                     size="sm" 
-                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 text-xs"
+                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90"
                 >
                    Subscribe Now
                 </Button>

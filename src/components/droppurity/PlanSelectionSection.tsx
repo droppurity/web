@@ -11,7 +11,6 @@ import TenureSelector from '@/components/droppurity/TenureSelector';
 import PlanCard from '@/components/droppurity/PlanCard';
 import PlanTypeSelector from '@/components/droppurity/PlanTypeSelector';
 import KeyFeaturesDisplay from '@/components/droppurity/KeyFeaturesDisplay';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Droplet, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -209,107 +208,99 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
     return 'theme-blue';
   }, [selectedPurifier.accentColor]);
 
-  const stickyCardTopClass = 'top-[7rem]';
+  const stickyCardTopClass = 'top-[8rem]';
 
 
   return (
-    <div ref={ref} className={`py-1 sm:py-2 bg-background ${overallThemeClass}`}>
+    <div ref={ref} className={`py-8 sm:py-12 bg-secondary/30 ${overallThemeClass}`}>
       <div className="container mx-auto px-4">
-        <header className="text-center mb-2 sm:mb-3">
-            <h2 className="text-xl sm:text-2xl font-bold font-headline text-foreground flex items-center justify-center">
-              <Droplet className="w-6 h-6 sm:w-7 sm:h-7 text-primary mr-1" />
+        <header className="text-center mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold font-headline text-foreground flex items-center justify-center">
+              <Droplet className="w-7 h-7 sm:w-8 sm:h-8 text-primary mr-2" />
               Choose Your Droppurity Plan
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Select the right purifier, plan, and tenure for your needs.
             </p>
         </header>
 
-
         <div className={cn(
-            "sticky bg-background py-0 shadow-lg mb-2 sm:mb-3 z-40",
+            "sticky bg-background/95 backdrop-blur-sm py-3 px-2 rounded-xl border border-border/70 shadow-lg mb-6 sm:mb-8 z-40",
             isHeaderDominant && "z-[51]"
           )}
-          style={{ top: '0' }}>
+          style={{ top: '0.5rem' }}>
           <PurifierSelector
             purifiers={purifiers}
             selectedPurifierId={selectedPurifierId}
             onSelectPurifier={setSelectedPurifierId}
           />
            <div className="lg:hidden"> 
-            <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-0" displayMode="animate" />
+            <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-1" displayMode="animate" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
           <div className="lg:col-span-2">
             <PurifierImageDisplay purifier={selectedPurifier} />
             <div className="hidden lg:block"> 
-                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-1 lg:mt-2" displayMode="list" />
+                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-2 lg:mt-3" displayMode="list" />
             </div>
           </div>
 
           <div className="lg:col-span-3">
-            <Card className={`shadow-xl sticky ${stickyCardTopClass}`}>
-              <CardHeader className="p-2">
-                <CardTitle className="font-headline text-sm sm:text-base text-foreground">Flexible Rental Plans</CardTitle>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
+            <Card className={`shadow-xl sticky ${stickyCardTopClass} border-border/80`}>
+              <CardHeader className="p-4 sm:p-6 pb-2">
+                <CardTitle className="font-headline text-lg text-foreground">Flexible Rental Plans</CardTitle>
+                <p className="text-sm text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
               </CardHeader>
-              <CardContent className="p-2 space-y-2">
-
-                <Separator />
-                <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <h3 className="text-xs font-semibold text-foreground">Step 1: Choose Your Plan</h3>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "h-auto px-1 py-0.5 text-[10px] sm:text-xs border-dynamic-accent",
-                            "text-dynamic-accent bg-transparent",
-                            "hover:bg-gradient-to-br hover:from-gradient-start hover:to-gradient-end hover:text-dynamic-accent-foreground hover:border-transparent",
-                            "focus-visible:bg-gradient-to-br focus-visible:from-gradient-start focus-visible:to-gradient-end focus-visible:text-dynamic-accent-foreground focus-visible:border-transparent"
-                          )}
-                        >
-                          <HelpCircle className="w-2 h-2 mr-0.5" /> Help me choose
-                        </Button>
-                      </DialogTrigger>
-                      <HelpMeChooseDialog />
-                    </Dialog>
-                  </div>
-                  <PlanTypeSelector
-                    plans={selectedPurifier.plans}
-                    selectedPlanId={selectedPlanId}
-                    onSelectPlan={setSelectedPlanId}
-                  />
+              <CardContent className="p-4 sm:p-6 space-y-4">
+                {/* Step 1 */}
+                <div className="space-y-3 rounded-xl bg-muted/40 p-4 border border-border/50">
+                    <div className="flex justify-between items-center">
+                        <h3 className="text-sm font-semibold text-foreground">Step 1: Choose Your Plan</h3>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    className="h-auto px-2 py-1 text-xs text-dynamic-accent hover:text-dynamic-accent hover:bg-dynamic-accent/10"
+                                >
+                                    <HelpCircle className="w-3 h-3 mr-1" /> Help me choose
+                                </Button>
+                            </DialogTrigger>
+                            <HelpMeChooseDialog />
+                        </Dialog>
+                    </div>
+                    <PlanTypeSelector
+                        plans={selectedPurifier.plans}
+                        selectedPlanId={selectedPlanId}
+                        onSelectPlan={setSelectedPlanId}
+                    />
                 </div>
 
-                <Separator />
-
-                <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <h3 className="text-xs font-semibold text-foreground">Step 2: Choose Your Tenure</h3>
-                  </div>
-                  <TenureSelector
-                    tenureOptions={tenureOptions}
-                    selectedTenureId={selectedTenureId}
-                    onSelectTenure={setSelectedTenureId}
-                  />
+                {/* Step 2 */}
+                <div className="space-y-3 rounded-xl bg-muted/40 p-4 border border-border/50">
+                    <h3 className="text-sm font-semibold text-foreground mb-1">Step 2: Choose Your Tenure</h3>
+                    <TenureSelector
+                        tenureOptions={tenureOptions}
+                        selectedTenureId={selectedTenureId}
+                        onSelectTenure={setSelectedTenureId}
+                    />
                 </div>
-                <Separator />
-
-                {selectedPlan && selectedTenure ? (
-                  <PlanCard
-                    plan={selectedPlan}
-                    tenure={selectedTenure}
-                    purifierContextName={selectedPurifier.name}
-                  />
-                ) : (
-                  <div className="text-center text-muted-foreground py-4 text-xs">
-                    Please make your selections to see plan details.
-                  </div>
-                )}
+                
+                {/* Final Result */}
+                <div className="pt-2">
+                    {selectedPlan && selectedTenure ? (
+                    <PlanCard
+                        plan={selectedPlan}
+                        tenure={selectedTenure}
+                        purifierContextName={selectedPurifier.name}
+                    />
+                    ) : (
+                    <div className="text-center text-muted-foreground py-4 text-sm">
+                        Please make your selections to see plan details.
+                    </div>
+                    )}
+                </div>
 
               </CardContent>
             </Card>
