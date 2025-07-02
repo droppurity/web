@@ -40,35 +40,54 @@ const faqs = [
 ]
 
 export default function FaqPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+  };
+
   return (
-    <div className="py-8 sm:py-12 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center mb-10 sm:mb-14">
-          <h1 className="text-3xl sm:text-4xl font-bold font-headline text-primary">
-            Frequently Asked Questions
-          </h1>
-          <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about Droppurity services.
-          </p>
-        </header>
-         <Card className="shadow-xl max-w-3xl mx-auto">
-            <CardHeader>
-                <CardTitle>Common Questions</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <Accordion type="single" collapsible className="w-full">
-                    {faqs.map((faq, index) => (
-                         <AccordionItem value={`item-${index}`} key={index}>
-                            <AccordionTrigger>{faq.question}</AccordionTrigger>
-                            <AccordionContent>
-                            {faq.answer}
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </CardContent>
-        </Card>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="py-8 sm:py-12 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <header className="text-center mb-10 sm:mb-14">
+            <h1 className="text-3xl sm:text-4xl font-bold font-headline text-primary">
+              Frequently Asked Questions
+            </h1>
+            <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+              Find answers to common questions about Droppurity services.
+            </p>
+          </header>
+          <Card className="shadow-xl max-w-3xl mx-auto">
+              <CardHeader>
+                  <CardTitle>Common Questions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqs.map((faq, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{faq.question}</AccordionTrigger>
+                              <AccordionContent>
+                              {faq.answer}
+                              </AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
