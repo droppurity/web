@@ -31,43 +31,58 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const autoScrollTimerRef = useRef<number | null>(null);
+  const initialDelayTimerRef = useRef<number | null>(null);
 
-  const clearAutoScrollTimer = () => {
+
+  const clearTimers = () => {
     if (autoScrollTimerRef.current) {
       clearInterval(autoScrollTimerRef.current);
       autoScrollTimerRef.current = null;
     }
-  };
-
-  const startAutoScrollTimer = () => {
-    clearAutoScrollTimer();
-    if (allImages.length > 1) {
-      autoScrollTimerRef.current = window.setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-      }, 4000); 
+    if(initialDelayTimerRef.current) {
+      clearTimeout(initialDelayTimerRef.current);
+      initialDelayTimerRef.current = null;
     }
   };
 
+  const startAutoScroll = (delay: number = 4000) => {
+    clearTimers();
+    if (allImages.length > 1) {
+      autoScrollTimerRef.current = window.setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+      }, delay);
+    }
+  };
+  
+  // Effect for initial load and purifier change
   useEffect(() => {
-    setCurrentImageIndex(0); 
-    startAutoScrollTimer(); 
-    return () => clearAutoScrollTimer(); 
-  }, [allImages]); 
+    setCurrentImageIndex(0);
+    clearTimers(); // Clear any existing timers when purifier changes
+
+    if (allImages.length > 1) {
+       // Start scrolling after an initial 6-second delay
+       initialDelayTimerRef.current = window.setTimeout(() => {
+            startAutoScroll();
+       }, 6000);
+    }
+
+    return () => clearTimers();
+  }, [allImages]);
 
 
   const handleThumbnailClick = (index: number) => {
     setCurrentImageIndex(index);
-    startAutoScrollTimer(); 
+    startAutoScroll(); // Restart scrolling immediately
   };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-    startAutoScrollTimer();
+    startAutoScroll(); // Restart scrolling immediately
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-    startAutoScrollTimer();
+    startAutoScroll(); // Restart scrolling immediately
   };
 
   const mainDisplayImage = allImages[currentImageIndex] || purifier.image;
@@ -212,7 +227,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 
   return (
-    <div ref={ref} className={`py-8 sm:py-12 bg-secondary/30 ${overallThemeClass}`}>
+    <div ref={ref} className={`py-12 sm:py-16 bg-secondary/30 ${overallThemeClass}`}>
       <div className="container mx-auto px-4">
         <header className="text-center mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold font-headline text-foreground flex items-center justify-center">
@@ -239,7 +254,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10">
           <div className="lg:col-span-2">
             <PurifierImageDisplay purifier={selectedPurifier} />
             <div className="hidden lg:block"> 
@@ -253,9 +268,9 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                 <CardTitle className="font-headline text-lg text-foreground">Flexible Rental Plans</CardTitle>
                 <p className="text-sm text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6 space-y-4">
+              <CardContent className="p-4 sm:p-6 pt-3 space-y-6">
                 {/* Step 1 */}
-                <div className="space-y-3 rounded-xl bg-muted/40 p-4 border border-border/50">
+                <div className="space-y-4 rounded-xl bg-muted/30 p-4 border border-border/50">
                     <div className="flex justify-between items-center">
                         <h3 className="text-sm font-semibold text-foreground">Step 1: Choose Your Plan</h3>
                         <Dialog>
@@ -278,7 +293,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                 </div>
 
                 {/* Step 2 */}
-                <div className="space-y-3 rounded-xl bg-muted/40 p-4 border border-border/50">
+                <div className="space-y-4 rounded-xl bg-muted/30 p-4 border border-border/50">
                     <h3 className="text-sm font-semibold text-foreground mb-1">Step 2: Choose Your Tenure</h3>
                     <TenureSelector
                         tenureOptions={tenureOptions}
