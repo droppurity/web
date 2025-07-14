@@ -16,6 +16,9 @@ function ThankYouContent() {
   const planName = searchParams.get('planName');
   const tenure = searchParams.get('tenure');
 
+  const isTrial = tenure === '7-Day Trial';
+  const titleText = isTrial ? "Thank You for Booking a Trial!" : "Thank You for Subscribing!";
+
   useEffect(() => {
     // If essential params are missing, redirect to home
     if (!purifierName || !planName || !tenure) {
@@ -36,14 +39,14 @@ function ThankYouContent() {
             <div className="mx-auto bg-green-100 p-3 rounded-full w-fit mb-4">
               <PartyPopper className="w-10 h-10 text-green-600" />
             </div>
-            <CardTitle className="font-headline text-2xl text-foreground">Thank You for Subscribing!</CardTitle>
+            <CardTitle className="font-headline text-2xl text-foreground">{titleText}</CardTitle>
             <CardDescription className="text-base text-muted-foreground pt-2">
               Your request has been received. Our representative will contact and visit you soon.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6 pt-0">
             <div className="bg-muted/50 rounded-lg p-4 text-left space-y-3 my-4 border">
-              <h3 className="font-semibold text-center text-foreground mb-3">Your Selected Plan</h3>
+              <h3 className="font-semibold text-center text-foreground mb-3">Your Selection</h3>
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground">Purifier:</span>
                 <span className="font-medium text-foreground">{purifierName}</span>
@@ -53,7 +56,7 @@ function ThankYouContent() {
                 <span className="font-medium text-foreground">{planName}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Tenure:</span>
+                <span className="text-muted-foreground">Selection:</span>
                 <span className="font-medium text-foreground">{tenure}</span>
               </div>
             </div>
