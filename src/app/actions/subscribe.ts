@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from 'zod';
@@ -7,7 +8,7 @@ const SubscriptionSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   phone: z.string(),
-  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }),
+  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }).optional().or(z.literal('')),
   address: z.string().min(10, { message: 'Please enter a full installation address.' }),
   purifierName: z.string(),
   planName: z.string(),

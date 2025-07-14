@@ -15,6 +15,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from '@/hooks/use-toast';
 import { saveSubscription } from '@/app/actions/subscribe';
 import { Loader2, MapPin, ExternalLink } from 'lucide-react';
@@ -23,7 +24,7 @@ const subscriptionFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: 'Please enter a valid 10-digit Indian mobile number.' }),
-  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }),
+  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }).optional().or(z.literal('')),
   address: z.string().min(10, { message: 'Please enter a full installation address.' }),
   purifierName: z.string({ required_error: 'Please select a purifier.' }).min(1, 'Please select a purifier.'),
   planName: z.string({ required_error: 'Please select a plan.' }).min(1, 'Please select a plan.'),
@@ -37,6 +38,7 @@ export default function SubscriptionFormPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  const [shareLocation, setShareLocation] = useState(false);
 
   const [selectedPurifierId, setSelectedPurifierId] = useState<string>('');
   const [selectedPlanId, setSelectedPlanId] = useState<string>('');
@@ -86,22 +88,24 @@ export default function SubscriptionFormPage() {
             setValue('location', locationUrl, { shouldValidate: true });
             setIsFetchingLocation(false);
             toast({
-            title: "Location Fetched!",
-            description: "A geolocation link has been generated.",
+              title: "Location Fetched!",
+              description: "A geolocation link has been generated.",
             });
         },
         (error) => {
             setIsFetchingLocation(false);
+            setShareLocation(false); // Uncheck the box on error
             toast({
-            variant: "destructive",
-            title: "Location Error",
-            description: "Could not fetch location. Please grant permission.",
+              variant: "destructive",
+              title: "Location Error",
+              description: "Could not fetch location. Please grant permission.",
             });
             console.error("Geolocation error:", error);
         }
         );
     } else {
         setIsFetchingLocation(false);
+        setShareLocation(false);
         toast({
             variant: "destructive",
             title: "Unsupported Browser",
@@ -109,6 +113,14 @@ export default function SubscriptionFormPage() {
         });
     }
   };
+  
+  useEffect(() => {
+    if (shareLocation) {
+        handleFetchLocation();
+    } else {
+        setValue('location', ''); // Clear location if unchecked
+    }
+  }, [shareLocation, setValue]);
 
   const onSubmit: SubmitHandler<SubscriptionFormValues> = async (data) => {
     setIsSubmitting(true);
@@ -195,45 +207,39 @@ export default function SubscriptionFormPage() {
                 <Input id="phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
               </div>
-              
-              <div>
-                <div className="flex justify-between items-center">
-                  <Label>Geolocation Link</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="h-auto px-2 py-1 text-xs"
-                    onClick={handleFetchLocation}
-                    disabled={isFetchingLocation || isSubmitting}
-                  >
-                    {isFetchingLocation ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <MapPin className="mr-1 h-3 w-3" />}
-                    Auto-fetch
-                  </Button>
-                </div>
-                 <div className="mt-1">
-                    {locationValue ? (
-                        <Button asChild variant="outline" className="w-full justify-start text-left font-normal">
-                        <a href={locationValue} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                            <ExternalLink className="mr-2 h-4 w-4 flex-shrink-0" />
-                            <span className="truncate">Location captured. Click to verify.</span>
-                        </a>
-                        </Button>
-                    ) : (
-                        <div className="flex h-10 w-full items-center rounded-md border border-input bg-background px-3 py-2 text-sm text-muted-foreground">
-                            Click 'Auto-fetch' to get location link
-                        </div>
-                    )}
-                </div>
-                <input type="hidden" {...register("location")} />
-                {errors.location && <p className="text-xs text-destructive mt-1">{errors.location.message}</p>}
-              </div>
 
               <div>
                 <Label htmlFor="address">Installation Address</Label>
                 <Textarea id="address" {...register("address")} placeholder="Your full address for installation (e.g., Flat No, Building, Street, Landmark...)" rows={3} className="mt-1" disabled={isSubmitting} />
                 {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
               </div>
+
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center space-x-2">
+                    <Checkbox id="share-location" checked={shareLocation} onCheckedChange={(checked) => setShareLocation(!!checked)} disabled={isSubmitting || isFetchingLocation} />
+                    <label
+                        htmlFor="share-location"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                        Help our delivery champ find you faster! 🗺️ Click here to share your live location.
+                    </label>
+                </div>
+                 <div className="mt-1">
+                    {isFetchingLocation && <div className="flex items-center text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Fetching your location...</div>}
+                    {locationValue ? (
+                        <Button asChild variant="outline" className="w-full justify-start text-left font-normal h-auto py-1.5">
+                        <a href={locationValue} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                            <ExternalLink className="mr-2 h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">Location captured!</span>
+                        </a>
+                        </Button>
+                    ) : (
+                       shareLocation && !isFetchingLocation && <div className="text-xs text-destructive">Could not fetch location. Please try again.</div>
+                    )}
+                </div>
+                <input type="hidden" {...register("location")} />
+              </div>
+
 
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

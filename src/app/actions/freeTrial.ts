@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from 'zod';
@@ -8,7 +9,7 @@ const FreeTrialSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: 'Please enter a valid 10-digit Indian mobile number.' }),
-  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }),
+  location: z.string().url({ message: 'Please auto-fetch a valid location link.' }).optional().or(z.literal('')),
   address: z.string().min(10, { message: 'Please enter a full installation address.' }),
   purifierName: z.string(),
   planName: z.string(),
