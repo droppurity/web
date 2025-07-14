@@ -71,10 +71,6 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
             const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
             setValue('location', locationUrl, { shouldValidate: true });
             setIsFetchingLocation(false);
-            toast({
-              title: "Location Fetched!",
-              description: "A geolocation link has been generated.",
-            });
         },
         (error) => {
             setIsFetchingLocation(false);
