@@ -5,23 +5,7 @@ import { Star } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-const testimonials = [
-  {
-    name: 'Riya Singh',
-    review: 'The best decision for my family\'s health. The water tastes great, and the service is incredibly prompt. Lifetime free maintenance is a huge plus!',
-    rating: 5,
-  },
-  {
-    name: 'Amit Kumar',
-    review: 'I was skeptical about a rental plan, but Droppurity changed my mind. Zero installation cost and hassle-free service. Highly recommended!',
-    rating: 5,
-  },
-  {
-    name: 'Priya Verma',
-    review: 'Excellent product and even better customer support. The team is always ready to help. The 7-day trial gave me the confidence to subscribe.',
-    rating: 4,
-  },
-];
+const testimonials: { name: string; review: string; rating: number }[] = [];
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex items-center gap-0.5">
@@ -49,20 +33,28 @@ export default function TestimonialsSection() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col bg-card">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-lg font-semibold text-foreground">{testimonial.name}</CardTitle>
-                  <StarRating rating={testimonial.rating} />
-                </div>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-sm text-muted-foreground">"{testimonial.review}"</p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mb-8 sm:mb-12">
+          {testimonials.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {testimonials.map((testimonial, index) => (
+                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col bg-card">
+                  <CardHeader>
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="text-lg font-semibold text-foreground">{testimonial.name}</CardTitle>
+                      <StarRating rating={testimonial.rating} />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-sm text-muted-foreground">"{testimonial.review}"</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center bg-card p-6 rounded-lg shadow-sm border">
+                <p className="text-muted-foreground">We value authentic feedback! See what our real customers are saying on Google.</p>
+            </div>
+          )}
         </div>
 
         <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">
