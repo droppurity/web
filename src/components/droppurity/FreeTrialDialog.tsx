@@ -134,12 +134,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
         {!showSuccess ? (
           <>
             <DialogHeader>
-              <DialogTitle>Book a 7-Day Risk-Free Trial</DialogTitle>
-              <DialogDescription>
-                You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
-                <br />
-                Pay only a refundable security deposit after successful installation.
-              </DialogDescription>
+              <DialogTitle className="text-primary text-center font-bold">Book Free Trial Now</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto px-4">
               <input type="hidden" {...register("purifierName")} />
@@ -184,6 +179,11 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
                       )}
                   </div>
                   <input type="hidden" {...register("location")} />
+                </div>
+                <div className="text-center text-xs text-muted-foreground pt-2">
+                    You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
+                    <br />
+                    Pay only a refundable security deposit after successful installation.
                 </div>
               <DialogFooter className="pt-2">
                 <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>Cancel</Button>
