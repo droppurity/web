@@ -185,8 +185,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
                     <br />
                     Pay only a refundable security deposit after successful installation.
                 </div>
-              <DialogFooter className="pt-2">
-                <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>Cancel</Button>
+              <DialogFooter className="pt-2 sm:justify-center">
                 <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>
                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Book My Trial
