@@ -136,7 +136,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
             <DialogHeader>
               <DialogTitle>Book a 7-Day Risk-Free Trial</DialogTitle>
               <DialogDescription>
-                You are booking a trial for the <strong>{trialPurifierName} - {trialPlanName} Plan (25L/day)</strong>.
+                You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
                 <br />
                 Pay only a refundable security deposit after successful installation.
               </DialogDescription>
