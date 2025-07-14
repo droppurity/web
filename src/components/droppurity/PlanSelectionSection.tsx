@@ -32,6 +32,7 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const autoScrollTimerRef = useRef<number | null>(null);
   const initialDelayTimerRef = useRef<number | null>(null);
+  const resumeTimerRef = useRef<number | null>(null);
 
 
   const clearTimers = () => {
@@ -42,6 +43,10 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     if(initialDelayTimerRef.current) {
       clearTimeout(initialDelayTimerRef.current);
       initialDelayTimerRef.current = null;
+    }
+     if (resumeTimerRef.current) {
+      clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
     }
   };
 
@@ -57,10 +62,9 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
   // Effect for initial load and purifier change
   useEffect(() => {
     setCurrentImageIndex(0);
-    clearTimers(); // Clear any existing timers when purifier changes
+    clearTimers();
 
     if (allImages.length > 1) {
-       // Start scrolling after an initial 6-second delay
        initialDelayTimerRef.current = window.setTimeout(() => {
             startAutoScroll();
        }, 6000);
@@ -69,21 +73,37 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     return () => clearTimers();
   }, [allImages]);
 
+  const pauseAndResumeScrolling = () => {
+    clearTimers();
+    resumeTimerRef.current = window.setTimeout(() => {
+        startAutoScroll();
+    }, 10000); // 10-second pause
+  };
+
 
   const handleThumbnailClick = (index: number) => {
     setCurrentImageIndex(index);
-    startAutoScroll(); // Restart scrolling immediately
+    pauseAndResumeScrolling();
   };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-    startAutoScroll(); // Restart scrolling immediately
+    pauseAndResumeScrolling();
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-    startAutoScroll(); // Restart scrolling immediately
+    pauseAndResumeScrolling();
   };
+
+  const handleTouchStart = () => {
+    clearTimers();
+  };
+
+  const handleTouchEnd = () => {
+    pauseAndResumeScrolling();
+  };
+
 
   const mainDisplayImage = allImages[currentImageIndex] || purifier.image;
   const imageDisplayThemeClass = purifier.accentColor === 'copper' ? 'theme-copper'
@@ -124,7 +144,12 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
               </Button>
 
               <div className="flex-grow overflow-hidden px-0.5 mx-0.5">
-                <div className="flex items-center justify-center space-x-1 overflow-x-auto pb-0.5 no-scrollbar">
+                <div 
+                    className="flex items-center justify-center space-x-1 overflow-x-auto pb-0.5 no-scrollbar"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    onWheel={handleTouchStart} 
+                >
                   {allImages.map((img, index) => (
                     <button
                       key={index}
