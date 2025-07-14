@@ -33,6 +33,10 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
   const autoScrollTimerRef = useRef<number | null>(null);
   const initialDelayTimerRef = useRef<number | null>(null);
   const resumeTimerRef = useRef<number | null>(null);
+  
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
 
 
   const clearTimers = () => {
@@ -95,12 +99,44 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     pauseAndResumeScrolling();
   };
-
-  const handleTouchStart = () => {
+  
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null); // a new touch has started
+    setTouchStart(e.targetTouches[0].clientX);
     clearTimers();
   };
 
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
   const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+        pauseAndResumeScrolling(); // Resume if it was just a tap
+        return;
+    }
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextImage();
+    } else if (isRightSwipe) {
+      prevImage();
+    } else {
+        // Not a long enough swipe, still resume scrolling
+        pauseAndResumeScrolling();
+    }
+    
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  const handleThumbnailTouchStart = () => {
+    clearTimers();
+  };
+
+  const handleThumbnailTouchEnd = () => {
     pauseAndResumeScrolling();
   };
 
@@ -114,7 +150,12 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
   return (
     <Card className={`shadow-xl overflow-hidden border-0 ${imageDisplayThemeClass}`}>
       <CardContent className="p-1.5 sm:p-2">
-        <div className="relative aspect-square mb-1">
+        <div
+          className="relative aspect-square mb-1"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <Image
             src={mainDisplayImage}
             alt={getFilenameFromUrl(mainDisplayImage)}
@@ -146,9 +187,9 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
               <div className="flex-grow overflow-hidden px-0.5 mx-0.5">
                 <div 
                     className="flex items-center justify-center space-x-1 overflow-x-auto pb-0.5 no-scrollbar"
-                    onTouchStart={handleTouchStart}
-                    onTouchEnd={handleTouchEnd}
-                    onWheel={handleTouchStart} 
+                    onTouchStart={handleThumbnailTouchStart}
+                    onTouchEnd={handleThumbnailTouchEnd}
+                    onWheel={handleThumbnailTouchStart} 
                 >
                   {allImages.map((img, index) => (
                     <button
@@ -362,3 +403,4 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
+
