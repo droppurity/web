@@ -177,13 +177,8 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
                   </div>
                   <div className="mt-1">
                       {isFetchingLocation && <div className="flex items-center text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Fetching your location...</div>}
-                      {locationValue ? (
-                          <Button asChild variant="outline" className="w-full justify-start text-left font-normal h-auto py-1.5">
-                          <a href={locationValue} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                              <ExternalLink className="mr-2 h-4 w-4 flex-shrink-0" />
-                              <span className="truncate">Location captured!</span>
-                          </a>
-                          </Button>
+                       {locationValue ? (
+                         <div className="text-xs text-green-600 font-medium py-1.5">Thanks for sharing! 👍</div>
                       ) : (
                         shareLocation && !isFetchingLocation && <div className="text-xs text-destructive">Could not fetch location. Please try again.</div>
                       )}
