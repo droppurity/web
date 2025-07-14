@@ -81,7 +81,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                   <div>
                     <Label htmlFor="name" className="text-foreground text-sm">Full Name</Label>
-                    <Input id="name" {...register("name")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
+                    <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
                     {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
                   </div>
                   <div>

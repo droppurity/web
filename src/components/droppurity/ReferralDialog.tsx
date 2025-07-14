@@ -86,7 +86,7 @@ export default function ReferralDialog() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
             <div>
               <Label htmlFor="friendName" className="text-foreground">Friend's Full Name</Label>
-              <Input id="friendName" {...register("friendName")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
+              <Input id="friendName" {...register("friendName")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
               {errors.friendName && <p className="text-xs text-destructive mt-1">{errors.friendName.message}</p>}
             </div>
             <div>

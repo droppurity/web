@@ -154,7 +154,7 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
         <div>
           <Label htmlFor="sd-name">Full Name</Label>
-          <Input id="sd-name" {...register("name")} placeholder="John Doe" className="mt-1" disabled={isSubmitting} />
+          <Input id="sd-name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
           {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
         </div>
         <div>
