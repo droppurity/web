@@ -15,9 +15,10 @@ interface PlanCardProps {
   plan: Plan;
   tenure: TenureOption;
   purifierContextName?: string; // e.g., "Droppurity RO+"
+  onDialogOpenChange: (open: boolean) => void;
 }
 
-export default function PlanCard({ plan, tenure, purifierContextName }: PlanCardProps) {
+export default function PlanCard({ plan, tenure, purifierContextName, onDialogOpenChange }: PlanCardProps) {
   const { toast } = useToast();
   const [isSubDialogOpen, setIsSubDialogOpen] = useState(false);
 
@@ -65,6 +66,11 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
       action: <Button variant="outline" size="sm">Learn Even More</Button>,
     });
   }
+
+  const handleOpenChange = (open: boolean) => {
+    setIsSubDialogOpen(open);
+    onDialogOpenChange(open);
+  };
 
   return (
     <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
@@ -119,7 +125,7 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
         >
           <Info className="mr-1.5 h-4 w-4" /> Know More
         </Button>
-        <Dialog open={isSubDialogOpen} onOpenChange={setIsSubDialogOpen}>
+        <Dialog open={isSubDialogOpen} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button 
                     size="sm" 
@@ -133,7 +139,7 @@ export default function PlanCard({ plan, tenure, purifierContextName }: PlanCard
                     purifierContextName={purifierContextName}
                     planName={plan.name}
                     tenure={tenure}
-                    onSubscriptionSuccess={() => setIsSubDialogOpen(false)}
+                    onSubscriptionSuccess={() => handleOpenChange(false)}
                 />
             )}
         </Dialog>

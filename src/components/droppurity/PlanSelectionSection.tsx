@@ -234,6 +234,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
   const [selectedPurifierId, setSelectedPurifierId] = useState<string>(defaultPurifierId);
   const [selectedTenureId, setSelectedTenureId] = useState<string>(defaultTenureId);
   const [isInView, setIsInView] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const observerRef = useRef<HTMLDivElement>(null);
 
@@ -346,8 +347,9 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
         </header>
 
         <div className={cn(
-            "sticky bg-background/95 backdrop-blur-sm py-3 px-2 rounded-xl border border-border/70 shadow-lg mb-6 sm:mb-8 z-40",
-            isHeaderDominant && "z-[51]"
+            "sticky bg-background/95 backdrop-blur-sm py-3 px-2 rounded-xl border border-border/70 shadow-lg mb-6 sm:mb-8",
+            !isDialogOpen && "z-40",
+            isHeaderDominant && !isDialogOpen && "z-[51]"
           )}
           style={{ top: '0.5rem' }}>
           <PurifierSelector
@@ -379,7 +381,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                 <div className="space-y-4 rounded-xl bg-muted/30 p-4 border border-border/50">
                     <div className="flex justify-between items-center">
                         <h3 className="text-sm font-semibold text-foreground">Step 1: Choose Your Plan</h3>
-                        <Dialog>
+                        <Dialog onOpenChange={setIsDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button
                                     variant="ghost"
@@ -415,6 +417,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                         plan={selectedPlan}
                         tenure={selectedTenure}
                         purifierContextName={selectedPurifier.name}
+                        onDialogOpenChange={setIsDialogOpen}
                     />
                     ) : (
                     <div className="text-center text-muted-foreground py-4 text-sm">
@@ -443,5 +446,3 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
-
-
