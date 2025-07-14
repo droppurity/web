@@ -24,7 +24,7 @@ interface PlanSelectionSectionProps {
   isHeaderDominant?: boolean;
 }
 
-function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
+function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, isInView: boolean }) {
   const allImages = useMemo(() => (purifier.thumbnailImages && purifier.thumbnailImages.length > 0
     ? [purifier.image, ...purifier.thumbnailImages]
     : [purifier.image]), [purifier]);
@@ -63,25 +63,27 @@ function PurifierImageDisplay({ purifier }: { purifier: PurifierType }) {
     }
   };
   
-  // Effect for initial load and purifier change
+  // Effect for initial load, purifier change, and visibility change
   useEffect(() => {
     setCurrentImageIndex(0);
     clearTimers();
 
-    if (allImages.length > 1) {
+    if (isInView && allImages.length > 1) {
        initialDelayTimerRef.current = window.setTimeout(() => {
             startAutoScroll();
        }, 6000);
     }
 
     return () => clearTimers();
-  }, [allImages]);
+  }, [allImages, isInView]);
 
   const pauseAndResumeScrolling = () => {
     clearTimers();
-    resumeTimerRef.current = window.setTimeout(() => {
-        startAutoScroll();
-    }, 10000); // 10-second pause
+    if (isInView) { // Only resume if the component is visible
+        resumeTimerRef.current = window.setTimeout(() => {
+            startAutoScroll();
+        }, 10000); // 10-second pause
+    }
   };
 
 
@@ -231,6 +233,44 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
   ({ isHeaderDominant }, ref) => {
   const [selectedPurifierId, setSelectedPurifierId] = useState<string>(defaultPurifierId);
   const [selectedTenureId, setSelectedTenureId] = useState<string>(defaultTenureId);
+  const [isInView, setIsInView] = useState(false);
+  
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1, // Trigger when 10% of the element is visible
+      }
+    );
+
+    const currentRef = observerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  // Combine the forwarded ref with the internal observerRef
+  const combinedRef = (node: HTMLDivElement | null) => {
+    (observerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+
 
   const selectedPurifier = useMemo(
     () => purifiers.find(p => p.id === selectedPurifierId) || purifiers[0],
@@ -293,7 +333,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 
   return (
-    <div ref={ref} className={`py-12 sm:py-16 bg-secondary/30 ${overallThemeClass}`}>
+    <div ref={combinedRef} className={`py-12 sm:py-16 bg-secondary/30 ${overallThemeClass}`}>
       <div className="container mx-auto px-4">
         <header className="text-center mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold font-headline text-foreground flex items-center justify-center">
@@ -322,7 +362,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10">
           <div className="lg:col-span-2">
-            <PurifierImageDisplay purifier={selectedPurifier} />
+            <PurifierImageDisplay purifier={selectedPurifier} isInView={isInView} />
             <div className="hidden lg:block"> 
                  <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-2 lg:mt-3" displayMode="list" />
             </div>
@@ -403,4 +443,5 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
 PlanSelectionSection.displayName = 'PlanSelectionSection';
 export default PlanSelectionSection;
+
 
