@@ -132,20 +132,20 @@ export default function HomePage() {
                   Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
-                  <Button asChild className="h-auto text-xs px-4 py-1.5">
+                  <Button asChild className="h-auto text-sm px-6 py-2.5">
                     <Link href="/plans">
                       <div className="flex flex-col items-center leading-tight">
                         <span>Explore Our Plans</span>
-                        <span className="mt-1 font-normal opacity-90 text-[10px]">
+                        <span className="mt-1 font-normal opacity-90 text-xs">
                           Starting from ₹299/mo
                         </span>
                       </div>
                     </Link>
                   </Button>
-                  <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-xs px-4 py-1.5">
+                  <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-sm px-6 py-2.5">
                      <div className="flex flex-col items-center leading-tight">
                        <span>Book a Free Trial</span>
-                        <span className="mt-1 font-normal opacity-90 text-[10px]">
+                        <span className="mt-1 font-normal opacity-90 text-xs">
                           7-Day Risk-Free
                         </span>
                      </div>
@@ -164,20 +164,20 @@ export default function HomePage() {
                     Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
                   </p>
                   <div className="flex flex-col items-start gap-4 mt-8">
-                    <Button asChild className="h-auto text-sm px-8 py-2 self-start">
+                    <Button asChild className="h-auto text-base px-10 py-3 self-start">
                       <Link href="/plans">
                         <div className="flex flex-col items-center leading-tight">
                           <span>Explore Our Plans</span>
-                          <span className="mt-1 font-normal opacity-90 text-xs">
+                          <span className="mt-1 font-normal opacity-90 text-sm">
                             Starting from ₹299/mo
                           </span>
                         </div>
                       </Link>
                     </Button>
-                    <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-sm px-8 py-2 self-start">
+                    <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-base px-10 py-3 self-start">
                        <div className="flex flex-col items-center leading-tight">
                          <span>Book a Free Trial</span>
-                          <span className="mt-1 font-normal opacity-90 text-xs">
+                          <span className="mt-1 font-normal opacity-90 text-sm">
                             7-Day Risk-Free
                           </span>
                        </div>
