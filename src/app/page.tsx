@@ -161,10 +161,17 @@ export default function HomePage() {
               {/* Text Content - On top for mobile */}
               <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
                  <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
-                  शुद्ध पानी, बिना परेशानी
+                   Smart RO Purifier on Rent
                 </h1>
+                 <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
+                   शुद्ध पानी, बिना परेशानी
+                </p>
                 <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                   Smart RO Purifier on Rent starting from just <strong className="text-foreground font-bold">₹299/month</strong> for the {sevenMonthPrice} plan.
+                    <span className="text-xs opacity-80">starting from just</span>
+                    <strong className="text-foreground font-bold text-3xl mx-1">₹299</strong>
+                    <span className="text-foreground/80">/month</span>
+                    <br />
+                    <span className="text-xs opacity-80">for the {sevenMonthPrice} plan.</span>
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
                   <Button asChild className="h-auto text-sm px-6 py-2.5">
@@ -193,10 +200,17 @@ export default function HomePage() {
                 {/* Desktop Text Content - Overlay */}
                 <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
                   <h1 className="text-5xl font-bold text-white mb-4">
-                    शुद्ध पानी, बिना परेशानी
+                    Smart RO Purifier on Rent
                   </h1>
+                  <p className="text-3xl font-semibold text-gray-100 mb-4">
+                    शुद्ध पानी, बिना परेशानी
+                  </p>
                   <p className="text-lg text-gray-200 max-w-xl">
-                   Smart RO Purifier on Rent starting from just <strong className="text-white font-bold">₹299/month</strong> for the {sevenMonthPrice} plan.
+                    <span className="text-sm opacity-80">starting from just</span>
+                    <strong className="text-white font-bold text-5xl mx-1">₹299</strong>
+                    <span className="text-gray-100/90 text-2xl">/month</span>
+                    <br />
+                    <span className="text-sm opacity-80">for the {sevenMonthPrice} plan.</span>
                   </p>
                   <div className="flex flex-col items-start gap-4 mt-8">
                     <Button asChild className="h-auto text-base px-10 py-3 self-start">
