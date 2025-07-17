@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift } from 'lucide-react';
+import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift, ArrowBigRightDash } from 'lucide-react';
 import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import { useState, useEffect, useRef } from 'react';
@@ -13,6 +13,8 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ReferralDialog from "@/components/droppurity/ReferralDialog";
 import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
+import { cn } from '@/lib/utils';
+import { tenureOptions } from '@/config/siteData';
 
 const features = [
   {
@@ -63,6 +65,36 @@ export default function HomePage() {
   const [makePlanSectionHeaderDominant, setMakePlanSectionHeaderDominant] = useState(false);
   const [isTrialDialogOpen, setIsTrialDialogOpen] = useState(false);
   const popupShownThisLoad = useRef(false);
+  const [showPlanHint, setShowPlanHint] = useState(false);
+  const planSectionObserverRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    // Show hint only once per session
+    const hintShown = sessionStorage.getItem('planHintShown');
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hintShown) {
+          setShowPlanHint(true);
+          sessionStorage.setItem('planHintShown', 'true');
+          setTimeout(() => {
+            setShowPlanHint(false);
+          }, 3000); // Hide after 3 seconds
+        }
+      });
+    };
+
+    planSectionObserverRef.current = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
+    if (planSectionRef.current) {
+      planSectionObserverRef.current.observe(planSectionRef.current);
+    }
+    
+    return () => {
+      if (planSectionObserverRef.current) {
+        planSectionObserverRef.current.disconnect();
+      }
+    };
+  }, []);
 
   // Auto-trigger logic for free trial popup, appears once per page load.
   useEffect(() => {
@@ -115,6 +147,9 @@ export default function HomePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  const sevenMonthPrice = tenureOptions.find(opt => opt.id === '7m')?.displayName || '7 Months';
+
 
   return (
     <>
@@ -125,11 +160,11 @@ export default function HomePage() {
             <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
               {/* Text Content - On top for mobile */}
               <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
-                <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-4">
-                  Pure Water, Pure Life.
+                 <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
+                  शुद्ध पानी, बिना परेशानी
                 </h1>
                 <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                  Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
+                   Smart RO Purifier on Rent starting from just <strong className="text-foreground font-bold">₹299/month</strong> for the {sevenMonthPrice} plan.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
                   <Button asChild className="h-auto text-sm px-6 py-2.5">
@@ -157,11 +192,11 @@ export default function HomePage() {
               <div className="relative aspect-[4/3] lg:aspect-[16/9] w-full rounded-b-xl lg:rounded-xl overflow-hidden">
                 {/* Desktop Text Content - Overlay */}
                 <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
-                  <h1 className="text-5xl font-bold text-white mb-6">
-                    Pure Water, Pure Life.
+                  <h1 className="text-5xl font-bold text-white mb-4">
+                    शुद्ध पानी, बिना परेशानी
                   </h1>
                   <p className="text-lg text-gray-200 max-w-xl">
-                    Experience the Droppurity difference. Clean, safe, and healthy water for everyone, with flexible plans to suit your needs.
+                   Smart RO Purifier on Rent starting from just <strong className="text-white font-bold">₹299/month</strong> for the {sevenMonthPrice} plan.
                   </p>
                   <div className="flex flex-col items-start gap-4 mt-8">
                     <Button asChild className="h-auto text-base px-10 py-3 self-start">
@@ -194,6 +229,7 @@ export default function HomePage() {
                     objectFit="cover"
                     className="block lg:hidden"
                     priority
+                    data-ai-hint="water purifier kitchen"
                   />
                   <Image
                     src="/hero.png"
@@ -202,6 +238,7 @@ export default function HomePage() {
                     objectFit="cover"
                     className="hidden lg:block lg:object-[center_35%]"
                     priority
+                    data-ai-hint="family kitchen water"
                   />
                   {/* Desktop-only gradient overlay */}
                   <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
@@ -234,13 +271,46 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        
+        {/* Clickable Trial Ad Section */}
+        <section className="py-4 sm:py-6 bg-background">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <button
+                  onClick={() => setIsTrialDialogOpen(true)}
+                  className="w-full block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  aria-label="Book a free 7-day trial"
+                >
+                  <Image
+                    src="https://placehold.co/1200x300.png"
+                    alt="Promotional banner for a free 7-day trial of Droppurity water purifiers"
+                    width={1200}
+                    height={300}
+                    className="w-full h-auto object-cover"
+                    data-ai-hint="water purifier advertisement"
+                  />
+                </button>
+            </div>
+        </section>
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-4 sm:py-6 bg-secondary/30">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-              Try Before You Buy: Our Simple Process
-            </h2>
+             <div className="relative text-center">
+              <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
+                Try Before You Buy: Our Simple Process
+              </h2>
+              {showPlanHint && (
+                <div className="hidden lg:block absolute -top-5 w-full transition-opacity duration-300 animate-in fade-in">
+                  <div className="inline-flex items-center gap-4 text-xs font-semibold text-primary">
+                      <div className="relative">
+                        <ArrowBigRightDash className="w-8 h-8 absolute -left-12 -top-1" />
+                        <span>Try these too!</span>
+                        <ArrowBigRightDash className="w-8 h-8 absolute -right-12 -top-1" />
+                      </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
               <div className="flex flex-col items-center">
                 <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">📅</div>

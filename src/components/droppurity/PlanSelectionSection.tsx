@@ -12,7 +12,7 @@ import PlanCard from '@/components/droppurity/PlanCard';
 import PlanTypeSelector from '@/components/droppurity/PlanTypeSelector';
 import KeyFeaturesDisplay from '@/components/droppurity/KeyFeaturesDisplay';
 import { Button } from '@/components/ui/button';
-import { Droplet, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Droplet, HelpCircle, ChevronLeft, ChevronRight, ArrowBigRightDash } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
