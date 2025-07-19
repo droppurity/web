@@ -161,9 +161,8 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
           <Image
             src={mainDisplayImage}
             alt={getFilenameFromUrl(mainDisplayImage)}
-            layout="fill"
-            objectFit="contain"
-            className="rounded-md"
+            fill
+            className="rounded-md object-contain"
             priority 
             data-ai-hint={purifier.dataAiHint || "water purifier"}
           />
