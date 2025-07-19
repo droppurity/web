@@ -65,10 +65,10 @@ export default function Header() {
                 </Link>
               </Button>
             ))}
-            {canInstall && (
-              <Button onClick={installPwa} size="sm" className="ml-2">
-                <Download className="mr-2 h-4 w-4" />
-                Install App
+             {canInstall && (
+              <Button onClick={installPwa} variant="ghost" size="icon" className="ml-2">
+                <Download className="h-5 w-5" />
+                 <span className="sr-only">Install App</span>
               </Button>
             )}
           </nav>
