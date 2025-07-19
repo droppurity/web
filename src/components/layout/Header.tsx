@@ -3,10 +3,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu } from 'lucide-react';
+import { Menu, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/hooks/use-auth';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -23,6 +24,7 @@ const getFilenameFromUrl = (url: string): string => {
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const { user, loading } = useAuth();
   const lastScrollY = useRef(0);
   const logoPath = "/logo.png";
   const logoFilename = getFilenameFromUrl(logoPath);
@@ -63,10 +65,23 @@ export default function Header() {
                 </Link>
               </Button>
             ))}
+             {!loading && user && (
+              <Button variant="default" asChild className="text-sm px-3 py-1.5 h-auto ml-2">
+                <Link href="/dashboard">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  Dashboard
+                </Link>
+              </Button>
+            )}
           </nav>
 
           {/* Mobile Navigation Trigger */}
           <div className="md:hidden flex items-center">
+             {!loading && user && (
+                <Button variant="ghost" asChild size="icon" className="mr-1">
+                    <Link href="/dashboard"><LayoutDashboard className="h-6 w-6" /></Link>
+                </Button>
+            )}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
