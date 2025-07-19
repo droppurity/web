@@ -18,6 +18,7 @@ import { tenureOptions } from '@/config/siteData';
 import InstallAppCta from '@/components/droppurity/InstallAppCta';
 import { useAuth } from '@/hooks/use-auth';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { usePwaDisplayMode } from '@/hooks/usePwaDisplayMode';
 import { useRouter } from 'next/navigation';
 
 const features = [
@@ -51,16 +52,18 @@ export default function HomePage() {
 
   const { user, loading } = useAuth();
   const isMobile = useIsMobile();
+  const { isStandalone } = usePwaDisplayMode();
   const router = useRouter();
 
   useEffect(() => {
     // Wait for auth & mobile status to be determined
-    if (loading || typeof isMobile === 'undefined') return;
+    if (loading || typeof isMobile === 'undefined' || typeof isStandalone === 'undefined') return;
 
-    if (isMobile && !user) {
+    // Redirect to login only if it's an installed PWA on mobile and user is not logged in.
+    if (isMobile && isStandalone && !user) {
       router.push('/login');
     }
-  }, [user, loading, isMobile, router]);
+  }, [user, loading, isMobile, isStandalone, router]);
 
 
   useEffect(() => {
@@ -158,7 +161,7 @@ export default function HomePage() {
   };
 
   // If we are redirecting, we can show a loader or nothing to avoid a flash of the homepage
-  if (isMobile && !user && !loading) {
+  if (isMobile && isStandalone && !user && !loading) {
     return (
        <div className="flex h-screen w-full items-center justify-center bg-background">
         <p>Loading...</p>
@@ -267,7 +270,7 @@ export default function HomePage() {
                     src="/hero.png"
                     alt="Droppurity water purifier in a modern kitchen setting with a family"
                     fill
-                    className="hidden lg:block object-cover lg:object-[center_35%]"
+                    className="hidden lg:block object-cover object-[center_35%]"
                     priority
                     data-ai-hint="family kitchen water"
                   />
@@ -407,3 +410,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
