@@ -3,11 +3,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, Download } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect, useRef } from 'react';
-import { usePwaInstall } from '@/hooks/usePwaInstall';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -25,7 +24,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const { canInstall, installPwa } = usePwaInstall();
   const logoPath = "/logo.png";
   const logoFilename = getFilenameFromUrl(logoPath);
 
@@ -65,22 +63,10 @@ export default function Header() {
                 </Link>
               </Button>
             ))}
-             {canInstall && (
-              <Button onClick={installPwa} variant="ghost" size="icon" className="ml-2">
-                <Download className="h-5 w-5" />
-                 <span className="sr-only">Install App</span>
-              </Button>
-            )}
           </nav>
 
           {/* Mobile Navigation Trigger */}
           <div className="md:hidden flex items-center">
-            {canInstall && (
-              <Button onClick={installPwa} variant="ghost" size="icon" className="mr-1">
-                <Download className="h-5 w-5" />
-                 <span className="sr-only">Install App</span>
-              </Button>
-            )}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">

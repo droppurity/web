@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
+import InstallPwaButton from '@/components/layout/InstallPwaButton';
 import { usePathname } from 'next/navigation';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       </main>
       <Footer />
       <WhatsAppButton />
+      <InstallPwaButton />
       <Toaster />
     </>
   );
