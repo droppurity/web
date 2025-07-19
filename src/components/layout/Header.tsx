@@ -3,10 +3,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu } from 'lucide-react';
+import { Menu, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect, useRef } from 'react';
+import { usePwaInstall } from '@/hooks/usePwaInstall';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -24,7 +25,8 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const logoPath = "/logo.png"; // Changed from /jadu/logo.png
+  const { canInstall, installPwa } = usePwaInstall();
+  const logoPath = "/logo.png";
   const logoFilename = getFilenameFromUrl(logoPath);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-1">
+          <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Button key={item.label} variant="ghost" asChild className="text-sm px-3 py-1.5 h-auto">
                 <Link href={item.href} className="text-foreground">
@@ -63,10 +65,22 @@ export default function Header() {
                 </Link>
               </Button>
             ))}
+            {canInstall && (
+              <Button onClick={installPwa} size="sm" className="ml-2">
+                <Download className="mr-2 h-4 w-4" />
+                Install App
+              </Button>
+            )}
           </nav>
 
           {/* Mobile Navigation Trigger */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            {canInstall && (
+              <Button onClick={installPwa} variant="ghost" size="icon" className="mr-1">
+                <Download className="h-5 w-5" />
+                 <span className="sr-only">Install App</span>
+              </Button>
+            )}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
