@@ -371,7 +371,7 @@ export default function HomePage() {
             <p className="text-[11px] sm:text-xs text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-3 sm:mb-4">
               Join thousands of happy customers enjoying the benefits of Droppurity water.
             </p>
-            <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               <Link href="/contact">Get in Touch</Link>
             </Button>
           </div>
