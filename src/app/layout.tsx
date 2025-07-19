@@ -15,12 +15,15 @@ export const metadata: Metadata = {
     template: `%s | Droppurity`,
   },
   description: siteDescription,
+  manifest: '/site.webmanifest',
   icons: {
-    icon: [{ url: '/logo.png' }],
-    shortcut: ['/logo.png'],
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+    ],
     apple: [
-      { url: '/logo.png' },
-      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png' },
     ],
   },
   keywords: ["drop", "drop aqua", "puja ro water", "ganga", "gangotri", "pani", "ro pani", "saaf pani", "best ro purifier", "ro purifier near me", "best ro purifier in bokaro", "ro in chas", "ro in ranchi", "ro in jamshedpur", "ro in patna", "ro in jharkhad", "ro in west bengal", "cheap and best ro purifier", "best ro filer", "filter on rent", "rent ro"],
