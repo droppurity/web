@@ -288,7 +288,10 @@ export default function HomePage() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-4 sm:py-6 bg-secondary/30">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className="container mx-auto px-4 sm:px-6 lg:px-8 cursor-pointer"
+            onClick={() => setIsTrialDialogOpen(true)}
+          >
              <div className="relative text-center">
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
                 Try Before You Buy: Our Simple Process
