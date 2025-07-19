@@ -16,6 +16,9 @@ import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
 import { cn } from '@/lib/utils';
 import { tenureOptions } from '@/config/siteData';
 import InstallAppCta from '@/components/droppurity/InstallAppCta';
+import { useAuth } from '@/hooks/use-auth';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useRouter } from 'next/navigation';
 
 const features = [
   {
@@ -45,6 +48,20 @@ export default function HomePage() {
   const popupShownThisLoad = useRef(false);
   const [showPlanHint, setShowPlanHint] = useState(false);
   const planSectionObserverRef = useRef<IntersectionObserver | null>(null);
+
+  const { user, loading } = useAuth();
+  const isMobile = useIsMobile();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Wait for auth & mobile status to be determined
+    if (loading || typeof isMobile === 'undefined') return;
+
+    if (isMobile && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, isMobile, router]);
+
 
   useEffect(() => {
     // Show hint only once per session
@@ -139,6 +156,15 @@ export default function HomePage() {
     }
     setIsTrialDialogOpen(true);
   };
+
+  // If we are redirecting, we can show a loader or nothing to avoid a flash of the homepage
+  if (isMobile && !user && !loading) {
+    return (
+       <div className="flex h-screen w-full items-center justify-center bg-background">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
 
   return (
