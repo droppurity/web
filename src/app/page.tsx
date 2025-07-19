@@ -150,12 +150,27 @@ export default function HomePage() {
   
   const sevenMonthPrice = tenureOptions.find(opt => opt.id === '7m')?.displayName || '7 Months';
 
+  const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
+    // Check if the click target or its parent is a button or a link
+    let target = e.target as HTMLElement;
+    while (target && target !== e.currentTarget) {
+        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+            return; // Don't trigger popup if a button or link was clicked
+        }
+        target = target.parentElement as HTMLElement;
+    }
+    setIsTrialDialogOpen(true);
+  };
+
 
   return (
     <>
       <div className="flex flex-col">
         {/* Hero Section */}
-        <section className="bg-background">
+        <section
+          className="bg-background cursor-pointer"
+          onClick={handleHeroClick}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
               {/* Text Content - On top for mobile */}
