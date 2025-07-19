@@ -285,26 +285,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        
-        {/* Clickable Trial Ad Section */}
-        <section className="py-4 sm:py-6 bg-background">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <button
-                  onClick={() => setIsTrialDialogOpen(true)}
-                  className="w-full block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                  aria-label="Book a free 7-day trial"
-                >
-                  <Image
-                    src="https://placehold.co/1200x300.png"
-                    alt="Promotional banner for a free 7-day trial of Droppurity water purifiers"
-                    width={1200}
-                    height={300}
-                    className="w-full h-auto object-cover"
-                    data-ai-hint="water purifier advertisement"
-                  />
-                </button>
-            </div>
-        </section>
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-4 sm:py-6 bg-secondary/30">
