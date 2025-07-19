@@ -15,6 +15,7 @@ import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
 import { cn } from '@/lib/utils';
 import { tenureOptions } from '@/config/siteData';
+import InstallAppCta from '@/components/droppurity/InstallAppCta';
 
 const features = [
   {
@@ -34,29 +35,6 @@ const features = [
     title: "Healthy Water",
     description: "Retains essential minerals, ensuring your water is not just pure, but healthy too.",
     color: "text-yellow-500",
-  },
-];
-
-const highlights = [
-  {
-    icon: ShieldCheck,
-    line1: "Lifetime Free",
-    line2: "Maintenance",
-  },
-  {
-    icon: CalendarDays,
-    line1: "7-Day",
-    line2: "Risk-Free Trial",
-  },
-  {
-    icon: Clock,
-    line1: "48-Hour",
-    line2: "Installation",
-  },
-  {
-    icon: IndianRupee,
-    line1: "Plans Starting",
-    line2: "From ₹299/mo",
   },
 ];
 
@@ -348,30 +326,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Highlights Section */}
-        <section className="py-4 sm:py-6 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-xl bg-gradient-to-r from-violet-100/60 via-blue-100/60 to-cyan-100/60 p-4 sm:p-6 shadow-sm border border-black/5">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-2 sm:gap-x-4">
-                {highlights.map((highlight, index) => {
-                  const Icon = highlight.icon;
-                  return (
-                    <div key={index} className="flex items-center gap-2 sm:gap-3 justify-center">
-                      <div className="bg-primary/10 p-2 sm:p-2.5 rounded-full flex-shrink-0">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-foreground text-xs sm:text-sm leading-tight">{highlight.line1}</p>
-                        <p className="text-muted-foreground text-[11px] sm:text-xs leading-tight">{highlight.line2}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-
         <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
         <section id="droppurity-advantage">
           <ComparisonTable />
@@ -422,6 +376,8 @@ export default function HomePage() {
             </Button>
           </div>
         </section>
+        
+        <InstallAppCta />
       </div>
       <FreeTrialDialog open={isTrialDialogOpen} onOpenChange={setIsTrialDialogOpen} />
     </>
