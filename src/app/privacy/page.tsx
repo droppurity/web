@@ -39,7 +39,6 @@ export default function PrivacyPolicyPage() {
                     <li>Changes to This Policy</li>
                     <li>Contact Information</li>
                 </ul>
-                <p>It is highly recommended to consult with a legal professional to draft a policy that is compliant with relevant laws and regulations (like GDPR, CCPA, etc.).</p>
             </CardContent>
         </Card>
       </div>
