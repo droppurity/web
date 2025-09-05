@@ -7,33 +7,51 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 const comparisonData = [
   {
     parameter: 'Initial Purchase Cost',
-    otherRo: { text: '₹15,000 - ₹20,000', icon: X, iconClass: 'text-destructive' },
     waterJar: { text: '₹150 (Refundable Deposit)', icon: Check, iconClass: 'text-yellow-500' },
+    otherRo: { text: '₹15,000 - ₹20,000', icon: X, iconClass: 'text-destructive' },
     droppurity: { text: '₹1,500 (Refundable Deposit)', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
   {
     parameter: 'Annual Maintenance Cost',
-    otherRo: { text: '₹4,000 - ₹6,000', icon: X, iconClass: 'text-destructive' },
     waterJar: { text: 'N/A', icon: Check, iconClass: 'text-yellow-500' },
+    otherRo: { text: '₹4,000 - ₹6,000', icon: X, iconClass: 'text-destructive' },
     droppurity: { text: 'Absolutely FREE', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
   {
     parameter: 'Filter Replacements',
-    otherRo: { text: 'Included in Maintenance', icon: X, iconClass: 'text-destructive' },
     waterJar: { text: 'N/A', icon: Check, iconClass: 'text-yellow-500' },
+    otherRo: { text: 'Included in Maintenance', icon: X, iconClass: 'text-destructive' },
     droppurity: { text: 'Included & FREE', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
+    {
+    parameter: 'Purification Stages',
+    waterJar: { text: 'None', icon: X, iconClass: 'text-destructive' },
+    otherRo: { text: 'Varies by Model', icon: Check, iconClass: 'text-yellow-500' },
+    droppurity: { text: 'Multi-stage RO+UV+UF', icon: ShieldCheck, iconClass: 'text-green-500' },
+  },
   {
-    parameter: 'Estimated Yearly Cost',
-    otherRo: { text: '~₹19,000 (1st Year)', icon: X, iconClass: 'text-destructive' },
-    waterJar: { text: '~₹10,800 (at ₹30/jar/day)', icon: X, iconClass: 'text-destructive' },
-    droppurity: { text: 'From ₹3,588/year', icon: ShieldCheck, iconClass: 'text-green-500' },
+    parameter: 'Water Quality Assurance',
+    waterJar: { text: 'Not Guaranteed', icon: X, iconClass: 'text-destructive' },
+    otherRo: { text: 'Depends on Service', icon: X, iconClass: 'text-destructive' },
+    droppurity: { text: 'Assured Purity', icon: ShieldCheck, iconClass: 'text-green-500' },
+  },
+  {
+    parameter: 'Hygiene & Handling',
+    waterJar: { text: 'Often Unhygienic Jars', icon: X, iconClass: 'text-destructive' },
+    otherRo: { text: 'Self-handled', icon: Check, iconClass: 'text-yellow-500' },
+    droppurity: { text: 'Contactless & Professional', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
   {
     parameter: 'Convenience',
-    otherRo: { text: 'High', icon: Check, iconClass: 'text-yellow-500' },
     waterJar: { text: 'Low (Ordering & Storage)', icon: X, iconClass: 'text-destructive' },
+    otherRo: { text: 'High', icon: Check, iconClass: 'text-yellow-500' },
     droppurity: { text: 'Highest (Hassle-Free)', icon: ShieldCheck, iconClass: 'text-green-500' },
+  },
+  {
+    parameter: 'Estimated Yearly Cost',
+    waterJar: { text: '~₹10,800 (at ₹30/jar/day)', icon: X, iconClass: 'text-destructive' },
+    otherRo: { text: '~₹19,000 (1st Year)', icon: X, iconClass: 'text-destructive' },
+    droppurity: { text: 'From ₹3,588/year', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
 ];
 
