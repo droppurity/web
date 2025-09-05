@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Check, X, ShieldCheck, IndianRupee } from 'lucide-react';
@@ -40,8 +41,8 @@ export default function CostComparisonTable() {
     const GRID_COLS = "grid-cols-[34%_22%_22%_22%]";
     const tableHeaders = [
         { id: 'parameter', title: 'Parameters' },
-        { id: 'otherRo', title: 'Buying a New RO' },
         { id: 'waterJar', title: '20-Litre Jars' },
+        { id: 'otherRo', title: 'Buying a New RO' },
         { id: 'droppurity', title: 'Droppurity', isHighlighted: true },
     ];
 
@@ -70,7 +71,7 @@ export default function CostComparisonTable() {
                     </div>
 
                     {/* Data Columns */}
-                    {(['otherRo', 'waterJar', 'droppurity'] as const).map((colKey) => {
+                    {(['waterJar', 'otherRo', 'droppurity'] as const).map((colKey) => {
                         const item = row[colKey];
                         const Icon = item.icon;
                         const isDroppurityCol = colKey === 'droppurity';
