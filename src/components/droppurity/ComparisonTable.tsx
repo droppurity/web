@@ -16,11 +16,11 @@ interface TableRowData {
     supported: boolean;
     text?: string;
   };
-  copper: {
+  alkaline: {
     supported: boolean;
     text?: string;
   };
-  alkaline: {
+  copper: {
     supported: boolean;
     text?: string;
   };
@@ -34,44 +34,44 @@ const tableData: TableRowData[] = [
   {
     feature: { name: 'RO Purification', icon: Droplet },
     roPlus: { supported: true },
-    copper: { supported: true },
     alkaline: { supported: true },
+    copper: { supported: true },
   },
   {
     feature: { name: 'In-Tank UV Purification', icon: Droplet },
     roPlus: { supported: true },
-    copper: { supported: true },
     alkaline: { supported: true },
+    copper: { supported: true },
   },
     {
     feature: { name: 'Inline UF Purification', icon: Droplet },
     roPlus: { supported: true },
-    copper: { supported: true },
     alkaline: { supported: true },
+    copper: { supported: true },
   },
   {
     feature: { name: 'Copper Infusion', icon: Atom },
     roPlus: { supported: false },
-    copper: { supported: true },
     alkaline: { supported: false },
+    copper: { supported: true },
   },
   {
     feature: { name: 'Alkaline pH Boost', icon: Droplet },
     roPlus: { supported: false },
-    copper: { supported: true },
     alkaline: { supported: true },
+    copper: { supported: true },
   },
    {
     feature: { name: 'Storage Capacity', icon: Droplet },
     roPlus: { supported: true, text: '10 Litres' },
-    copper: { supported: true, text: '10 Litres' },
     alkaline: { supported: true, text: '10 Litres' },
+    copper: { supported: true, text: '10 Litres' },
   },
   {
     feature: { name: 'Ideal For', icon: Droplet },
     roPlus: { supported: true, text: 'Standard Purification' },
-    copper: { supported: true, text: 'Health Enthusiasts' },
     alkaline: { supported: true, text: 'Acidity Concerns' },
+    copper: { supported: true, text: 'Health Enthusiasts' },
   },
 ];
 
@@ -82,8 +82,8 @@ export default function ComparisonTable() {
   const tableHeaders = [
       { id: 'feature', title: 'Features' },
       { id: 'roPlus', title: roPurifier.name, imageSrc: roPurifier.image, dataAiHint: roPurifier.dataAiHint, isHighlighted: false, className: "bg-blue-500/10" },
-      { id: 'copper', title: copperPurifier.name, imageSrc: copperPurifier.image, dataAiHint: copperPurifier.dataAiHint, isHighlighted: true, className: "bg-copper-500/10 theme-copper" },
-      { id: 'alkaline', title: alkalinePurifier.name, imageSrc: alkalinePurifier.image, dataAiHint: alkalinePurifier.dataAiHint, isHighlighted: false, className: "bg-teal-500/10 theme-teal" },
+      { id: 'alkaline', title: alkalinePurifier.name, imageSrc: alkalinePurifier.image, dataAiHint: alkalinePurifier.dataAiHint, isHighlighted: true, className: "bg-teal-500/10 theme-teal" },
+      { id: 'copper', title: copperPurifier.name, imageSrc: copperPurifier.image, dataAiHint: copperPurifier.dataAiHint, isHighlighted: false, className: "bg-copper-500/10 theme-copper" },
   ]
 
   return (
@@ -133,7 +133,7 @@ export default function ComparisonTable() {
               </div>
 
               {/* Other Columns Data */}
-              {(['roPlus', 'copper', 'alkaline'] as const).map((colKey, itemIndex) => {
+              {(['roPlus', 'alkaline', 'copper'] as const).map((colKey, itemIndex) => {
                 const item = row[colKey];
                 const header = tableHeaders[itemIndex + 1];
                 return (
