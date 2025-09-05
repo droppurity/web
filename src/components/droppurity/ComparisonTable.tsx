@@ -32,12 +32,6 @@ const alkalinePurifier = purifiers.find(p => p.id === 'droppurity-alkaline')!;
 
 const tableData: TableRowData[] = [
   {
-    feature: { name: 'Starting Price', icon: IndianRupee },
-    roPlus: { supported: true, text: '₹299/mo' },
-    alkaline: { supported: true, text: '₹374/mo' },
-    copper: { supported: true, text: '₹384/mo' },
-  },
-  {
     feature: { name: 'RO Purification', icon: Droplet },
     roPlus: { supported: true },
     alkaline: { supported: true },
@@ -56,15 +50,15 @@ const tableData: TableRowData[] = [
     copper: { supported: true },
   },
   {
-    feature: { name: 'Copper Infusion', icon: Atom },
-    roPlus: { supported: false },
-    alkaline: { supported: false },
-    copper: { supported: true },
-  },
-  {
     feature: { name: 'Alkaline pH Boost', icon: Droplet },
     roPlus: { supported: false },
     alkaline: { supported: true },
+    copper: { supported: true },
+  },
+  {
+    feature: { name: 'Copper Infusion', icon: Atom },
+    roPlus: { supported: false },
+    alkaline: { supported: false },
     copper: { supported: true },
   },
    {
@@ -78,6 +72,12 @@ const tableData: TableRowData[] = [
     roPlus: { supported: true, text: 'Standard Purification' },
     alkaline: { supported: true, text: 'Acidity Concerns' },
     copper: { supported: true, text: 'Health Enthusiasts' },
+  },
+  {
+    feature: { name: 'Starting Price', icon: IndianRupee },
+    roPlus: { supported: true, text: '₹299/mo' },
+    alkaline: { supported: true, text: '₹374/mo' },
+    copper: { supported: true, text: '₹384/mo' },
   },
 ];
 
@@ -142,13 +142,14 @@ export default function ComparisonTable() {
               {(['roPlus', 'alkaline', 'copper'] as const).map((colKey, itemIndex) => {
                 const item = row[colKey];
                 const header = tableHeaders[itemIndex + 1];
+                const isPriceRow = row.feature.name === 'Starting Price';
                 return (
                   <div
                     key={`${rowIndex}-${colKey}`}
                     className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${header.className || 'bg-card'}`}
                   >
                     {item.text ? (
-                        <p className="text-[9px] sm:text-[11px] text-foreground font-medium leading-snug break-words">{item.text}</p>
+                        <p className={`text-[9px] sm:text-[11px] text-foreground leading-snug break-words ${isPriceRow ? 'font-bold' : 'font-medium'}`}>{item.text}</p>
                     ) : item.supported ? (
                         <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" />
                     ) : (
