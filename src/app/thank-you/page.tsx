@@ -2,11 +2,12 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PartyPopper } from 'lucide-react';
 import Link from 'next/link';
+import { purifiers, tenureOptions } from '@/config/siteData';
 
 function ThankYouContent() {
   const searchParams = useSearchParams();
@@ -18,6 +19,38 @@ function ThankYouContent() {
 
   const isTrial = tenure === '7-Day Trial';
   const titleText = isTrial ? "Thank You for Booking a Trial!" : "Thank You for Subscribing!";
+  const securityDeposit = 1500;
+
+  const { planPrice, totalAmount } = useMemo(() => {
+    if (isTrial) {
+      return { planPrice: 0, totalAmount: securityDeposit };
+    }
+    
+    if (!purifierName || !planName || !tenure) {
+      return { planPrice: 0, totalAmount: securityDeposit };
+    }
+
+    const selectedPurifier = purifiers.find(p => p.name === purifierName);
+    const selectedTenure = tenureOptions.find(t => t.displayName === tenure);
+    
+    if (!selectedPurifier || !selectedTenure) {
+      return { planPrice: 0, totalAmount: securityDeposit };
+    }
+
+    const selectedPlan = selectedPurifier.plans.find(p => p.name === planName);
+    const priceDetail = selectedPlan?.tenurePricing[selectedTenure.id];
+    
+    if (!priceDetail) {
+      return { planPrice: 0, totalAmount: securityDeposit };
+    }
+    
+    const calculatedPlanPrice = Math.round(priceDetail.pricePerMonth * (priceDetail.payingMonths || selectedTenure.durationMonths));
+    return {
+      planPrice: calculatedPlanPrice,
+      totalAmount: calculatedPlanPrice + securityDeposit
+    };
+  }, [purifierName, planName, tenure, isTrial]);
+
 
   useEffect(() => {
     // If essential params are missing, redirect to home
@@ -60,6 +93,25 @@ function ThankYouContent() {
                 <span className="font-medium text-foreground">{tenure}</span>
               </div>
             </div>
+            
+             <div className="bg-primary/5 rounded-lg p-4 text-left space-y-3 my-4 border border-primary/20">
+              <h3 className="font-semibold text-center text-primary mb-3">Payment Details</h3>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">Plan Amount:</span>
+                <span className="font-medium text-foreground">₹{planPrice.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">Security Deposit (Refundable):</span>
+                <span className="font-medium text-foreground">₹{securityDeposit.toLocaleString()}</span>
+              </div>
+              <hr className="border-border my-2" />
+              <div className="flex justify-between items-center text-base">
+                <span className="font-semibold text-foreground">Total to pay on installation:</span>
+                <span className="font-bold text-primary text-lg">₹{totalAmount.toLocaleString()}</span>
+              </div>
+            </div>
+
+
             <Button asChild className="mt-4 w-full sm:w-auto">
               <Link href="/">Back to Home</Link>
             </Button>
