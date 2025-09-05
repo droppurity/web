@@ -58,7 +58,7 @@ const tableData: TableRowData[] = [
   {
     feature: { name: 'Alkaline pH Boost', icon: Droplet },
     roPlus: { supported: false },
-    copper: { supported: false },
+    copper: { supported: true },
     alkaline: { supported: true },
   },
    {
