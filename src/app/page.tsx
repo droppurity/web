@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift, ArrowBigRightDash } from 'lucide-react';
 import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
+import CostComparisonTable from '@/components/droppurity/CostComparisonTable';
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ReferralDialog from "@/components/droppurity/ReferralDialog";
@@ -377,6 +378,8 @@ export default function HomePage() {
         <section id="droppurity-advantage">
           <ComparisonTable />
         </section>
+
+        <CostComparisonTable />
 
         {/* Refer and Earn Section */}
         <section id="refer-and-earn" className="py-4 sm:py-6 bg-secondary/30">
