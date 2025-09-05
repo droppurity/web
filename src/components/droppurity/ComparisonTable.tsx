@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Check, X, Atom, Droplet } from 'lucide-react';
+import { Check, X, Atom, Droplet, IndianRupee } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
@@ -31,6 +31,12 @@ const copperPurifier = purifiers.find(p => p.id === 'droppurity-copper')!;
 const alkalinePurifier = purifiers.find(p => p.id === 'droppurity-alkaline')!;
 
 const tableData: TableRowData[] = [
+  {
+    feature: { name: 'Starting Price', icon: IndianRupee },
+    roPlus: { supported: true, text: '₹299/mo' },
+    alkaline: { supported: true, text: '₹374/mo' },
+    copper: { supported: true, text: '₹384/mo' },
+  },
   {
     feature: { name: 'RO Purification', icon: Droplet },
     roPlus: { supported: true },
