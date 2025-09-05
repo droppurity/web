@@ -8,7 +8,7 @@ const comparisonData = [
     parameter: 'Initial Purchase Cost',
     otherRo: { text: '₹15,000 - ₹20,000', icon: X, iconClass: 'text-destructive' },
     waterJar: { text: '₹150 (Refundable Deposit)', icon: Check, iconClass: 'text-yellow-500' },
-    droppurity: { text: '₹0 (Refundable Deposit)', icon: ShieldCheck, iconClass: 'text-green-500' },
+    droppurity: { text: '₹1,500 (Refundable Deposit)', icon: ShieldCheck, iconClass: 'text-green-500' },
   },
   {
     parameter: 'Annual Maintenance Cost',
