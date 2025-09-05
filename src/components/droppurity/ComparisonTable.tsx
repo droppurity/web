@@ -1,126 +1,96 @@
+
 "use client";
 
-import Image from 'next/image';
-import { AlertTriangle, CheckCircle2, ShieldCheck, Sparkles, Droplet, HelpCircle, X, Check } from 'lucide-react';
+import { Check, X, Atom, Droplet } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-
-interface TableHeaderItem {
-  id: string;
-  title: string;
-  subTitle?: string;
-  icon?: LucideIcon;
-  imageSrc?: string;
-  iconColor?: string;
-  isHighlighted?: boolean;
-  className?: string;
-  dataAiHint?: string;
-}
+import Image from 'next/image';
+import { purifiers } from '@/config/siteData';
 
 interface TableRowData {
   feature: {
     name: string;
-    icon?: LucideIcon;
+    icon: LucideIcon;
   };
-  waterCan: {
+  roPlus: {
     supported: boolean;
     text?: string;
   };
-  otherPurifiers: {
+  copper: {
     supported: boolean;
     text?: string;
   };
-  droppurity: {
+  alkaline: {
     supported: boolean;
     text?: string;
   };
 }
 
-const getFilenameFromUrl = (url: string): string => {
-  const parts = url.split('/');
-  return parts[parts.length -1];
-}
-
-const tableHeaders: TableHeaderItem[] = [
-  { id: 'feature', title: 'Feature Comparison' },
-  {
-    id: 'waterCan',
-    title: 'Water Can',
-    imageSrc: '/jar.png',
-    dataAiHint: "water can"
-  },
-  {
-    id: 'otherPurifiers',
-    title: 'Other Purifiers',
-    imageSrc: '/otherro.png',
-    dataAiHint: "other ro purifier"
-  },
-  {
-    id: 'droppurity',
-    title: 'Droppurity',
-    imageSrc: '/logo.png',
-    className: "bg-primary/10",
-    isHighlighted: true,
-  },
-  {
-    id: 'droppurityAdvantage',
-    title: 'Droppurity Advantage',
-    subTitle:'(Free for Lifetime)',
-    icon: Sparkles,
-    iconColor: 'text-green-600',
-    className: "bg-green-500/10",
-    isHighlighted: true,
-  },
-];
+const roPurifier = purifiers.find(p => p.id === 'droppurity-ro-plus')!;
+const copperPurifier = purifiers.find(p => p.id === 'droppurity-copper')!;
+const alkalinePurifier = purifiers.find(p => p.id === 'droppurity-alkaline')!;
 
 const tableData: TableRowData[] = [
   {
-    feature: { name: 'Water Safety', icon: ShieldCheck },
-    waterCan: { supported: false, text: 'Variable Quality' },
-    otherPurifiers: { supported: false, text: 'Inconsistent Purity' },
-    droppurity: { supported: true, text: 'Assured Safe Water' },
+    feature: { name: 'RO Purification', icon: Droplet },
+    roPlus: { supported: true },
+    copper: { supported: true },
+    alkaline: { supported: true },
   },
   {
-    feature: { name: 'Purification Stages', icon: CheckCircle2 },
-    waterCan: { supported: false, text: 'None/Minimal' },
-    otherPurifiers: { supported: false, text: 'Basic Filtration' },
-    droppurity: { supported: true, text: 'RO+UV+UF+Minerals' },
+    feature: { name: 'In-Tank UV Purification', icon: Droplet },
+    roPlus: { supported: true },
+    copper: { supported: true },
+    alkaline: { supported: true },
+  },
+    {
+    feature: { name: 'Inline UF Purification', icon: Droplet },
+    roPlus: { supported: true },
+    copper: { supported: true },
+    alkaline: { supported: true },
   },
   {
-    feature: { name: 'Upfront Cost', icon: CheckCircle2 },
-    waterCan: { supported: true, text: 'Per Can Charge' },
-    otherPurifiers: { supported: false, text: 'High Initial Buy' },
-    droppurity: { supported: true, text: 'Zero Down Payment' },
+    feature: { name: 'Copper Infusion', icon: Atom },
+    roPlus: { supported: false },
+    copper: { supported: true },
+    alkaline: { supported: false },
   },
   {
-    feature: { name: 'Maintenance', icon: CheckCircle2 },
-    waterCan: { supported: true, text: 'Not Applicable' },
-    otherPurifiers: { supported: false, text: 'Costly AMC' },
-    droppurity: { supported: true, text: 'Free, Lifetime' },
+    feature: { name: 'Alkaline pH Boost', icon: Droplet },
+    roPlus: { supported: false },
+    copper: { supported: false },
+    alkaline: { supported: true },
+  },
+   {
+    feature: { name: 'Storage Capacity', icon: Droplet },
+    roPlus: { supported: true, text: '10 Litres' },
+    copper: { supported: true, text: '10 Litres' },
+    alkaline: { supported: true, text: '10 Litres' },
   },
   {
-    feature: { name: 'Tech Features', icon: CheckCircle2 },
-    waterCan: { supported: false, text: 'None' },
-    otherPurifiers: { supported: false, text: 'Limited/None' },
-    droppurity: { supported: true, text: 'Smart Monitoring*' },
-  },
-  {
-    feature: { name: 'Relocation/Upgrade', icon: CheckCircle2 },
-    waterCan: { supported: false, text: 'Not Applicable' },
-    otherPurifiers: { supported: false, text: 'Difficult/Costly' },
-    droppurity: { supported: true, text: 'Easy & Free' },
+    feature: { name: 'Ideal For', icon: Droplet },
+    roPlus: { supported: true, text: 'Standard Purification' },
+    copper: { supported: true, text: 'Health Enthusiasts' },
+    alkaline: { supported: true, text: 'Acidity Concerns' },
   },
 ];
 
 
 export default function ComparisonTable() {
-  const GRID_COLS = "grid-cols-[30%_17.5%_17.5%_17.5%_17.5%]";
+  const GRID_COLS = "grid-cols-[34%_22%_22%_22%]";
+
+  const tableHeaders = [
+      { id: 'feature', title: 'Features' },
+      { id: 'roPlus', title: roPurifier.name, imageSrc: roPurifier.image, dataAiHint: roPurifier.dataAiHint, isHighlighted: false, className: "bg-blue-500/10" },
+      { id: 'copper', title: copperPurifier.name, imageSrc: copperPurifier.image, dataAiHint: copperPurifier.dataAiHint, isHighlighted: true, className: "bg-copper-500/10 theme-copper" },
+      { id: 'alkaline', title: alkalinePurifier.name, imageSrc: alkalinePurifier.image, dataAiHint: alkalinePurifier.dataAiHint, isHighlighted: false, className: "bg-teal-500/10 theme-teal" },
+  ]
 
   return (
     <section className="py-4 sm:py-6 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-lg sm:text-xl font-semibold text-center mb-4 sm:mb-6 text-foreground">
-          Addressing Your Water Worries: The Droppurity Difference
+          Compare Our Purifiers
         </h2>
         <Card className="shadow-xl overflow-hidden border-border">
           {/* Header Row */}
@@ -130,23 +100,19 @@ export default function ComparisonTable() {
               return (
                 <div
                   key={header.id}
-                  className={`p-1 text-center border-l border-border flex flex-col items-center justify-center ${header.isHighlighted ? header.className : ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
+                  className={`p-1 text-center border-l border-border flex flex-col items-center justify-center ${header.className || ''} ${header.id === 'feature' ? 'border-l-0' : ''}`}
                 >
                   {header.imageSrc && (
                     <Image
                       src={header.imageSrc}
-                      alt={getFilenameFromUrl(header.imageSrc)}
-                      width={header.id === 'droppurity' ? 40 : 28}
-                      height={header.id === 'droppurity' ? 16 : 28}
-                      className={`mb-0.5 ${header.id === 'droppurity' ? 'object-contain' : 'rounded-full'}`}
-                      data-ai-hint={header.dataAiHint || (header.id === 'droppurity' ? "company logo" : "product image")}
+                      alt={header.title}
+                      width={40}
+                      height={40}
+                      className="mb-0.5 object-contain h-10"
+                      data-ai-hint={header.dataAiHint || "product image"}
                     />
                   )}
-                  {HeaderIcon && !header.imageSrc && (
-                    <HeaderIcon className={`w-4 h-4 sm:w-5 sm:h-5 mb-0.5 ${header.iconColor || 'text-foreground'}`} />
-                  )}
                   <p className="text-[9px] sm:text-xs font-semibold text-foreground leading-tight">{header.title}</p>
-                  {header.subTitle && <p className="text-[8px] sm:text-[10px] text-muted-foreground leading-tight">{header.subTitle}</p>}
                 </div>
               );
             })}
@@ -166,37 +132,28 @@ export default function ComparisonTable() {
                 </div>
               </div>
 
-              {/* Other Columns Data (WaterCan, OtherPurifiers, Droppurity) */}
-              {(['waterCan', 'otherPurifiers', 'droppurity'] as const).map((colKey, itemIndex) => {
+              {/* Other Columns Data */}
+              {(['roPlus', 'copper', 'alkaline'] as const).map((colKey, itemIndex) => {
                 const item = row[colKey];
                 const header = tableHeaders[itemIndex + 1];
                 return (
                   <div
                     key={`${rowIndex}-${colKey}`}
-                    className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${header.isHighlighted ? header.className : 'bg-card'}`}
+                    className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${header.className || 'bg-card'}`}
                   >
-                    {item.supported ? <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" /> : <X className="w-3.5 h-3.5 text-destructive mb-0.5" />}
-                    {item.text && <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug break-all">{item.text}</p>}
+                    {item.text ? (
+                        <p className="text-[9px] sm:text-[11px] text-foreground font-medium leading-snug break-words">{item.text}</p>
+                    ) : item.supported ? (
+                        <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" />
+                    ) : (
+                        <X className="w-3.5 h-3.5 text-destructive mb-0.5" />
+                    )}
                   </div>
                 );
               })}
-              {/* Droppurity Advantage Column */}
-               <div className={`p-1 sm:p-2 border-l border-border flex flex-col items-center justify-center text-center ${tableHeaders[4].className}`}>
-                  <Check className="w-3.5 h-3.5 text-green-600 mb-0.5" />
-                  <p className="text-[9px] sm:text-[11px] text-muted-foreground leading-snug break-all">
-                     {row.feature.name === 'Upfront Cost' ? 'Pay as you use' :
-                      row.feature.name === 'Maintenance' ? 'No hidden fees' :
-                      row.feature.name === 'Tech Features' ? 'Smart alerts*' :
-                      row.feature.name === 'Relocation/Upgrade' ? 'Adapts with you' :
-                      'Pure peace of mind'}
-                  </p>
-              </div>
             </div>
           ))}
         </Card>
-         <p className="text-center text-[11px] text-muted-foreground mt-2">
-            * Features may vary by plan/model. Lifetime refers to active subscription period.
-        </p>
       </div>
     </section>
   );
