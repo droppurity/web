@@ -348,6 +348,8 @@ export default function HomePage() {
           </div>
         </section>
 
+        <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
+        
         {/* Highlights Section */}
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -372,7 +374,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
         <section id="droppurity-advantage">
           <ComparisonTable />
         </section>
