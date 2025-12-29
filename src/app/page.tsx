@@ -255,18 +255,16 @@ export default function HomePage() {
                   <Image
                     src="/herom.png"
                     alt="Droppurity water purifier in a modern kitchen setting, mobile view"
-                    layout="fill"
-                    objectFit="cover"
-                    className="block lg:hidden"
+                    fill
+                    className="block lg:hidden object-cover"
                     priority
                     data-ai-hint="water purifier kitchen"
                   />
                   <Image
                     src="/hero.png"
                     alt="Droppurity water purifier rental for families in Bokaro, Jharkhand"
-                    layout="fill"
-                    objectFit="cover"
-                    className="hidden lg:block lg:object-[center_35%]"
+                    fill
+                    className="hidden lg:block object-cover object-[center_35%]"
                     priority
                     data-ai-hint="family kitchen water"
                   />
