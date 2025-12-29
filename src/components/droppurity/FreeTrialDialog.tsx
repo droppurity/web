@@ -49,7 +49,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
 
   const trialPurifierName = "Droppurity RO+";
   const trialPlanName = "Basic";
-  const trialTenure = "28 days";
+  const trialTenure = "7-Day Trial";
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm<FreeTrialFormValues>({
     resolver: zodResolver(freeTrialFormSchema),
@@ -64,7 +64,8 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
   
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
-    if (navigator.geolocation) {
+    // Ensure navigator is available
+    if (typeof window !== "undefined" && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
         (position) => {
             const { latitude, longitude } = position.coords;
@@ -99,7 +100,7 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
     } else {
         setValue('location', '');
     }
-  }, [shareLocation, setValue]);
+  }, [shareLocation]);
 
 
   const onSubmit: SubmitHandler<FreeTrialFormValues> = async (data) => {

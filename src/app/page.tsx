@@ -26,8 +26,8 @@ const features = [
   },
   {
     icon: Shield,
-    title: "Trusted Quality",
-    description: "Reliable service and high-quality purifiers for your peace of mind.",
+    title: "Trusted Local Service",
+    description: "Reliable service from your neighbors in Bokaro for your peace of mind.",
     color: "text-blue-500",
   },
   {
@@ -56,8 +56,8 @@ const highlights = [
   },
   {
     icon: IndianRupee,
-    line1: "Plans Starting",
-    line2: "From ₹299/mo",
+    line1: "No Hidden",
+    line2: "Charges",
   },
 ];
 
@@ -177,25 +177,25 @@ export default function HomePage() {
               {/* Text Content - On top for mobile */}
               <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
                  <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
-                   Smart RO Purifier on Rent
+                   RO Water Purifier on Rent in Bokaro
                 </h1>
                  <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
-                   शुद्ध पानी, बिना परेशानी
+                   शुद्ध पानी, अब आपके बजट में
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                    <span className="text-xs opacity-80">starting from just</span>
+                    <span className="text-xs opacity-80">Starts from just</span>
                     <strong className="text-foreground font-bold text-3xl mx-1">₹299</strong>
                     <span className="text-foreground/80">/month</span>
                     <br />
-                    <span className="text-xs opacity-80">for the {sevenMonthPrice} plan.</span>
+                    <span className="font-semibold text-primary">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
                   <Button asChild className="h-auto text-sm px-6 py-2.5">
                     <Link href="/plans">
                       <div className="flex flex-col items-center leading-tight">
-                        <span>Explore Our Plans</span>
+                        <span>Explore Plans</span>
                         <span className="mt-1 font-normal opacity-90 text-xs">
-                          Starting from ₹299/mo
+                          For Bokaro & Jharkhand
                         </span>
                       </div>
                     </Link>
@@ -216,25 +216,25 @@ export default function HomePage() {
                 {/* Desktop Text Content - Overlay */}
                 <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
                   <h1 className="text-5xl font-bold text-white mb-4">
-                    Smart RO Purifier on Rent
+                    RO Water Purifier on Rent in Bokaro
                   </h1>
                   <p className="text-3xl font-semibold text-gray-100 mb-4">
-                    शुद्ध पानी, बिना परेशानी
+                    शुद्ध पानी, अब आपके बजट में
                   </p>
                   <p className="text-lg text-gray-200 max-w-xl">
-                    <span className="text-sm opacity-80">starting from just</span>
+                    <span className="text-sm opacity-80">Starts from just</span>
                     <strong className="text-white font-bold text-5xl mx-1">₹299</strong>
                     <span className="text-gray-100/90 text-2xl">/month</span>
                     <br />
-                    <span className="text-sm opacity-80">for the {sevenMonthPrice} plan.</span>
+                    <span className="font-semibold text-yellow-300 text-base">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
                   </p>
                   <div className="flex flex-col items-start gap-4 mt-8">
                     <Button asChild className="h-auto text-base px-10 py-3 self-start">
                       <Link href="/plans">
                         <div className="flex flex-col items-center leading-tight">
-                          <span>Explore Our Plans</span>
+                          <span>Explore Plans</span>
                           <span className="mt-1 font-normal opacity-90 text-sm">
-                            Starting from ₹299/mo
+                            For Bokaro & Jharkhand
                           </span>
                         </div>
                       </Link>
@@ -263,7 +263,7 @@ export default function HomePage() {
                   />
                   <Image
                     src="/hero.png"
-                    alt="Droppurity water purifier in a modern kitchen setting with a family"
+                    alt="Droppurity water purifier rental for families in Bokaro, Jharkhand"
                     layout="fill"
                     objectFit="cover"
                     className="hidden lg:block lg:object-[center_35%]"
@@ -277,13 +277,23 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        
+        {/* Local SEO Content Section */}
+        <section className="py-4 sm:py-6 bg-secondary/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-base sm:text-lg font-bold text-foreground">Your Local Water Purifier Rental Service in Jharkhand</h2>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-3xl mx-auto">
+              Looking for the best <strong className="text-primary">RO water purifier on rent in Bokaro</strong>? Droppurity is your trusted local provider, delivering pure and safe drinking water right to your home. We are proud to serve communities across Jharkhand, including <strong className="text-primary">Chas, Ranchi, and Jamshedpur</strong>. Enjoy hassle-free service with no hidden costs.
+            </p>
+          </div>
+        </section>
 
         {/* Features Overview Section */}
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-md md:max-w-4xl lg:max-w-5xl px-4 sm:px-0">
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-                Why Choose Droppurity?
+                Why Choose Droppurity in Bokaro?
               </h2>
               <div className="grid md:grid-cols-3 gap-4 lg:gap-12">
                 {features.map((feature, index) => (
@@ -416,10 +426,10 @@ export default function HomePage() {
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-sm sm:text-base font-semibold mb-1.5 sm:mb-2 text-foreground">
-              Ready for an Upgrade to Purity?
+              Ready for Pure Water in Bokaro?
             </h2>
             <p className="text-[11px] sm:text-xs text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-3 sm:mb-4">
-              Join thousands of happy customers enjoying the benefits of Droppurity water.
+              Join thousands of happy customers in Jharkhand enjoying the benefits of Droppurity.
             </p>
             <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm">
               <Link href="/contact">Get in Touch</Link>
