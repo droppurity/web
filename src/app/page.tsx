@@ -26,8 +26,8 @@ const features = [
   },
   {
     icon: Shield,
-    title: "Trusted Local Service",
-    description: "Reliable service from your neighbors in Bokaro for your peace of mind.",
+    title: "Trusted Service",
+    description: "Reliable service and support for your peace of mind.",
     color: "text-blue-500",
   },
   {
@@ -195,7 +195,7 @@ export default function HomePage() {
                       <div className="flex flex-col items-center leading-tight">
                         <span>Explore Plans</span>
                         <span className="mt-1 font-normal opacity-90 text-xs">
-                          For Bokaro & Jharkhand
+                          Nationwide Service
                         </span>
                       </div>
                     </Link>
@@ -216,7 +216,7 @@ export default function HomePage() {
                 {/* Desktop Text Content - Overlay */}
                 <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
                   <h1 className="text-5xl font-bold text-white mb-4">
-                    RO Water Purifier on Rent in Bokaro
+                    RO Water Purifier on Rent
                   </h1>
                   <p className="text-3xl font-semibold text-gray-100 mb-4">
                     शुद्ध पानी, अब आपके बजट में
@@ -234,7 +234,7 @@ export default function HomePage() {
                         <div className="flex flex-col items-center leading-tight">
                           <span>Explore Plans</span>
                           <span className="mt-1 font-normal opacity-90 text-sm">
-                            For Bokaro & Jharkhand
+                            Nationwide Service
                           </span>
                         </div>
                       </Link>
@@ -262,7 +262,7 @@ export default function HomePage() {
                   />
                   <Image
                     src="/hero.png"
-                    alt="Droppurity water purifier rental for families in Bokaro, Jharkhand"
+                    alt="Droppurity water purifier rental for families"
                     fill
                     className="hidden lg:block object-cover object-[center_35%]"
                     priority
@@ -276,12 +276,12 @@ export default function HomePage() {
           </div>
         </section>
         
-        {/* Local SEO Content Section */}
+        {/* General Service Content Section */}
         <section className="py-4 sm:py-6 bg-secondary/30">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-base sm:text-lg font-bold text-foreground">Your Local Water Purifier Rental Service in Jharkhand</h2>
+            <h2 className="text-base sm:text-lg font-bold text-foreground">Your Go-To Water Purifier Rental Service</h2>
             <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-3xl mx-auto">
-              Looking for the best <strong className="text-primary">RO water purifier on rent in Bokaro</strong>? Droppurity is your trusted local provider, delivering pure and safe drinking water right to your home. We are proud to serve communities across Jharkhand, including <strong className="text-primary">Chas, Ranchi, and Jamshedpur</strong>. Enjoy hassle-free service with no hidden costs.
+              Looking for the best <strong className="text-primary">RO water purifier on rent</strong>? Droppurity is your trusted provider, delivering pure and safe drinking water right to your home. We are proud to serve communities across the country. Enjoy hassle-free service with no hidden costs.
             </p>
           </div>
         </section>
@@ -424,10 +424,10 @@ export default function HomePage() {
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-sm sm:text-base font-semibold mb-1.5 sm:mb-2 text-foreground">
-              Ready for Pure Water in Bokaro?
+              Ready for Pure Water?
             </h2>
             <p className="text-[11px] sm:text-xs text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-3 sm:mb-4">
-              Join thousands of happy customers in Jharkhand enjoying the benefits of Droppurity.
+              Join thousands of happy customers enjoying the benefits of Droppurity.
             </p>
             <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm">
               <Link href="/contact">Get in Touch</Link>

@@ -4,8 +4,8 @@ import './globals.css';
 import ClientLayout from '@/components/layout/ClientLayout';
 
 const siteUrl = "https://www.droppurity.in";
-const siteTitle = "RO Water Purifier on Rent in Bokaro, Jharkhand | Droppurity";
-const siteDescription = "Get a Droppurity RO water purifier on rent in Bokaro, Chas & throughout Jharkhand. Plans from ₹299/mo. Enjoy pure, healthy water with zero down payment, lifetime free maintenance, and a 7-day risk-free trial.";
+const siteTitle = "RO Water Purifier on Rent | Droppurity";
+const siteDescription = "Get a Droppurity RO water purifier on rent. Plans from ₹299/mo. Enjoy pure, healthy water with zero down payment, lifetime free maintenance, and a 7-day risk-free trial.";
 const ogImageUrl = `${siteUrl}/hero.png`;
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
       { url: '/favicon/apple-touch-icon.png' },
     ],
   },
-  keywords: ["ro water purifier on rent in bokaro", "water purifier rental jharkhand", "ro on rent in chas", "droppurity bokaro", "ro water filter for home", "best ro purifier", "ro purifier near me", "best ro purifier in bokaro", "ro in chas", "ro in ranchi", "ro in jamshedpur", "ro in patna", "ro in jharkhad", "ro in west bengal", "cheap and best ro purifier", "best ro filer", "filter on rent", "rent ro"],
+  keywords: ["ro water purifier on rent", "water purifier rental", "ro on rent", "droppurity", "ro water filter for home", "best ro purifier", "ro purifier near me", "best ro purifier", "cheap and best ro purifier", "best ro filer", "filter on rent", "rent ro"],
   authors: [{ name: 'Droppurity', url: siteUrl }],
   creator: 'Droppurity',
   robots: {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1200,
         height: 630,
-        alt: 'A Droppurity RO water purifier, perfect for homes in Bokaro, Jharkhand.',
+        alt: 'A Droppurity RO water purifier, perfect for any home.',
       },
     ],
   },
@@ -95,8 +95,8 @@ export const metadata: Metadata = {
         ]
       },
       "areaServed": {
-        "@type": "AdministrativeArea",
-        "name": "Jharkhand"
+        "@type": "Country",
+        "name": "India"
       },
       "offers": {
         "@type": "Offer",
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
         "priceCurrency": "INR",
         "description": "Monthly rental starting from ₹299."
       },
-      "description": "Smart RO water purifiers on rent in Bokaro and across Jharkhand with lifetime free maintenance."
+      "description": "Smart RO water purifiers on rent with lifetime free maintenance."
     })
   }
 };

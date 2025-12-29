@@ -8,17 +8,17 @@ import { Button } from '@/components/ui/button';
 const testimonials: { name: string; review: string; rating: number }[] = [
     {
         name: "Rakesh Kumar",
-        review: "The best RO service in Bokaro. Installation was quick and the water tastes great. Highly recommended for anyone looking for a water purifier on rent.",
+        review: "The best RO service I've used. Installation was quick and the water tastes great. Highly recommended for anyone looking for a water purifier on rent.",
         rating: 5,
     },
     {
         name: "Sunita Devi",
-        review: "I was tired of dealing with water jars. Droppurity is a lifesaver! Their service in Chas is excellent and the free maintenance is a huge plus.",
+        review: "I was tired of dealing with water jars. Droppurity is a lifesaver! Their service is excellent and the free maintenance is a huge plus.",
         rating: 5,
     },
     {
         name: "Anil Singh",
-        review: "A very professional and reliable water purifier rental service in Jharkhand. The team is responsive and the 'no hidden charges' promise is real.",
+        review: "A very professional and reliable water purifier rental service. The team is responsive and the 'no hidden charges' promise is real.",
         rating: 4,
     }
 ];
@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold font-headline text-primary">
-            Trusted by Families in Bokaro
+            Trusted by Families Everywhere
           </h2>
           <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             See what our happy customers are saying about Droppurity.
