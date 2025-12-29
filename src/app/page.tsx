@@ -177,7 +177,7 @@ export default function HomePage() {
               {/* Text Content - On top for mobile */}
               <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
                  <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
-                   RO Water Purifier on Rent in Bokaro
+                   RO Water Purifier on Rent 
                 </h1>
                  <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
                    शुद्ध पानी, अब आपके बजट में
@@ -293,7 +293,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-md md:max-w-4xl lg:max-w-5xl px-4 sm:px-0">
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-                Why Choose Droppurity in Bokaro?
+                Why Choose Droppurity ?
               </h2>
               <div className="grid md:grid-cols-3 gap-4 lg:gap-12">
                 {features.map((feature, index) => (
