@@ -1,0 +1,157 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 100% 98%; /* Very light blue */
+    --foreground: 220 30% 25%; /* Dark, desaturated blue */
+
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 220 30% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 25%;
+
+    --primary: 210 90% 55%; /* Vibrant blue */
+    --primary-foreground: 0 0% 100%; 
+
+    --secondary: 210 60% 90%; /* Lighter blue */
+    --secondary-foreground: 210 50% 30%;
+
+    --muted: 210 40% 92%;
+    --muted-foreground: 210 20% 55%;
+
+    --accent: 210 90% 55%; /* Vibrant blue, same as primary */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 20% 88%;
+    --input: 210 20% 94%;
+    --ring: 210 90% 55%; /* Vibrant blue for focus rings */
+
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    
+    --radius: 0.75rem; /* More rounded corners */
+
+    /* Dynamic accent colors */
+    --dynamic-accent-hsl-values: 210 90% 55%; /* Default to primary blue HSL values */
+    --dynamic-accent-foreground-hsl-values: 0 0% 100%;
+    --light-dynamic-accent-bg-hsl-values: 210 90% 88%; /* Default light blue for unselected bg - Adjusted for more distinct blue */
+
+
+    /* Gradient variables for dynamic accent */
+    --gradient-start-hsl-values: 210 90% 55%; /* Default to current dynamic accent */
+    --gradient-end-hsl-values: 210 90% 45%; /* Darker shade of default blue */
+
+    --dynamic-accent: hsl(var(--dynamic-accent-hsl-values));
+    --dynamic-accent-foreground: hsl(var(--dynamic-accent-foreground-hsl-values));
+    --light-dynamic-accent-bg: hsl(var(--light-dynamic-accent-bg-hsl-values));
+    --gradient-start: hsl(var(--gradient-start-hsl-values));
+    --gradient-end: hsl(var(--gradient-end-hsl-values));
+  }
+
+  .dark {
+    --background: 220 30% 10%; 
+    --foreground: 210 40% 96%;
+
+    --card: 220 30% 15%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 220 30% 15%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 210 90% 60%;
+    --primary-foreground: 220 30% 5%;
+
+    --secondary: 210 50% 25%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 210 30% 22%;
+    --muted-foreground: 210 30% 65%;
+
+    --accent: 210 90% 60%;
+    --accent-foreground: 220 30% 5%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 30% 30%;
+    --input: 210 30% 30%;
+    --ring: 210 90% 60%;
+
+    --dynamic-accent-hsl-values: 210 90% 60%;
+    --dynamic-accent-foreground-hsl-values: 220 30% 5%;
+    --light-dynamic-accent-bg-hsl-values: 210 80% 22%; /* Darker light blue for dark mode - Adjusted for more distinct blue */
+
+
+    /* Gradient variables for dynamic accent in dark mode */
+    --gradient-start-hsl-values: 210 90% 60%; /* Default to current dynamic accent in dark mode */
+    --gradient-end-hsl-values: 210 90% 50%; /* Darker shade of default blue in dark mode */
+  }
+
+  .theme-blue { /* Explicitly define blue theme variables */
+    --dynamic-accent-hsl-values: 210 90% 55%;
+    --dynamic-accent-foreground-hsl-values: 0 0% 100%;
+    --light-dynamic-accent-bg-hsl-values: 210 90% 88%;
+    --gradient-start-hsl-values: 210 90% 55%;
+    --gradient-end-hsl-values: 210 90% 45%;
+  }
+
+  .dark .theme-blue { /* Dark mode for explicit blue theme */
+    --dynamic-accent-hsl-values: 210 90% 60%;
+    --dynamic-accent-foreground-hsl-values: 220 30% 5%;
+    --light-dynamic-accent-bg-hsl-values: 210 80% 22%;
+    --gradient-start-hsl-values: 210 90% 60%;
+    --gradient-end-hsl-values: 210 90% 50%;
+  }
+
+  .theme-teal {
+    --dynamic-accent-hsl-values: 170 60% 45%;
+    --dynamic-accent-foreground-hsl-values: 0 0% 100%;
+    --light-dynamic-accent-bg-hsl-values: 170 60% 92%; /* Light Teal */
+    --gradient-start-hsl-values: 170 60% 45%; /* Teal */
+    --gradient-end-hsl-values: 170 60% 35%; /* Darker Teal */
+  }
+
+  .dark .theme-teal {
+    --dynamic-accent-hsl-values: 170 60% 50%;
+    --dynamic-accent-foreground-hsl-values: 200 100% 5%;
+    --light-dynamic-accent-bg-hsl-values: 170 60% 18%; /* Darker light teal for dark mode */
+    --gradient-start-hsl-values: 170 60% 50%; 
+    --gradient-end-hsl-values: 170 60% 40%; 
+  }
+
+  .theme-copper {
+    --dynamic-accent-hsl-values: 30 70% 50%; 
+    --dynamic-accent-foreground-hsl-values: 0 0% 100%;
+    --light-dynamic-accent-bg-hsl-values: 30 70% 92%; /* Light Copper */
+    --gradient-start-hsl-values: 30 70% 50%; /* Copper */
+    --gradient-end-hsl-values: 30 70% 40%; /* Darker Copper */
+  }
+
+  .dark .theme-copper {
+    --dynamic-accent-hsl-values: 30 70% 55%;
+    --dynamic-accent-foreground-hsl-values: 20 100% 5%;
+    --light-dynamic-accent-bg-hsl-values: 30 70% 18%; /* Darker light copper for dark mode */
+    --gradient-start-hsl-values: 30 70% 55%;
+    --gradient-end-hsl-values: 30 70% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+}
