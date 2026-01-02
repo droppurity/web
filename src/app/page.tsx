@@ -270,6 +270,8 @@ export default function HomePage() {
           </div>
         </section>
         
+        <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
+        
         {/* General Service Content Section */}
         <section className="py-4 sm:py-6 bg-secondary/30">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -350,8 +352,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
         
         {/* Highlights Section */}
         <section className="py-4 sm:py-6 bg-background">
@@ -433,3 +433,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
