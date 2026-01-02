@@ -194,9 +194,6 @@ export default function HomePage() {
                     <Link href="/plans">
                       <div className="flex flex-col items-center leading-tight">
                         <span>Explore Plans</span>
-                        <span className="mt-1 font-normal opacity-90 text-xs">
-                          Nationwide Service
-                        </span>
                       </div>
                     </Link>
                   </Button>
@@ -233,9 +230,6 @@ export default function HomePage() {
                       <Link href="/plans">
                         <div className="flex flex-col items-center leading-tight">
                           <span>Explore Plans</span>
-                          <span className="mt-1 font-normal opacity-90 text-sm">
-                            Nationwide Service
-                          </span>
                         </div>
                       </Link>
                     </Button>
