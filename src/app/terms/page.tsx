@@ -70,9 +70,14 @@ export default function TermsOfUsePage() {
               </div>
 
               <div className="space-y-4">
-                  <h2 className="!mb-2">7. Equipment Condition & Charges for Damages</h2>
-                  <p>7.1. The customer agrees to inspect the equipment upon delivery. Any discrepancies must be reported within 24 hours.</p>
-                  <p>7.2. The customer is responsible for the equipment's safekeeping. If the equipment is damaged, lost, or malfunctions due to misuse during the rental period, the customer must notify Droppurity immediately. The repair or replacement cost will be billed to the customer as per the charges outlined below:</p>
+                <h2 className="!mb-2">7. Shipping Policy</h2>
+                <p>7.1. Delivery and installation will be completed within 48 hours of successful order placement and verification.</p>
+              </div>
+
+              <div className="space-y-4">
+                  <h2 className="!mb-2">8. Equipment Condition & Charges for Damages</h2>
+                  <p>8.1. The customer agrees to inspect the equipment upon delivery. Any discrepancies must be reported within 24 hours.</p>
+                  <p>8.2. The customer is responsible for the equipment's safekeeping. If the equipment is damaged, lost, or malfunctions due to misuse during the rental period, the customer must notify Droppurity immediately. The repair or replacement cost will be billed to the customer as per the charges outlined below:</p>
                   <ul className="!mt-2">
                       <li>Front cover damage: ₹1,000</li>
                       <li>Main body damage: ₹1,700</li>
@@ -84,29 +89,29 @@ export default function TermsOfUsePage() {
               </div>
               
               <div className="space-y-4">
-                  <h2 className="!mb-2">8. Liability</h2>
-                  <p>8.1. Droppurity is not responsible for damages resulting from misuse, unauthorized alterations, or negligence by the customer.</p>
-                  <p>8.2. Droppurity's liability is limited to the value of the service provided. We are not liable for indirect or consequential damages.</p>
+                  <h2 className="!mb-2">9. Liability</h2>
+                  <p>9.1. Droppurity is not responsible for damages resulting from misuse, unauthorized alterations, or negligence by the customer.</p>
+                  <p>9.2. Droppurity's liability is limited to the value of the service provided. We are not liable for indirect or consequential damages.</p>
               </div>
 
               <div className="space-y-4">
-                  <h2 className="!mb-2">9. Payment Terms</h2>
-                  <p>9.1. The customer agrees to pay all rental and other charges on time. Late payments may incur penalties as specified in the service agreement.</p>
-                  <p>9.2. All damage charges will be invoiced separately and must be paid by the due date.</p>
+                  <h2 className="!mb-2">10. Payment Terms</h2>
+                  <p>10.1. The customer agrees to pay all rental and other charges on time. Late payments may incur penalties as specified in the service agreement.</p>
+                  <p>10.2. All damage charges will be invoiced separately and must be paid by the due date.</p>
               </div>
 
               <div className="space-y-4">
-                  <h2 className="!mb-2">10. Governing Law</h2>
-                  <p>10.1. This agreement and any disputes arising from it will be governed by the laws of India, with exclusive jurisdiction in the courts of Jharkhand.</p>
+                  <h2 className="!mb-2">11. Governing Law</h2>
+                  <p>11.1. This agreement and any disputes arising from it will be governed by the laws of India, with exclusive jurisdiction in the courts of Jharkhand.</p>
               </div>
 
               <div className="space-y-4">
-                  <h2 className="!mb-2">11. General Provisions</h2>
-                  <p>11.1. This document constitutes the entire agreement between the customer and Droppurity. No other promises, representations, or agreements, whether verbal or written, shall be binding unless they are in writing and signed by both parties.</p>
+                  <h2 className="!mb-2">12. General Provisions</h2>
+                  <p>12.1. This document constitutes the entire agreement between the customer and Droppurity. No other promises, representations, or agreements, whether verbal or written, shall be binding unless they are in writing and signed by both parties.</p>
               </div>
 
               <div className="space-y-4">
-                  <h2 className="!mb-2">12. Contact Information</h2>
+                  <h2 className="!mb-2">13. Contact Information</h2>
                   <p>For any queries or support, please contact us at:</p>
                   <ul className="!mt-2">
                       <li>Email: <a href="mailto:official@droppurity.in" className="text-primary hover:underline">official@droppurity.in</a></li>
