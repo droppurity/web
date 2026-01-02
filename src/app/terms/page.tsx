@@ -66,7 +66,7 @@ export default function TermsOfUsePage() {
                   <h3 className="!text-sm !mb-1">6.1. Product Purchase & Warranty</h3>
                   <p>All products sold by Droppurity come with a standard manufacturer's warranty from the date of purchase, which covers manufacturing defects and technical malfunctions under normal usage. The warranty is void if the product's seal is broken, it is physically damaged, or unauthorized repairs are attempted. Please refer to the specific product warranty card for details.</p>
                   <h3 className="!text-sm !mb-1">6.2. Returns & Refunds</h3>
-                  <p>All sales are final. Droppurity does not accept returns or provide refunds for products purchased outright.</p>
+                  <p>All sales of water purifiers are final. Droppurity does not accept returns or provide refunds for products that have been purchased outright. We encourage customers to take advantage of our 7-day risk-free trial for rental units to ensure satisfaction before making a purchase decision.</p>
               </div>
 
               <div className="space-y-4">
