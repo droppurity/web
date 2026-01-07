@@ -41,13 +41,13 @@ export default function Footer() {
             </p>
             <div>
               <p className="text-xs text-primary-foreground/80">
-                <strong>Main Branch:</strong><br />
+                <strong>Nagpur office:</strong><br />
                 Plot No. 21, Adarsh Nagar,<br />
                 Opp. Shivaji Chowk, Khadgaon Road,<br />
                 WADI, NAGPUR - 440 023. (MH.)
               </p>
               <p className="text-xs text-primary-foreground/80 mt-1.5">
-                <strong>Corporate Office:</strong><br />
+                <strong>Ranchi office:</strong><br />
                 B-503, Shivalik Enclave, Obaria Road,<br />
                 Hatia, Near Nandan Palace,<br />
                 Ranchi - 834003
@@ -61,6 +61,9 @@ export default function Footer() {
                 <strong>Bokaro Office:</strong><br />
                 Shivpuri colony, chas,<br />
                 Bokaro, Jharkhand - 827013.
+              </p>
+               <p className="text-[10px] text-primary-foreground/60 italic mt-2.5">
+                Note: These office locations represent our valued product partners, relation partners, and service partners.
               </p>
             </div>
           </div>
