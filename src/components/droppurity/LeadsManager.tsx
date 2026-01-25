@@ -37,8 +37,16 @@ const SubscriptionsTable = ({ leads, isClient }: { leads: any[], isClient: boole
                         <TableRow key={lead._id}>
                             <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
-                            <TableCell>{lead.phone}</TableCell>
-                            <TableCell>{lead.email}</TableCell>
+                            <TableCell>
+                                <a href={`tel:${lead.phone}`} className="text-primary hover:underline">
+                                    {lead.phone}
+                                </a>
+                            </TableCell>
+                            <TableCell>
+                                <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
+                                    {lead.email}
+                                </a>
+                            </TableCell>
                             <TableCell>{lead.purifierName}</TableCell>
                             <TableCell><Badge variant="secondary">{lead.planName}</Badge></TableCell>
                             <TableCell><Badge variant="outline">{lead.tenure}</Badge></TableCell>
@@ -70,7 +78,11 @@ const TrialsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }) =
                         <TableRow key={lead._id}>
                             <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
-                            <TableCell>{lead.phone}</TableCell>
+                            <TableCell>
+                                <a href={`tel:${lead.phone}`} className="text-primary hover:underline">
+                                    {lead.phone}
+                                </a>
+                            </TableCell>
                             <TableCell>{lead.city || 'N/A'}</TableCell>
                             <TableCell className="text-xs">{lead.address}</TableCell>
                         </TableRow>
@@ -100,7 +112,11 @@ const ContactsTable = ({ leads, isClient }: { leads: any[], isClient: boolean })
                         <TableRow key={lead._id}>
                             <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP p') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
-                            <TableCell>{lead.email}</TableCell>
+                            <TableCell>
+                                <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
+                                    {lead.email}
+                                </a>
+                            </TableCell>
                             <TableCell>{lead.subject}</TableCell>
                             <TableCell className="text-xs">{lead.message}</TableCell>
                         </TableRow>
@@ -131,7 +147,11 @@ const ReferralsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }
                             <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.customerId}</TableCell>
                             <TableCell>{lead.friendName}</TableCell>
-                            <TableCell>{lead.friendMobile}</TableCell>
+                            <TableCell>
+                                <a href={`tel:${lead.friendMobile}`} className="text-primary hover:underline">
+                                    {lead.friendMobile}
+                                </a>
+                            </TableCell>
                             <TableCell className="text-xs">{lead.friendAddress}</TableCell>
                         </TableRow>
                     ))}
