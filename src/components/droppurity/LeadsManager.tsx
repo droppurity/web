@@ -1,6 +1,8 @@
 
+
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -13,7 +15,7 @@ const NoLeads = () => (
     </div>
 );
 
-const SubscriptionsTable = ({ leads }: { leads: any[] }) => {
+const SubscriptionsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }) => {
     if (leads.length === 0) return <NoLeads />;
     return (
         <div className="max-h-[60vh] overflow-y-auto border rounded-lg">
@@ -33,7 +35,7 @@ const SubscriptionsTable = ({ leads }: { leads: any[] }) => {
                 <TableBody>
                     {leads.map(lead => (
                         <TableRow key={lead._id}>
-                            <TableCell>{format(new Date(lead.createdAt), 'PP')}</TableCell>
+                            <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
                             <TableCell>{lead.phone}</TableCell>
                             <TableCell>{lead.email}</TableCell>
@@ -49,7 +51,7 @@ const SubscriptionsTable = ({ leads }: { leads: any[] }) => {
     );
 };
 
-const TrialsTable = ({ leads }: { leads: any[] }) => {
+const TrialsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }) => {
      if (leads.length === 0) return <NoLeads />;
     return (
         <div className="max-h-[60vh] overflow-y-auto border rounded-lg">
@@ -66,7 +68,7 @@ const TrialsTable = ({ leads }: { leads: any[] }) => {
                 <TableBody>
                     {leads.map(lead => (
                         <TableRow key={lead._id}>
-                            <TableCell>{format(new Date(lead.createdAt), 'PP')}</TableCell>
+                            <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
                             <TableCell>{lead.phone}</TableCell>
                             <TableCell>{lead.city || 'N/A'}</TableCell>
@@ -79,7 +81,7 @@ const TrialsTable = ({ leads }: { leads: any[] }) => {
     );
 };
 
-const ContactsTable = ({ leads }: { leads: any[] }) => {
+const ContactsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }) => {
     if (leads.length === 0) return <NoLeads />;
     return (
         <div className="max-h-[60vh] overflow-y-auto border rounded-lg">
@@ -96,7 +98,7 @@ const ContactsTable = ({ leads }: { leads: any[] }) => {
                 <TableBody>
                     {leads.map(lead => (
                         <TableRow key={lead._id}>
-                            <TableCell>{format(new Date(lead.createdAt), 'PP p')}</TableCell>
+                            <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP p') : ''}</TableCell>
                             <TableCell>{lead.name}</TableCell>
                             <TableCell>{lead.email}</TableCell>
                             <TableCell>{lead.subject}</TableCell>
@@ -109,7 +111,7 @@ const ContactsTable = ({ leads }: { leads: any[] }) => {
     );
 };
 
-const ReferralsTable = ({ leads }: { leads: any[] }) => {
+const ReferralsTable = ({ leads, isClient }: { leads: any[], isClient: boolean }) => {
     if (leads.length === 0) return <NoLeads />;
     return (
         <div className="max-h-[60vh] overflow-y-auto border rounded-lg">
@@ -126,7 +128,7 @@ const ReferralsTable = ({ leads }: { leads: any[] }) => {
                 <TableBody>
                     {leads.map(lead => (
                         <TableRow key={lead._id}>
-                            <TableCell>{format(new Date(lead.createdAt), 'PP')}</TableCell>
+                            <TableCell>{isClient ? format(new Date(lead.createdAt), 'PP') : ''}</TableCell>
                             <TableCell>{lead.customerId}</TableCell>
                             <TableCell>{lead.friendName}</TableCell>
                             <TableCell>{lead.friendMobile}</TableCell>
@@ -141,6 +143,12 @@ const ReferralsTable = ({ leads }: { leads: any[] }) => {
 
 
 export default function LeadsManager({ contacts, trials, subscriptions, referrals }: { contacts: any[], trials: any[], subscriptions: any[], referrals: any[]}) {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     return (
         <Card className="shadow-xl">
             <CardHeader>
@@ -155,10 +163,10 @@ export default function LeadsManager({ contacts, trials, subscriptions, referral
                         <TabsTrigger value="contacts">Contacts <Badge className="ml-2">{contacts.length}</Badge></TabsTrigger>
                         <TabsTrigger value="referrals">Referrals <Badge className="ml-2">{referrals.length}</Badge></TabsTrigger>
                     </TabsList>
-                    <TabsContent value="subscriptions"><SubscriptionsTable leads={subscriptions} /></TabsContent>
-                    <TabsContent value="trials"><TrialsTable leads={trials} /></TabsContent>
-                    <TabsContent value="contacts"><ContactsTable leads={contacts} /></TabsContent>
-                    <TabsContent value="referrals"><ReferralsTable leads={referrals} /></TabsContent>
+                    <TabsContent value="subscriptions"><SubscriptionsTable leads={subscriptions} isClient={isClient} /></TabsContent>
+                    <TabsContent value="trials"><TrialsTable leads={trials} isClient={isClient} /></TabsContent>
+                    <TabsContent value="contacts"><ContactsTable leads={contacts} isClient={isClient} /></TabsContent>
+                    <TabsContent value="referrals"><ReferralsTable leads={referrals} isClient={isClient} /></TabsContent>
                 </Tabs>
             </CardContent>
         </Card>
