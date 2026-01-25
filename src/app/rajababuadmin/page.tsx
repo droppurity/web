@@ -9,6 +9,22 @@ import LeadsManager from '@/components/droppurity/LeadsManager';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+// Helper function to safely serialize MongoDB documents for Client Components
+const serializeDocs = (docs: any[]) => {
+  return docs.map(doc => {
+    const plainDoc = { ...doc };
+    if (plainDoc._id) {
+      plainDoc._id = plainDoc._id.toString();
+    }
+    if (plainDoc.createdAt && plainDoc.createdAt instanceof Date) {
+      plainDoc.createdAt = plainDoc.createdAt.toISOString();
+    }
+    // You can add more checks for other non-serializable types if needed
+    return plainDoc;
+  });
+};
+
+
 async function getLeads() {
   try {
     const client = await connectToDatabase();
@@ -19,12 +35,11 @@ async function getLeads() {
     const subscriptions = await db.collection('subscriptions').find({}).sort({ createdAt: -1 }).toArray();
     const referrals = await db.collection('referrals').find({}).sort({ createdAt: -1 }).toArray();
 
-    // Serialize data to pass from Server to Client Component
     return {
-      contacts: JSON.parse(JSON.stringify(contacts)),
-      trials: JSON.parse(JSON.stringify(free_trials)),
-      subscriptions: JSON.parse(JSON.stringify(subscriptions)),
-      referrals: JSON.parse(JSON.stringify(referrals)),
+      contacts: serializeDocs(contacts),
+      trials: serializeDocs(free_trials),
+      subscriptions: serializeDocs(subscriptions),
+      referrals: serializeDocs(referrals),
     };
   } catch (error) {
     console.error("Failed to fetch leads:", error);
