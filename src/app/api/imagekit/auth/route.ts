@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 import ImageKit from 'imagekit';
 
 const imagekit = new ImageKit({
-    publicKey: "public_w3IZIaX1dTh4qKg+tymOqYsb4N8=",
-    privateKey: "private_V2w3+iGN5qderjPtuRLXmmt7aX0=",
-    urlEndpoint: "https://ik.imagekit.io/gdal96mht",
+    publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+    urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
 });
 
 export async function GET(request: Request) {
