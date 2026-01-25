@@ -2,11 +2,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import { compareSync } from 'bcryptjs';
 
-export async function middleware(req: NextRequest) {
-  // Reading a Node.js specific API (process.env) opts this middleware
-  // into the Node.js runtime, which is required for the 'mongodb' package.
-  process.env.NODE_ENV;
+// Opt-in to the Node.js runtime, required for 'mongodb' and 'bcryptjs' packages.
+export const runtime = 'nodejs';
 
+export async function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization');
 
   if (basicAuth) {
