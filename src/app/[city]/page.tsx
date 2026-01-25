@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { capitalCase } from 'change-case';
 import CityTrialForm from '@/components/droppurity/CityTrialForm';
+import PlanSelectionSection from '@/components/droppurity/PlanSelectionSection';
 
 // List of cities to pre-render
 const cities = [
@@ -52,5 +53,10 @@ export default function CityPage({ params }: { params: { city: string } }) {
      )
   }
 
-  return <CityTrialForm cityName={cityName} />;
+  return (
+    <>
+      <PlanSelectionSection cityName={cityName} />
+      <CityTrialForm cityName={cityName} />
+    </>
+  );
 }

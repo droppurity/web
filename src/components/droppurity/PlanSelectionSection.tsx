@@ -22,6 +22,7 @@ const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexO
 
 interface PlanSelectionSectionProps {
   isHeaderDominant?: boolean;
+  cityName?: string;
 }
 
 function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, isInView: boolean }) {
@@ -230,7 +231,7 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
 
 
 const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProps>(
-  ({ isHeaderDominant }, ref) => {
+  ({ isHeaderDominant, cityName }, ref) => {
   const [selectedPurifierId, setSelectedPurifierId] = useState<string>(defaultPurifierId);
   const [selectedTenureId, setSelectedTenureId] = useState<string>(defaultTenureId);
   const [isInView, setIsInView] = useState(false);
@@ -339,10 +340,12 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
         <header className="text-center mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold font-headline text-foreground flex items-center justify-center">
               <Droplet className="w-7 h-7 sm:w-8 sm:h-8 text-primary mr-2" />
-              Choose Your Droppurity Plan
+              {cityName ? `Water Purifier Plans in ${cityName}` : 'Choose Your Droppurity Plan'}
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground mt-1">
-              Select the right purifier, plan, and tenure for your needs.
+              {cityName
+                ? `Find the perfect RO rental plan for your home in ${cityName}.`
+                : 'Select the right purifier, plan, and tenure for your needs.'}
             </p>
         </header>
 
