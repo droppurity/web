@@ -25,7 +25,7 @@ export default function CityHero({ city }: CityHeroProps) {
             alt={`A view of ${city.monument} in ${city.name}`}
             width={1200}
             height={600}
-            className="w-full h-auto object-cover aspect-[2/1]"
+            className="w-full h-auto object-cover aspect-[2/1] filter grayscale contrast-150 brightness-110"
             data-ai-hint={city.dataAiHint}
             priority
           />
