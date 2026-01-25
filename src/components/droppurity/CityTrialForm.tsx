@@ -18,7 +18,6 @@ import { Loader2 } from 'lucide-react';
 
 const freeTrialFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit Indian mobile number." }),
   location: z.string().url({ message: "Please auto-fetch a valid location link." }).optional().or(z.literal('')),
   address: z.string().min(10, { message: "Please enter a full installation address." }),
@@ -49,7 +48,6 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
       tenure: trialTenure,
       city: cityName,
       name: '',
-      email: '',
       phone: '',
       location: '',
       address: '',
@@ -140,11 +138,6 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
                 {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
-                {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number</Label>
