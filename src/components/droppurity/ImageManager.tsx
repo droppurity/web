@@ -8,13 +8,17 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Copy } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cityData } from '@/config/cityData';
 
 const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
 const authenticationEndpoint = '/api/imagekit/auth';
 
 export default function ImageManager() {
-  const [folder, setFolder] = useState('cities'); // Default folder
+  const [folder, setFolder] = useState('');
+  const [uploadMode, setUploadMode] = useState('city'); // 'city' or 'custom'
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
@@ -62,6 +66,12 @@ export default function ImageManager() {
     }
   };
 
+  const handleCitySelect = (citySlug: string) => {
+    if (citySlug) {
+      setFolder(`cities/${citySlug}`);
+    }
+  };
+
   if (!publicKey || !urlEndpoint) {
     return (
       <div className="text-destructive font-semibold">
@@ -78,22 +88,47 @@ export default function ImageManager() {
     >
       <div className="space-y-6">
         <div>
-          <Label htmlFor="folder-name">Upload Folder</Label>
-          <Input
-            id="folder-name"
-            value={folder}
-            onChange={(e) => setFolder(e.target.value)}
-            placeholder="e.g., cities/kolkata"
-            className="mt-1"
-            disabled={isUploading}
-          />
-           <p className="text-xs text-muted-foreground mt-1">Enter a folder path. Nested folders are created with a '/'.</p>
+          <Label>Upload Folder</Label>
+          <RadioGroup value={uploadMode} onValueChange={setUploadMode} className="flex space-x-4 py-2">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="city" id="city" />
+              <Label htmlFor="city">Select City</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="custom" id="custom" />
+              <Label htmlFor="custom">Custom Folder</Label>
+            </div>
+          </RadioGroup>
+
+          {uploadMode === 'city' ? (
+            <Select onValueChange={handleCitySelect} disabled={isUploading}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a city to create a folder..." />
+              </SelectTrigger>
+              <SelectContent>
+                {cityData.map(city => (
+                  <SelectItem key={city.slug} value={city.slug}>
+                    {city.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <Input
+              value={folder}
+              onChange={(e) => setFolder(e.target.value)}
+              placeholder="e.g., products/new"
+              className="mt-1"
+              disabled={isUploading}
+            />
+          )}
+          <p className="text-xs text-muted-foreground mt-1">Current upload path: <strong>{folder || '[Not Set]'}</strong></p>
         </div>
 
         <div className="p-4 border-2 border-dashed border-border rounded-lg text-center">
             <Button 
                 type="button" 
-                disabled={isUploading}
+                disabled={isUploading || !folder}
                 onClick={() => ikUploadRef.current?.click()}
             >
                 {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -109,9 +144,9 @@ export default function ImageManager() {
                 onUploadStart={onUploadStart}
                 onSuccess={onSuccess}
                 onError={onError}
-                disabled={isUploading}
+                disabled={isUploading || !folder}
             />
-            <p className="text-xs text-muted-foreground mt-2">Click to select an image.</p>
+            <p className="text-xs text-muted-foreground mt-2">Select a folder, then click to select an image.</p>
         </div>
 
         {uploadedImageUrl && (
