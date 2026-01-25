@@ -43,9 +43,9 @@ export default function ImageManager() {
     console.error("ImageKit Upload Error:", err);
     
     let description = "An unknown error occurred during upload.";
-    if (Object.keys(err).length === 0) {
+    if (err && Object.keys(err).length === 0) { // Check for empty object
       description = "Authentication failed. Please ensure your IMAGEKIT_PRIVATE_KEY is set correctly in .env.local and that the server has been restarted.";
-    } else if (err.message) {
+    } else if (err && err.message) {
       description = err.message;
     }
 
