@@ -12,8 +12,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cityData } from '@/config/cityData';
 
-const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
-const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+const publicKey = "public_w3IZIaX1dTh4qKg+tymOqYsb4N8=";
+const urlEndpoint = "https://ik.imagekit.io/gdal96mht";
 const authenticationEndpoint = '/api/imagekit/auth';
 
 export default function ImageManager() {

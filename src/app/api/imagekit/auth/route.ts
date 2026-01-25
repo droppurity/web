@@ -2,14 +2,10 @@
 import { NextResponse } from 'next/server';
 import ImageKit from 'imagekit';
 
-if (!process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || !process.env.IMAGEKIT_PRIVATE_KEY || !process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT) {
-  throw new Error("ImageKit environment variables are not set.");
-}
-
 const imagekit = new ImageKit({
-    publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
+    publicKey: "public_w3IZIaX1dTh4qKg+tymOqYsb4N8=",
+    privateKey: "private_V2w3+iGN5qderjPtuRLXmmt7aX0=",
+    urlEndpoint: "https://ik.imagekit.io/gdal96mht",
 });
 
 export async function GET(request: Request) {
