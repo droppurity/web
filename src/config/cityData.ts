@@ -8,7 +8,7 @@ export interface CityData {
   localTitle: string;
 }
 
-const imageKitBaseUrl = "https://ik.imagekit.io/droppurity/cities";
+const imageKitBaseUrl = "https://ik.imagekit.io/gdal96mht/cities";
 const heroImageFilename = "hero-shot.jpg";
 
 
