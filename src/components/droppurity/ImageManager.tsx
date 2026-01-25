@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef } from 'react';
@@ -18,6 +17,7 @@ export default function ImageManager() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
+  const ikUploadRef = useRef<HTMLInputElement>(null);
 
   const onUploadStart = () => {
     setIsUploading(true);
@@ -90,7 +90,17 @@ export default function ImageManager() {
         </div>
 
         <div className="p-4 border-2 border-dashed border-border rounded-lg text-center">
+            <Button 
+                type="button" 
+                disabled={isUploading}
+                onClick={() => ikUploadRef.current?.click()}
+            >
+                {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isUploading ? "Uploading..." : "Choose File to Upload"}
+            </Button>
             <IKUpload
+                ref={ikUploadRef}
+                style={{ display: 'none' }}
                 folder={folder}
                 fileName="website-asset.jpg"
                 tags={["website-asset"]}
@@ -99,12 +109,7 @@ export default function ImageManager() {
                 onSuccess={onSuccess}
                 onError={onError}
                 disabled={isUploading}
-            >
-                <Button type="button" disabled={isUploading}>
-                    {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isUploading ? "Uploading..." : "Choose File to Upload"}
-                </Button>
-            </IKUpload>
+            />
             <p className="text-xs text-muted-foreground mt-2">Click to select an image.</p>
         </div>
 
