@@ -14,6 +14,7 @@ const FreeTrialSchema = z.object({
   purifierName: z.string(),
   planName: z.string(),
   tenure: z.string(),
+  city: z.string().optional(),
 });
 
 export async function saveFreeTrial(data: z.infer<typeof FreeTrialSchema>) {

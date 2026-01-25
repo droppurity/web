@@ -1,7 +1,20 @@
 import { MetadataRoute } from 'next'
+
+const cities = [
+  'bengaluru', 'chennai', 'delhi', 'faridabad', 'ghaziabad', 
+  'gurugram', 'hyderabad', 'kolkata', 'mumbai', 'noida', 'pune'
+];
  
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.droppurity.in'
+
+  const cityPages = cities.map(city => ({
+    url: `${baseUrl}/${city}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -69,5 +82,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'yearly',
         priority: 0.7,
     },
+    ...cityPages,
   ]
 }
