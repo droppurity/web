@@ -154,7 +154,7 @@ export default function ImageManager() {
                 ref={ikUploadRef}
                 style={{ display: 'none' }}
                 folder={folder}
-                fileName="city-hero-image.jpg"
+                fileName="hero-shot.jpg"
                 tags={["website-asset", "city-hero"]}
                 useUniqueFileName={false}
                 onUploadStart={onUploadStart}

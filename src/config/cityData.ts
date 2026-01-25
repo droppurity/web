@@ -9,7 +9,7 @@ export interface CityData {
 }
 
 const imageKitBaseUrl = "https://ik.imagekit.io/droppurity/cities";
-const heroImageFilename = "city-hero-image.jpg";
+const heroImageFilename = "hero-shot.jpg";
 
 
 export const cityData: CityData[] = [
