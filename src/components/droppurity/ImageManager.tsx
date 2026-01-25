@@ -14,7 +14,6 @@ import { cityData } from '@/config/cityData';
 
 const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
-const authenticationEndpoint = '/api/imagekit/auth';
 
 export default function ImageManager() {
   const [folder, setFolder] = useState('');
@@ -23,6 +22,20 @@ export default function ImageManager() {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
   const ikUploadRef = useRef<HTMLInputElement>(null);
+
+  const authenticator = async () => {
+    try {
+      const response = await fetch('/api/imagekit/auth');
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Authentication request failed with status ${response.status}: ${errorText}`);
+      }
+      return await response.json();
+    } catch (error: any) {
+      console.error("Authentication request failed:", error);
+      throw new Error(`Authentication failed: ${error.message}`);
+    }
+  };
 
   const onUploadStart = () => {
     setIsUploading(true);
@@ -43,12 +56,10 @@ export default function ImageManager() {
     console.error("ImageKit Upload Error:", err);
 
     let description = "An unknown error occurred during upload.";
-    // This is a specific check for a known issue where server-side auth failure
-    // results in an empty error object on the client.
-    if (err && Object.keys(err).length === 0 && typeof err === 'object') {
-      description = "Authentication failed. This often happens if the IMAGEKIT_PRIVATE_KEY is incorrect or missing from your .env.local file. Please verify your server credentials and restart the application.";
-    } else if (err && err.message) {
+    if (err && err.message) {
       description = err.message;
+    } else if (err && Object.keys(err).length === 0 && typeof err === 'object') {
+       description = "An unexpected client-side error occurred. Please check your network and try again.";
     }
 
     toast({
@@ -86,7 +97,6 @@ export default function ImageManager() {
     <IKContext
       publicKey={publicKey}
       urlEndpoint={urlEndpoint}
-      authenticationEndpoint={authenticationEndpoint}
     >
       <div className="space-y-6">
         <div>
@@ -137,6 +147,7 @@ export default function ImageManager() {
                 {isUploading ? "Uploading..." : "Choose File to Upload"}
             </Button>
             <IKUpload
+                authenticator={authenticator}
                 ref={ikUploadRef}
                 style={{ display: 'none' }}
                 folder={folder}
