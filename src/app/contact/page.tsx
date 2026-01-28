@@ -26,7 +26,7 @@ import Link from 'next/link';
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
+  email: z.string().email({ message: "Please enter a valid email address." }).optional().or(z.literal('')),
   subject: z.string().min(5, { message: "Subject must be at least 5 characters." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
@@ -85,7 +85,7 @@ export default function ContactPage() {
                     {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
                   </div>
                   <div>
-                    <Label htmlFor="email" className="text-foreground text-sm">Email Address</Label>
+                    <Label htmlFor="email" className="text-foreground text-sm">Email Address (Optional)</Label>
                     <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
                     {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
                   </div>
@@ -141,20 +141,20 @@ export default function ContactPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="shadow-xl">
-                  <CardHeader className="p-5">
-                      <CardTitle className="font-headline text-xl text-foreground">Operating Hours</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-5">
-                      <p className="text-muted-foreground text-sm">
-                          <strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM
-                          <br />
-                          <strong>Saturday:</strong> 10:00 AM - 4:00 PM
-                          <br />
-                          <strong>Sunday:</strong> Closed
-                      </p>
-                  </CardContent>
+                <CardHeader className="p-5">
+                  <CardTitle className="font-headline text-xl text-foreground">Operating Hours</CardTitle>
+                </CardHeader>
+                <CardContent className="p-5">
+                  <p className="text-muted-foreground text-sm">
+                    <strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM
+                    <br />
+                    <strong>Saturday:</strong> 10:00 AM - 4:00 PM
+                    <br />
+                    <strong>Sunday:</strong> Closed
+                  </p>
+                </CardContent>
               </Card>
             </div>
           </div>

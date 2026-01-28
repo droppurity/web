@@ -21,12 +21,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from '@/hooks/use-toast';
 import { saveFreeTrial } from '@/app/actions/freeTrial';
 import { Loader2, MapPin, ExternalLink } from 'lucide-react';
+import { verifyPincode, getPincodeFromCoords } from '@/lib/pincode';
 
 const freeTrialFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit Indian mobile number." }),
   location: z.string().url({ message: "Please auto-fetch a valid location link." }).optional().or(z.literal('')),
-  address: z.string().min(10, { message: "Please enter a full installation address." }),
+  pincode: z.string().regex(/^[1-9][0-9]{5}$/, { message: "Please enter a valid 6-digit PIN code." }),
   purifierName: z.string(),
   planName: z.string(),
   tenure: z.string(),
@@ -45,6 +46,8 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [shareLocation, setShareLocation] = useState(false);
+  const [pincodeDetails, setPincodeDetails] = useState<string>('');
+  const [pincodeError, setPincodeError] = useState<string>('');
 
   const trialPurifierName = "Droppurity RO+";
   const trialPlanName = "Basic";
@@ -58,46 +61,79 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
       tenure: trialTenure,
     }
   });
-  
+
   const locationValue = watch('location');
-  
+
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
     // Ensure navigator is available
     if (typeof window !== "undefined" && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const { latitude, longitude } = position.coords;
-            const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-            setValue('location', locationUrl, { shouldValidate: true });
-            setIsFetchingLocation(false);
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+          setValue('location', locationUrl, { shouldValidate: true });
+
+          // Auto-fetch PIN code
+          const pinResult = await getPincodeFromCoords(latitude, longitude);
+          if (pinResult.success && pinResult.pincode) {
+            setValue('pincode', pinResult.pincode, { shouldValidate: true });
+            // For auto-fetch, show the full address
+            if (pinResult.display_name) {
+              setPincodeDetails(pinResult.display_name);
+              setPincodeError('');
+            } else {
+              handlePincodeVerify(pinResult.pincode);
+            }
+          }
+
+          setIsFetchingLocation(false);
         },
         (error) => {
-            setIsFetchingLocation(false);
-            setShareLocation(false);
-            toast({
-              variant: "destructive",
-              title: "Location Error",
-              description: "Could not fetch location. Please grant permission.",
-            });
-        }
-        );
-    } else {
-        setIsFetchingLocation(false);
-        setShareLocation(false);
-        toast({
+          setIsFetchingLocation(false);
+          setShareLocation(false);
+          toast({
             variant: "destructive",
-            title: "Unsupported Browser",
-            description: "Your browser does not support Geolocation.",
-        });
+            title: "Location Error",
+            description: "Could not fetch location. Please grant permission.",
+          });
+        }
+      );
+    } else {
+      setIsFetchingLocation(false);
+      setShareLocation(false);
+      toast({
+        variant: "destructive",
+        title: "Unsupported Browser",
+        description: "Your browser does not support Geolocation.",
+      });
     }
   };
 
+  const handlePincodeVerify = async (pin: string) => {
+    if (/^\d{6}$/.test(pin)) {
+      const result = await verifyPincode(pin);
+      if (result.success && result.info) {
+        setPincodeDetails(`${result.info.district}, ${result.info.state}`);
+        setPincodeError('');
+      } else {
+        setPincodeDetails('');
+        setPincodeError(result.message || 'Invalid PIN code');
+      }
+    } else {
+      setPincodeDetails('');
+      setPincodeError('');
+    }
+  };
+
+  // Removed useEffect for pincodeValue to allow custom messages for auto-fetch
+
+
   useEffect(() => {
     if (shareLocation) {
-        handleFetchLocation();
+      handleFetchLocation();
     } else {
-        setValue('location', '');
+      setValue('location', '');
     }
   }, [shareLocation]);
 
@@ -118,10 +154,10 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
       });
     }
   };
-  
+
   const handleClose = () => {
-      setShowSuccess(false);
-      onOpenChange(false);
+    setShowSuccess(false);
+    onOpenChange(false);
   }
 
   return (
@@ -146,39 +182,53 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
                 <Input id="ft-phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
               </div>
-              <div>
-                <Label htmlFor="ft-address">Installation Address</Label>
-                <Textarea id="ft-address" {...register("address")} placeholder="Full address for installation..." rows={3} className="mt-1" disabled={isSubmitting} />
-                {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
+              <div className="relative">
+                <Label htmlFor="ft-pincode">Pin Code</Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    id="ft-pincode"
+                    type="tel"
+                    maxLength={6}
+                    {...register("pincode", {
+                      onChange: (e) => {
+                        if (e.target.value.length === 6) {
+                          handlePincodeVerify(e.target.value);
+                        } else {
+                          setPincodeDetails('');
+                          setPincodeError('');
+                        }
+                      }
+                    })}
+                    placeholder="110001"
+                    className="flex-1"
+                    disabled={isSubmitting}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    title="Auto-fetch PIN"
+                    onClick={() => {
+                      setShareLocation(true);
+                      handleFetchLocation();
+                    }}
+                    disabled={isFetchingLocation || isSubmitting}
+                  >
+                    {isFetchingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
+                  </Button>
+                </div>
+                {pincodeDetails && <p className="text-xs text-green-600 mt-1">Area: {pincodeDetails} ✅</p>}
+                {(pincodeError || errors.pincode) && <p className="text-xs text-destructive mt-1">{pincodeError || errors.pincode?.message}</p>}
               </div>
-               <div className="space-y-2 pt-2">
-                  <div className="flex items-center space-x-2">
-                      <Checkbox id="ft-share-location" checked={shareLocation} onCheckedChange={(checked) => setShareLocation(!!checked)} disabled={isSubmitting || isFetchingLocation} />
-                      <label
-                          htmlFor="ft-share-location"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                          Help our delivery champ find you faster! 🗺️ Click here to share your live location.
-                      </label>
-                  </div>
-                  <div className="mt-1">
-                      {isFetchingLocation && <div className="flex items-center text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Fetching your location...</div>}
-                       {locationValue ? (
-                         <div className="text-xs text-green-600 font-medium py-1.5">Thanks for sharing! 👍</div>
-                      ) : (
-                        shareLocation && !isFetchingLocation && <div className="text-xs text-destructive">Could not fetch location. Please try again.</div>
-                      )}
-                  </div>
-                  <input type="hidden" {...register("location")} />
-                </div>
-                <div className="text-center text-xs text-muted-foreground pt-2">
-                    You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
-                    <br />
-                    Pay only a refundable security deposit after successful installation.
-                </div>
+              <input type="hidden" {...register("location")} />
+              <div className="text-center text-xs text-muted-foreground pt-2">
+                You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
+                <br />
+                Pay only a refundable security deposit after successful installation.
+              </div>
               <DialogFooter className="pt-2 sm:justify-center">
                 <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>
-                   {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Book My Trial
                 </Button>
               </DialogFooter>
@@ -187,13 +237,13 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
         ) : (
           <>
             <DialogHeader>
-                <DialogTitle>Trial Booked!</DialogTitle>
-                <DialogDescription>
-                  Thank you! Our team will contact you shortly to schedule your free installation.
-                </DialogDescription>
+              <DialogTitle>Trial Booked!</DialogTitle>
+              <DialogDescription>
+                Thank you! Our team will contact you shortly to schedule your free installation.
+              </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-                <Button onClick={handleClose}>Close</Button>
+              <Button onClick={handleClose}>Close</Button>
             </DialogFooter>
           </>
         )}

@@ -60,7 +60,7 @@ export default function ImageManager() {
     } else if (err && typeof err === 'object' && err.message) {
       description = err.message;
     } else if (typeof err === 'object' && Object.keys(err).length === 0) {
-       description = "An unexpected client-side error occurred. Please check your network and try again.";
+      description = "An unexpected client-side error occurred. Please check your network and try again.";
     }
 
 
@@ -70,14 +70,14 @@ export default function ImageManager() {
       description: description,
     });
   };
-  
+
   const copyToClipboard = () => {
     if (uploadedImageUrl) {
-        navigator.clipboard.writeText(uploadedImageUrl).then(() => {
-            toast({ title: "URL Copied!" });
-        }, (err) => {
-            toast({ variant: "destructive", title: "Failed to copy URL." });
-        });
+      navigator.clipboard.writeText(uploadedImageUrl).then(() => {
+        toast({ title: "URL Copied!" });
+      }, (err) => {
+        toast({ variant: "destructive", title: "Failed to copy URL." });
+      });
     }
   };
 
@@ -141,45 +141,45 @@ export default function ImageManager() {
         </div>
 
         <div className="p-4 border-2 border-dashed border-border rounded-lg text-center">
-            <Button 
-                type="button" 
-                disabled={isUploading || !folder}
-                onClick={() => ikUploadRef.current?.click()}
-            >
-                {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isUploading ? "Uploading..." : "Choose File to Upload"}
-            </Button>
-            <IKUpload
-                ref={ikUploadRef}
-                style={{ display: 'none' }}
-                folder={folder}
-                fileName="hero-shot.jpg"
-                tags={["website-asset", "city-hero"]}
-                useUniqueFileName={false}
-                onUploadStart={onUploadStart}
-                onSuccess={onSuccess}
-                onError={onError}
-                disabled={isUploading || !folder}
-            />
-            <p className="text-xs text-muted-foreground mt-2">Select a folder, then click to select an image.</p>
-             <p className="text-xs text-destructive mt-1">
-                <strong>Note:</strong> Uploading will overwrite the current hero image for the selected city.
-            </p>
+          <Button
+            type="button"
+            disabled={isUploading || !folder}
+            onClick={() => ikUploadRef.current?.click()}
+          >
+            {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isUploading ? "Uploading..." : "Choose File to Upload"}
+          </Button>
+          <IKUpload
+            ref={ikUploadRef}
+            style={{ display: 'none' }}
+            folder={folder}
+            fileName="hero-shot.jpg"
+            tags={["website-asset", "city-hero"]}
+            useUniqueFileName={false}
+            onUploadStart={onUploadStart}
+            onSuccess={onSuccess}
+            onError={onError}
+            disabled={isUploading || !folder}
+          />
+          <p className="text-xs text-muted-foreground mt-2">Select a folder, then click to select an image.</p>
+          <p className="text-xs text-destructive mt-1">
+            <strong>Note:</strong> Uploading will overwrite the current hero image for the selected city.
+          </p>
         </div>
 
         {uploadedImageUrl && (
-            <div className="space-y-2">
-                <Label>Uploaded Image URL</Label>
-                <div className="flex items-center gap-2">
-                    <Input value={uploadedImageUrl} readOnly className="bg-muted" />
-                    <Button variant="outline" size="icon" onClick={copyToClipboard}>
-                        <Copy className="h-4 w-4" />
-                    </Button>
-                </div>
-                 <div className="relative aspect-video w-full max-w-sm mx-auto mt-4 rounded-md overflow-hidden border">
-                    <img src={uploadedImageUrl} alt="Uploaded image" className="object-contain w-full h-full" />
-                 </div>
+          <div className="space-y-2">
+            <Label>Uploaded Image URL</Label>
+            <div className="flex items-center gap-2">
+              <Input value={uploadedImageUrl} readOnly className="bg-muted" />
+              <Button variant="outline" size="icon" onClick={copyToClipboard}>
+                <Copy className="h-4 w-4" />
+              </Button>
             </div>
+            <div className="relative aspect-video w-full max-w-sm mx-auto mt-4 rounded-md overflow-hidden border">
+              <img src={uploadedImageUrl} alt="Uploaded image" className="object-contain w-full h-full" />
+            </div>
+          </div>
         )}
       </div>
     </IKContext>
