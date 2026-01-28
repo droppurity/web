@@ -283,21 +283,20 @@ export default function SubscriptionFormPage() {
                 {(pincodeError || errors.pincode) && <p className="text-xs text-destructive mt-1">{pincodeError || errors.pincode?.message}</p>}
               </div>
 
-            </div>
 
-            <input type="hidden" {...register("city")} />
-            <input type="hidden" {...register("state")} />
-            <input type="hidden" {...register("location")} />
+              <input type="hidden" {...register("city")} />
+              <input type="hidden" {...register("state")} />
+              <input type="hidden" {...register("location")} />
 
 
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
-              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Submit & Subscribe
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Submit & Subscribe
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div >
   );
 }
