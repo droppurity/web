@@ -14,6 +14,8 @@ const SubscriptionSchema = z.object({
   purifierName: z.string(),
   planName: z.string(),
   tenure: z.string(),
+  city: z.string().optional(),
+  state: z.string().optional(),
 });
 
 export async function saveSubscription(data: z.infer<typeof SubscriptionSchema>) {

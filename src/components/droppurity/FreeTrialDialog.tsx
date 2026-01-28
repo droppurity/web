@@ -31,6 +31,8 @@ const freeTrialFormSchema = z.object({
   purifierName: z.string(),
   planName: z.string(),
   tenure: z.string(),
+  city: z.string().optional(),
+  state: z.string().optional(),
 });
 
 type FreeTrialFormValues = z.infer<typeof freeTrialFormSchema>;
@@ -115,6 +117,8 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
       const result = await verifyPincode(pin);
       if (result.success && result.info) {
         setPincodeDetails(`${result.info.district}, ${result.info.state}`);
+        setValue('city', result.info.district);
+        setValue('state', result.info.state);
         setPincodeError('');
       } else {
         setPincodeDetails('');
@@ -172,6 +176,8 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
               <input type="hidden" {...register("purifierName")} />
               <input type="hidden" {...register("planName")} />
               <input type="hidden" {...register("tenure")} />
+              <input type="hidden" {...register("city")} />
+              <input type="hidden" {...register("state")} />
               <div>
                 <Label htmlFor="ft-name">Full Name</Label>
                 <Input id="ft-name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />

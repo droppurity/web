@@ -26,6 +26,7 @@ const freeTrialFormSchema = z.object({
   planName: z.string(),
   tenure: z.string(),
   city: z.string().optional(),
+  state: z.string().optional(),
 });
 
 type FreeTrialFormValues = z.infer<typeof freeTrialFormSchema>;
@@ -109,6 +110,9 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
       const result = await verifyPincode(pin);
       if (result.success && result.info) {
         setPincodeDetails(`${result.info.district}, ${result.info.state}`);
+        // For CityTrialForm, we might want to keep the specialized city name if provided, but let's store the PIN derived one too or mapped
+        // Actually, explicit city is passed in props. Let's store state at least.
+        setValue('state', result.info.state);
         setPincodeError('');
       } else {
         setPincodeDetails('');
@@ -169,7 +173,9 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
               <input type="hidden" {...register("purifierName")} />
               <input type="hidden" {...register("planName")} />
               <input type="hidden" {...register("tenure")} />
+              <input type="hidden" {...register("tenure")} />
               <input type="hidden" {...register("city")} />
+              <input type="hidden" {...register("state")} />
               <div>
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
