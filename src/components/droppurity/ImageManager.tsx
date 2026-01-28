@@ -43,7 +43,8 @@ export default function ImageManager() {
 
   const onSuccess = (res: any) => {
     setIsUploading(false);
-    setUploadedImageUrl(res.url);
+    // Append timestamp to force browser to reload the image (bypass cache)
+    setUploadedImageUrl(`${res.url}?updatedAt=${new Date().getTime()}`);
     toast({
       title: 'Upload Successful!',
       description: `Image uploaded to: ${res.filePath}`,

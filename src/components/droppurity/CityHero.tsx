@@ -25,7 +25,7 @@ export default function CityHero({ city }: CityHeroProps) {
             alt={`A view of ${city.monument} in ${city.name}`}
             width={1200}
             height={600}
-            className="w-full h-auto object-cover aspect-[2/1] filter grayscale contrast-150 brightness-110"
+            className="w-full h-auto object-cover aspect-[2/1]"
             data-ai-hint={city.dataAiHint}
             priority
           />
@@ -41,20 +41,20 @@ export default function CityHero({ city }: CityHeroProps) {
         </div>
 
         <div className="mt-8">
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1" className="border-b-0">
-                    <div className="text-center">
-                        <AccordionTrigger className="inline-flex flex-initial justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-lg px-8 py-3 data-[state=open]:rounded-b-none data-[state=open]:shadow-lg">
-                            Show Plans
-                        </AccordionTrigger>
-                    </div>
-                    <AccordionContent className="pt-0">
-                         <div className="border border-t-0 rounded-b-md shadow-lg bg-card">
-                            <PlanSelectionSection cityName={city.name} />
-                         </div>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1" className="border-b-0">
+              <div className="text-center">
+                <AccordionTrigger className="inline-flex flex-initial justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-lg px-8 py-3 data-[state=open]:rounded-b-none data-[state=open]:shadow-lg">
+                  Show Plans
+                </AccordionTrigger>
+              </div>
+              <AccordionContent className="pt-0">
+                <div className="border border-t-0 rounded-b-md shadow-lg bg-card">
+                  <PlanSelectionSection cityName={city.name} />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </div>
