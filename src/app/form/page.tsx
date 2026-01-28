@@ -133,172 +133,171 @@ export default function SubscriptionFormPage() {
     if (/^\d{6}$/.test(pin)) {
       const result = await verifyPincode(pin);
       if (result.success && result.info) {
-        if (result.success && result.info) {
-          setPincodeDetails(`${result.info.district}, ${result.info.state}`);
-          setValue('city', result.info.district);
-          setValue('state', result.info.state);
-          setPincodeError('');
-        } else {
-          setPincodeDetails('');
-          setPincodeError(result.message || 'Invalid PIN code');
-        }
+        setPincodeDetails(`${result.info.district}, ${result.info.state}`);
+        setValue('city', result.info.district);
+        setValue('state', result.info.state);
+        setPincodeError('');
       } else {
         setPincodeDetails('');
-        setPincodeError('');
+        setPincodeError(result.message || 'Invalid PIN code');
       }
-    };
+    } else {
+      setPincodeDetails('');
+      setPincodeError('');
+    }
+  };
 
-    // Removed useEffect for pincodeValue to allow custom messages for auto-fetch
+  // Removed useEffect for pincodeValue to allow custom messages for auto-fetch
 
 
-    useEffect(() => {
-      if (shareLocation) {
-        handleFetchLocation();
-      } else {
-        setValue('location', ''); // Clear location if unchecked
-      }
-    }, [shareLocation, setValue]);
+  useEffect(() => {
+    if (shareLocation) {
+      handleFetchLocation();
+    } else {
+      setValue('location', ''); // Clear location if unchecked
+    }
+  }, [shareLocation, setValue]);
 
-    const onSubmit: SubmitHandler<SubscriptionFormValues> = async (data) => {
-      setIsSubmitting(true);
-      const result = await saveSubscription(data);
+  const onSubmit: SubmitHandler<SubscriptionFormValues> = async (data) => {
+    setIsSubmitting(true);
+    const result = await saveSubscription(data);
 
-      if (result.success) {
-        toast({
-          title: 'Subscription successful!',
-          description: 'Redirecting you to the confirmation page.',
-        });
-        const queryParams = new URLSearchParams({
-          purifierName: data.purifierName,
-          planName: data.planName,
-          tenure: data.tenure,
-        }).toString();
-        router.push(`/thank-you?${queryParams}`);
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Subscription failed',
-          description: result.message || 'An unexpected error occurred.',
-        });
-        setIsSubmitting(false);
-      }
-    };
+    if (result.success) {
+      toast({
+        title: 'Subscription successful!',
+        description: 'Redirecting you to the confirmation page.',
+      });
+      const queryParams = new URLSearchParams({
+        purifierName: data.purifierName,
+        planName: data.planName,
+        tenure: data.tenure,
+      }).toString();
+      router.push(`/thank-you?${queryParams}`);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Subscription failed',
+        description: result.message || 'An unexpected error occurred.',
+      });
+      setIsSubmitting(false);
+    }
+  };
 
-    return (
-      <div className="py-8 sm:py-12 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-          <Card className="shadow-xl max-w-2xl w-full">
-            <CardHeader className="p-6">
-              <CardTitle className="font-headline text-2xl text-foreground">Subscribe to Droppurity</CardTitle>
-              <CardDescription className="text-base text-muted-foreground pt-2">
-                Fill out the form below to get started with our premium water purifiers.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 pt-0">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <div className="space-y-1">
-                    <Label>Purifier</Label>
-                    <Select onValueChange={setSelectedPurifierId} value={selectedPurifierId} disabled={isSubmitting}>
-                      <SelectTrigger><SelectValue placeholder="Select Purifier" /></SelectTrigger>
-                      <SelectContent>
-                        {purifiers.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    {errors.purifierName && <p className="text-xs text-destructive mt-1">{errors.purifierName.message}</p>}
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Plan</Label>
-                    <Select onValueChange={setSelectedPlanId} value={selectedPlanId} disabled={!selectedPurifierId || isSubmitting}>
-                      <SelectTrigger><SelectValue placeholder="Select Plan" /></SelectTrigger>
-                      <SelectContent>
-                        {availablePlans.map(p => <SelectItem key={p.id} value={p.id}>{p.name} ({p.limits.replace('Upto ', '')})</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    {errors.planName && <p className="text-xs text-destructive mt-1">{errors.planName.message}</p>}
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Tenure</Label>
-                    <Select onValueChange={setSelectedTenureId} value={selectedTenureId} disabled={isSubmitting}>
-                      <SelectTrigger><SelectValue placeholder="Select Tenure" /></SelectTrigger>
-                      <SelectContent>
-                        {tenureOptions.map(t => <SelectItem key={t.id} value={t.id}>{t.displayName}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    {errors.tenure && <p className="text-xs text-destructive mt-1">{errors.tenure.message}</p>}
-                  </div>
+  return (
+    <div className="py-8 sm:py-12 bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <Card className="shadow-xl max-w-2xl w-full">
+          <CardHeader className="p-6">
+            <CardTitle className="font-headline text-2xl text-foreground">Subscribe to Droppurity</CardTitle>
+            <CardDescription className="text-base text-muted-foreground pt-2">
+              Fill out the form below to get started with our premium water purifiers.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 pt-0">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <Label>Purifier</Label>
+                  <Select onValueChange={setSelectedPurifierId} value={selectedPurifierId} disabled={isSubmitting}>
+                    <SelectTrigger><SelectValue placeholder="Select Purifier" /></SelectTrigger>
+                    <SelectContent>
+                      {purifiers.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  {errors.purifierName && <p className="text-xs text-destructive mt-1">{errors.purifierName.message}</p>}
                 </div>
-
-                <div>
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
-                  {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+                <div className="space-y-1">
+                  <Label>Plan</Label>
+                  <Select onValueChange={setSelectedPlanId} value={selectedPlanId} disabled={!selectedPurifierId || isSubmitting}>
+                    <SelectTrigger><SelectValue placeholder="Select Plan" /></SelectTrigger>
+                    <SelectContent>
+                      {availablePlans.map(p => <SelectItem key={p.id} value={p.id}>{p.name} ({p.limits.replace('Upto ', '')})</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  {errors.planName && <p className="text-xs text-destructive mt-1">{errors.planName.message}</p>}
                 </div>
-                <div>
-                  <Label htmlFor="email">Email Address (Optional)</Label>
-                  <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
-                  {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
+                <div className="space-y-1">
+                  <Label>Tenure</Label>
+                  <Select onValueChange={setSelectedTenureId} value={selectedTenureId} disabled={isSubmitting}>
+                    <SelectTrigger><SelectValue placeholder="Select Tenure" /></SelectTrigger>
+                    <SelectContent>
+                      {tenureOptions.map(t => <SelectItem key={t.id} value={t.id}>{t.displayName}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  {errors.tenure && <p className="text-xs text-destructive mt-1">{errors.tenure.message}</p>}
                 </div>
-                <div>
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
-                  {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
-                </div>
-
-                <div className="relative">
-                  <Label htmlFor="pincode">Pin Code</Label>
-                  <div className="flex gap-2 mt-1">
-                    <Input
-                      id="pincode"
-                      type="tel"
-                      maxLength={6}
-                      {...register("pincode", {
-                        onChange: (e) => {
-                          if (e.target.value.length === 6) {
-                            handlePincodeVerify(e.target.value);
-                          } else {
-                            setPincodeDetails('');
-                            setPincodeError('');
-                          }
-                        }
-                      })}
-                      placeholder="110001"
-                      className="flex-1"
-                      disabled={isSubmitting}
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      title="Auto-fetch PIN"
-                      onClick={() => {
-                        setShareLocation(true);
-                        handleFetchLocation();
-                      }}
-                      disabled={isFetchingLocation || isSubmitting}
-                    >
-                      {isFetchingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
-                    </Button>
-                  </div>
-                  {pincodeDetails && <p className="text-xs text-green-600 mt-1">Area: {pincodeDetails} ✅</p>}
-                  {(pincodeError || errors.pincode) && <p className="text-xs text-destructive mt-1">{pincodeError || errors.pincode?.message}</p>}
-                </div>
-
               </div>
 
-              <input type="hidden" {...register("city")} />
-              <input type="hidden" {...register("state")} />
-              <input type="hidden" {...register("location")} />
+              <div>
+                <Label htmlFor="name">Full Name</Label>
+                <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
+                {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="email">Email Address (Optional)</Label>
+                <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
+                {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
+              </div>
+              <div>
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
+                {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
+              </div>
+
+              <div className="relative">
+                <Label htmlFor="pincode">Pin Code</Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    id="pincode"
+                    type="tel"
+                    maxLength={6}
+                    {...register("pincode", {
+                      onChange: (e) => {
+                        if (e.target.value.length === 6) {
+                          handlePincodeVerify(e.target.value);
+                        } else {
+                          setPincodeDetails('');
+                          setPincodeError('');
+                        }
+                      }
+                    })}
+                    placeholder="110001"
+                    className="flex-1"
+                    disabled={isSubmitting}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    title="Auto-fetch PIN"
+                    onClick={() => {
+                      setShareLocation(true);
+                      handleFetchLocation();
+                    }}
+                    disabled={isFetchingLocation || isSubmitting}
+                  >
+                    {isFetchingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
+                  </Button>
+                </div>
+                {pincodeDetails && <p className="text-xs text-green-600 mt-1">Area: {pincodeDetails} ✅</p>}
+                {(pincodeError || errors.pincode) && <p className="text-xs text-destructive mt-1">{pincodeError || errors.pincode?.message}</p>}
+              </div>
+
+            </div>
+
+            <input type="hidden" {...register("city")} />
+            <input type="hidden" {...register("state")} />
+            <input type="hidden" {...register("location")} />
 
 
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
-                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Submit & Subscribe
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Submit & Subscribe
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
     </div >
   );
 }
