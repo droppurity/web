@@ -14,6 +14,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ReferralDialog from "@/components/droppurity/ReferralDialog";
 import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
+import CityAutoRedirect from '@/components/droppurity/CityAutoRedirect';
 import { cn } from '@/lib/utils';
 import { tenureOptions } from '@/config/siteData';
 
@@ -89,7 +90,7 @@ export default function HomePage() {
     if (planSectionRef.current) {
       planSectionObserverRef.current.observe(planSectionRef.current);
     }
-    
+
     return () => {
       if (planSectionObserverRef.current) {
         planSectionObserverRef.current.disconnect();
@@ -103,7 +104,7 @@ export default function HomePage() {
       // Only show if it hasn't been shown in this page load.
       if (popupShownThisLoad.current) return;
       popupShownThisLoad.current = true;
-      
+
       setIsTrialDialogOpen(true);
     };
 
@@ -130,13 +131,13 @@ export default function HomePage() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []); // Empty dependency array ensures this runs only once on mount
-  
+
   useEffect(() => {
     const handleScroll = () => {
       if (planSectionRef.current) {
-        const sectionTop = planSectionRef.current.offsetTop; 
-        const headerHeight = 56; 
-        
+        const sectionTop = planSectionRef.current.offsetTop;
+        const headerHeight = 56;
+
         if (window.scrollY >= sectionTop - headerHeight) {
           setMakePlanSectionHeaderDominant(true);
         } else {
@@ -148,24 +149,61 @@ export default function HomePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   const sevenMonthPrice = tenureOptions.find(opt => opt.id === '7m')?.displayName || '7 Months';
 
   const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
     // Check if the click target or its parent is a button or a link
     let target = e.target as HTMLElement;
     while (target && target !== e.currentTarget) {
-        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-            return; // Don't trigger popup if a button or link was clicked
-        }
-        target = target.parentElement as HTMLElement;
+      if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+        return; // Don't trigger popup if a button or link was clicked
+      }
+      target = target.parentElement as HTMLElement;
     }
     setIsTrialDialogOpen(true);
   };
 
 
+  // FAQ JSON-LD specific to Homepage
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does RO on rent cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our RO rental starts at just ₹299 per month with free service, maintenance, and filter replacement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is installation free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, installation, relocation, and lifetime maintenance are fully free with all Droppurity plans."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a security deposit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer zero security deposit options for eligible customers."
+        }
+      }
+    ]
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <CityAutoRedirect />
       <div className="flex flex-col">
         {/* Hero Section */}
         <section
@@ -176,18 +214,18 @@ export default function HomePage() {
             <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
               {/* Text Content - On top for mobile */}
               <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
-                 <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
-                   RO Water Purifier on Rent 
+                <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
+                  RO Water Purifier on Rent
                 </h1>
-                 <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
-                   शुद्ध पानी, अब आपके बजट में
+                <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
+                  शुद्ध पानी, अब आपके बजट में
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                    <span className="text-xs opacity-80">Starts from just</span>
-                    <strong className="text-foreground font-bold text-3xl mx-1">₹299</strong>
-                    <span className="text-foreground/80">/month</span>
-                    <br />
-                    <span className="font-semibold text-primary">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
+                  <span className="text-xs opacity-80">Starts from just</span>
+                  <strong className="text-foreground font-bold text-3xl mx-1">₹299</strong>
+                  <span className="text-foreground/80">/month</span>
+                  <br />
+                  <span className="font-semibold text-primary">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
                   <Button asChild className="h-auto text-sm px-6 py-2.5">
@@ -198,12 +236,12 @@ export default function HomePage() {
                     </Link>
                   </Button>
                   <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-sm px-6 py-2.5">
-                     <div className="flex flex-col items-center leading-tight">
-                       <span>Book a Free Trial</span>
-                        <span className="mt-1 font-normal opacity-90 text-xs">
-                          7-Day Risk-Free
-                        </span>
-                     </div>
+                    <div className="flex flex-col items-center leading-tight">
+                      <span>Book a Free Trial</span>
+                      <span className="mt-1 font-normal opacity-90 text-xs">
+                        7-Day Risk-Free
+                      </span>
+                    </div>
                   </Button>
                 </div>
               </div>
@@ -225,7 +263,12 @@ export default function HomePage() {
                     <br />
                     <span className="font-semibold text-yellow-300 text-base">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
                   </p>
-                  <div className="flex flex-col items-start gap-4 mt-8">
+
+                  <p className="mt-4 text-sm font-medium text-white/90 bg-black/20 backdrop-blur-sm p-2 rounded-md inline-block border border-white/10">
+                    ✅ Serving Bengaluru, Chennai, Hyderabad & nearby areas
+                  </p>
+
+                  <div className="flex flex-col items-start gap-4 mt-6">
                     <Button asChild className="h-auto text-base px-10 py-3 self-start">
                       <Link href="/plans">
                         <div className="flex flex-col items-center leading-tight">
@@ -234,12 +277,12 @@ export default function HomePage() {
                       </Link>
                     </Button>
                     <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-base px-10 py-3 self-start">
-                       <div className="flex flex-col items-center leading-tight">
-                         <span>Book a Free Trial</span>
-                          <span className="mt-1 font-normal opacity-90 text-sm">
-                            7-Day Risk-Free
-                          </span>
-                       </div>
+                      <div className="flex flex-col items-center leading-tight">
+                        <span>Book a Free Trial</span>
+                        <span className="mt-1 font-normal opacity-90 text-sm">
+                          7-Day Risk-Free
+                        </span>
+                      </div>
                     </Button>
                   </div>
                 </div>
@@ -269,9 +312,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        
+
         <PlanSelectionSection ref={planSectionRef} isHeaderDominant={makePlanSectionHeaderDominant} />
-        
+
         {/* General Service Content Section */}
         <section className="py-4 sm:py-6 bg-secondary/30">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -312,18 +355,18 @@ export default function HomePage() {
             className="container mx-auto px-4 sm:px-6 lg:px-8 cursor-pointer"
             onClick={() => setIsTrialDialogOpen(true)}
           >
-             <div className="relative text-center">
+            <div className="relative text-center">
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
                 Try Before You Buy: Our Simple Process
               </h2>
               {showPlanHint && (
                 <div className="hidden lg:block absolute -top-5 w-full transition-opacity duration-300 animate-in fade-in">
                   <div className="inline-flex items-center gap-4 text-xs font-semibold text-primary">
-                      <div className="relative">
-                        <ArrowBigRightDash className="w-8 h-8 absolute -left-12 -top-1" />
-                        <span>Try these too!</span>
-                        <ArrowBigRightDash className="w-8 h-8 absolute -right-12 -top-1" />
-                      </div>
+                    <div className="relative">
+                      <ArrowBigRightDash className="w-8 h-8 absolute -left-12 -top-1" />
+                      <span>Try these too!</span>
+                      <ArrowBigRightDash className="w-8 h-8 absolute -right-12 -top-1" />
+                    </div>
                   </div>
                 </div>
               )}
@@ -352,7 +395,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        
+
         {/* Highlights Section */}
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -434,4 +477,3 @@ export default function HomePage() {
   );
 }
 
-    

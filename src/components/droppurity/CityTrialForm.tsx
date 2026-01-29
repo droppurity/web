@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { saveFreeTrial } from '@/app/actions/freeTrial';
 import { Loader2, MapPin } from 'lucide-react';
 import { verifyPincode, getPincodeFromCoords } from '@/lib/pincode';
+import { cityData } from '@/config/cityData';
 
 const freeTrialFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -31,7 +32,7 @@ const freeTrialFormSchema = z.object({
 
 type FreeTrialFormValues = z.infer<typeof freeTrialFormSchema>;
 
-export default function CityTrialForm({ cityName }: { cityName: string }) {
+export default function CityTrialForm({ cityName, exampleName }: { cityName: string; exampleName?: string }) {
   const { toast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,6 +60,8 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
   });
 
   const locationValue = watch('location');
+  const cityInfo = cityData.find(c => c.name === cityName);
+
 
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
@@ -73,6 +76,28 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
           const pinResult = await getPincodeFromCoords(latitude, longitude);
           if (pinResult.success && pinResult.pincode) {
             setValue('pincode', pinResult.pincode, { shouldValidate: true });
+
+            // Redirect logic if city is detected
+            if (pinResult.city) {
+              const detectedCityName = pinResult.city.toLowerCase();
+              const matchedCity = cityData.find(c =>
+                detectedCityName.includes(c.name.toLowerCase()) ||
+                c.name.toLowerCase().includes(detectedCityName) ||
+                (c.slug === 'bengaluru' && detectedCityName.includes('bangalore')) ||
+                (c.slug === 'gurugram' && detectedCityName.includes('gurgaon'))
+              );
+
+              if (matchedCity && matchedCity.name !== cityName) {
+                toast({
+                  title: `Detected Location: ${matchedCity.name}`,
+                  description: `Switching to ${matchedCity.name} page for local plans...`,
+                });
+                router.push(`/${matchedCity.slug}`);
+                return; // Stop further processing as we are redirecting
+              }
+            }
+
+
             // For auto-fetch, show the full address
             if (pinResult.display_name) {
               setPincodeDetails(pinResult.display_name);
@@ -84,6 +109,8 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
 
           setIsFetchingLocation(false);
         },
+        // ... error handling
+
         (error) => {
           setIsFetchingLocation(false);
           setShareLocation(false);
@@ -165,7 +192,18 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <Card className="shadow-xl max-w-2xl w-full">
           <CardHeader className="p-6 text-center">
-            <CardTitle className="font-headline text-2xl text-primary font-bold">Request a Callback in {cityName}</CardTitle>
+            {cityInfo && cityInfo.localFormTitle ? (
+              <CardTitle className="font-headline text-2xl text-primary font-bold flex flex-col gap-1">
+                {cityInfo.localFormTitle.includes(' / ') ? (
+                  <>
+                    <span>{cityInfo.localFormTitle.split(' / ')[0]}</span>
+                    <span className="text-lg opacity-90">{cityInfo.localFormTitle.split(' / ')[1]}</span>
+                  </>
+                ) : cityInfo.localFormTitle}
+              </CardTitle>
+            ) : (
+              <CardTitle className="font-headline text-2xl text-primary font-bold">Request a Callback in {cityName}</CardTitle>
+            )}
             <CardDescription>Book a free demo for our RO water purifier. We'll call you back shortly!</CardDescription>
           </CardHeader>
           <CardContent className="p-6 pt-0">
@@ -178,7 +216,7 @@ export default function CityTrialForm({ cityName }: { cityName: string }) {
               <input type="hidden" {...register("state")} />
               <div>
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
+                <Input id="name" {...register("name")} placeholder={exampleName || "Sonu Sharma"} className="mt-1" disabled={isSubmitting} />
                 {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
               </div>
               <div>

@@ -35,7 +35,7 @@ export async function verifyPincode(pincode: string): Promise<{ success: boolean
     }
 }
 
-export async function getPincodeFromCoords(lat: number, lon: number): Promise<{ success: boolean; pincode?: string; message?: string; display_name?: string }> {
+export async function getPincodeFromCoords(lat: number, lon: number): Promise<{ success: boolean; pincode?: string; message?: string; display_name?: string; city?: string }> {
     try {
         const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {
             headers: {
@@ -47,11 +47,14 @@ export async function getPincodeFromCoords(lat: number, lon: number): Promise<{ 
         if (data.address && data.address.postcode) {
             // Nominatim sometimes returns "110001; 110002" or "110001-1234"
             const postcode = data.address.postcode.split(/[\s,;-]/)[0];
+            const city = data.address.city || data.address.town || data.address.village || data.address.district || data.address.state_district;
+
             if (/^\d{6}$/.test(postcode)) {
                 return {
                     success: true,
                     pincode: postcode,
-                    display_name: data.display_name // Return the full address
+                    display_name: data.display_name, // Return the full address
+                    city: city
                 };
             }
         }

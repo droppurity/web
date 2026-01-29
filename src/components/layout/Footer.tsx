@@ -14,7 +14,7 @@ const socialLinks = [
 
 const getFilenameFromUrl = (url: string): string => {
   const parts = url.split('/');
-  return parts[parts.length -1];
+  return parts[parts.length - 1];
 }
 
 export default function Footer() {
@@ -30,7 +30,7 @@ export default function Footer() {
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-          
+
           {/* Column 1: Logo and Address */}
           <div className="sm:col-span-2 md:col-span-1 space-y-3">
             <Link href="/" className="flex items-center">
@@ -62,7 +62,7 @@ export default function Footer() {
                 Shivpuri colony, chas,<br />
                 Bokaro, Jharkhand - 827013.
               </p>
-               <p className="text-[10px] text-primary-foreground/60 italic mt-2.5">
+              <p className="text-[10px] text-primary-foreground/60 italic mt-2.5">
                 Note: These office locations represent our valued product partners, relation partners, and service partners.
               </p>
             </div>
@@ -77,6 +77,7 @@ export default function Footer() {
               <li><Link href="/#how-it-works" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">How it works</Link></li>
               <li><Link href="/#droppurity-advantage" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Droppurity Advantage</Link></li>
               <li><Link href="/plans" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Our Products</Link></li>
+              <li><Link href="/ro-on-rent-bengaluru" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors font-semibold text-yellow-100">Service Areas</Link></li>
             </ul>
           </div>
 
@@ -95,21 +96,21 @@ export default function Footer() {
           {/* Column 4: Terms and Refer */}
           <div className="space-y-6">
             <div className="space-y-3">
-                <h3 className="text-base font-semibold text-yellow-300">Terms</h3>
-                <ul className="space-y-1.5">
-                  <li><Link href="/privacy" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Terms of Use</Link></li>
-                </ul>
+              <h3 className="text-base font-semibold text-yellow-300">Terms</h3>
+              <ul className="space-y-1.5">
+                <li><Link href="/privacy" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">Terms of Use</Link></li>
+              </ul>
             </div>
             <div className="space-y-3">
-                <h3 className="text-base font-semibold text-yellow-300">Refer & Earn</h3>
-                <ul className="space-y-1.5">
-                    <li>
-                        <Link href="/#refer-and-earn" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
-                            Refer now
-                        </Link>
-                    </li>
-                </ul>
+              <h3 className="text-base font-semibold text-yellow-300">Refer & Earn</h3>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link href="/#refer-and-earn" className="text-xs text-primary-foreground/90 hover:text-primary-foreground transition-colors">
+                    Refer now
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
 

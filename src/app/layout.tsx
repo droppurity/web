@@ -4,8 +4,8 @@ import './globals.css';
 import ClientLayout from '@/components/layout/ClientLayout';
 
 const siteUrl = "https://www.droppurity.in";
-const siteTitle = "RO Water Purifier on Rent | Droppurity";
-const siteDescription = "Get a Droppurity RO water purifier on rent. Plans from ₹299/mo. Enjoy pure, healthy water with zero down payment, lifetime free maintenance, and a 7-day risk-free trial.";
+const siteTitle = "RO on Rent @ ₹299/month | Free Installation & Service – Droppurity";
+const siteDescription = "Get RO water purifier on rent for just ₹299/month. Free installation, free maintenance & filter replacement. Ideal for homes & rented houses. Book now.";
 const ogImageUrl = `${siteUrl}/hero.png`;
 
 export const metadata: Metadata = {
@@ -122,7 +122,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-          <ClientLayout>{children}</ClientLayout>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
