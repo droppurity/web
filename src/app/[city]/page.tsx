@@ -204,15 +204,19 @@ export default function CityPage({ params }: { params: { city: string } }) {
     ]
   };
 
+
+  // Create a plain object copy to resolve getters and avoid "Array objects not supported" error in Client Components
+  const plainCityInfo = { ...cityInfo };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CityHero city={cityInfo} />
+      <CityHero city={plainCityInfo} />
       <CityTrialForm cityName={cityInfo.name} exampleName={cityInfo.exampleName} />
-      <CitySEOContent city={cityInfo} />
+      <CitySEOContent city={plainCityInfo} />
       <CityLinks currentCitySlug={cityInfo.slug} />
     </>
   );
