@@ -14,11 +14,12 @@ import SubscriptionDialog from "./SubscriptionDialog";
 interface PlanCardProps {
   plan: Plan;
   tenure: TenureOption;
-  purifierContextName?: string; // e.g., "Droppurity RO+"
+  purifierContextName?: string;
+  cityName?: string;
   onDialogOpenChange: (open: boolean) => void;
 }
 
-export default function PlanCard({ plan, tenure, purifierContextName, onDialogOpenChange }: PlanCardProps) {
+export default function PlanCard({ plan, tenure, purifierContextName, cityName, onDialogOpenChange }: PlanCardProps) {
   const { toast } = useToast();
   const [isSubDialogOpen, setIsSubDialogOpen] = useState(false);
 
@@ -29,15 +30,15 @@ export default function PlanCard({ plan, tenure, purifierContextName, onDialogOp
   if (!priceDetail) {
     return (
       <Card className="flex flex-col shadow-lg rounded-xl overflow-hidden border border-destructive">
-        <CardHeader className="p-4 bg-card">
-          {purifierContextName && (
-            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wide mb-1">
+      <CardHeader className="p-3 bg-card">
+        {purifierContextName && (
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-1">
               {purifierContextName}
             </p>
           )}
-          <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-destructive-foreground">
-            {plan.name} Plan
-          </CardTitle>
+        <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-foreground">
+          {plan.name} Plan
+        </CardTitle>
         </CardHeader>
         <CardContent className="p-4 flex-grow">
           <p className="text-center text-destructive">Pricing not available for {tenure.displayName}.</p>
@@ -79,21 +80,24 @@ export default function PlanCard({ plan, tenure, purifierContextName, onDialogOp
           {plan.pillText}
         </Badge>
       )}
-      <CardHeader className="p-4 bg-card">
+      <CardHeader className="py-3 px-4 bg-card">
         {purifierContextName && (
-            <p className="text-xs text-dynamic-accent text-center font-medium uppercase tracking-wide mb-1">
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-0.5">
               {purifierContextName}
             </p>
           )}
-        <CardTitle className="font-headline text-base sm:text-lg text-center font-semibold text-foreground">
+        <CardTitle className="font-headline text-sm sm:text-base text-center font-semibold text-foreground">
           {plan.name} Plan
         </CardTitle>
-        <p className="text-sm text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
-        <div className="text-center mt-2">
-          <span className="text-2xl sm:text-3xl font-bold font-headline text-dynamic-accent">
+        <p className="text-xs text-muted-foreground text-center">{plan.limits.replace("Upto ", "")}</p>
+        <div className="text-center mt-1.5 flex items-center justify-center gap-1 flex-wrap">
+          <span className="text-xl sm:text-2xl font-bold font-headline text-dynamic-accent">
             ₹{Math.round(displayPricePerMonth)}
           </span>
-          <span className="text-sm text-muted-foreground">/mo</span>
+          <span className="text-xs text-muted-foreground mr-1">/mo</span>
+          <Badge variant="secondary" className="text-[9px] bg-dynamic-accent/10 text-dynamic-accent hover:bg-dynamic-accent/20 align-middle py-0 px-1.5 h-4 uppercase tracking-wider">
+            + 18% GST
+          </Badge>
         </div>
         
         {savingsAmount > 0 && (
@@ -102,34 +106,25 @@ export default function PlanCard({ plan, tenure, purifierContextName, onDialogOp
           </Badge>
         )}
          <p className="text-xs text-muted-foreground text-center mt-1">
-          Total ₹{Math.round(totalBilled)} for {tenure.displayName}
-          {priceDetail.payingMonths && priceDetail.payingMonths < tenure.durationMonths ? ` (pay for ${priceDetail.payingMonths} months)` : ''}
+          Plan Total: ₹{Math.round(totalBilled)} <span className="opacity-80">+ GST & Sec. Deposit</span>
         </p>
       </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <ul className="space-y-1.5">
+      <CardContent className="py-2 px-4 flex-grow">
+        <ul className="space-y-1">
           {featuresToShow.map((feature, index) => (
-            <li key={index} className="flex items-start text-sm text-foreground">
-              <CheckCircle className="w-4 h-4 mr-2 text-dynamic-accent flex-shrink-0 mt-0.5" />
+            <li key={index} className="flex items-start text-xs text-foreground">
+               <CheckCircle className="w-3 h-3 mr-1.5 text-dynamic-accent flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="grid grid-cols-2 gap-2 sm:gap-3 p-4 bg-muted/40 mt-auto">
-        <Button 
-            size="sm" 
-            variant="outline" 
-            className="w-full border-dynamic-accent text-dynamic-accent hover:bg-dynamic-accent/10" 
-            onClick={handleKnowMore}
-        >
-          <Info className="mr-1.5 h-4 w-4" /> Know More
-        </Button>
+      <CardFooter className="p-3 bg-muted/40 mt-auto">
         <Dialog open={isSubDialogOpen} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button 
-                    size="sm" 
-                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90"
+                    size="default" 
+                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 py-4 text-sm font-bold shadow-sm rounded-lg"
                 >
                    Subscribe Now
                 </Button>
@@ -139,6 +134,8 @@ export default function PlanCard({ plan, tenure, purifierContextName, onDialogOp
                     purifierContextName={purifierContextName}
                     planName={plan.name}
                     tenure={tenure}
+                    totalPrice={totalBilled}
+                    cityName={cityName}
                     onSubscriptionSuccess={() => handleOpenChange(false)}
                 />
             )}

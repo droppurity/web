@@ -30,7 +30,11 @@ export default function Header() {
   const logoFilename = getFilenameFromUrl(logoPath);
 
   useEffect(() => {
+    let ignoreScrollUntil = 0;
+
     const handleScroll = () => {
+      if (Date.now() < ignoreScrollUntil) return;
+
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY.current && currentScrollY > 56) { // 56px is header height
         setIsHeaderVisible(false);
@@ -40,8 +44,18 @@ export default function Header() {
       lastScrollY.current = currentScrollY;
     };
 
+    const handleHideHeader = () => {
+      setIsHeaderVisible(false);
+      ignoreScrollUntil = Date.now() + 1500; // Ignore scroll events for 1.5s during smooth scroll
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('hide-header', handleHideHeader);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hide-header', handleHideHeader);
+    };
   }, []);
 
   return (

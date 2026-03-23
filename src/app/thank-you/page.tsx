@@ -21,31 +21,36 @@ function ThankYouContent() {
   const titleText = isTrial ? "Thank You for Booking a Trial!" : "Thank You for Subscribing!";
   const securityDeposit = 1500;
 
-  const { planPrice, totalAmount } = useMemo(() => {
+  const { planPrice, totalAmount, basePlanPrice, gstAmount } = useMemo(() => {
     if (isTrial) {
-      return { planPrice: 0, totalAmount: securityDeposit };
+      return { planPrice: 0, totalAmount: securityDeposit, basePlanPrice: 0, gstAmount: 0 };
     }
     
     if (!purifierName || !planName || !tenure) {
-      return { planPrice: 0, totalAmount: securityDeposit };
+      return { planPrice: 0, totalAmount: securityDeposit, basePlanPrice: 0, gstAmount: 0 };
     }
 
     const selectedPurifier = purifiers.find(p => p.name === purifierName);
     const selectedTenure = tenureOptions.find(t => t.displayName === tenure);
     
     if (!selectedPurifier || !selectedTenure) {
-      return { planPrice: 0, totalAmount: securityDeposit };
+      return { planPrice: 0, totalAmount: securityDeposit, basePlanPrice: 0, gstAmount: 0 };
     }
 
     const selectedPlan = selectedPurifier.plans.find(p => p.name === planName);
     const priceDetail = selectedPlan?.tenurePricing[selectedTenure.id];
     
     if (!priceDetail) {
-      return { planPrice: 0, totalAmount: securityDeposit };
+      return { planPrice: 0, totalAmount: securityDeposit, basePlanPrice: 0, gstAmount: 0 };
     }
     
-    const calculatedPlanPrice = Math.round(priceDetail.pricePerMonth * (priceDetail.payingMonths || selectedTenure.durationMonths));
+    const calculatedBasePlanPrice = Math.round(priceDetail.pricePerMonth * (priceDetail.payingMonths || selectedTenure.durationMonths));
+    const calculatedGstAmount = Math.round(calculatedBasePlanPrice * 0.18);
+    const calculatedPlanPrice = calculatedBasePlanPrice + calculatedGstAmount;
+
     return {
+      basePlanPrice: calculatedBasePlanPrice,
+      gstAmount: calculatedGstAmount,
       planPrice: calculatedPlanPrice,
       totalAmount: calculatedPlanPrice + securityDeposit
     };
@@ -97,8 +102,16 @@ function ThankYouContent() {
              <div className="bg-primary/5 rounded-lg p-4 text-left space-y-3 my-4 border border-primary/20">
               <h3 className="font-semibold text-center text-primary mb-3">Payment Details</h3>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Plan Amount:</span>
-                <span className="font-medium text-foreground">₹{planPrice.toLocaleString()}</span>
+                <span className="text-muted-foreground">Plan Base Amount:</span>
+                <span className="font-medium text-foreground">₹{basePlanPrice.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">GST (18%):</span>
+                <span className="font-medium text-foreground">₹{gstAmount.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm font-medium">
+                <span className="text-muted-foreground">Plan Total Amount:</span>
+                <span className="text-foreground">₹{planPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground">Security Deposit (Refundable):</span>

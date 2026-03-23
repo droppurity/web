@@ -137,7 +137,7 @@ export default function FreeTrialPage() {
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
+                <Input id="phone" type="tel" {...register("phone")} placeholder="7979784087" className="mt-1" disabled={isSubmitting} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
               </div>
 

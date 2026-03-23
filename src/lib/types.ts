@@ -39,6 +39,7 @@ export interface TenureOption {
 export interface Purifier {
   id: string;
   name: string;
+  shortDescription?: string;
   plans: Plan[];
   image: string;
   thumbnailImages?: string[];

@@ -21,12 +21,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from '@/hooks/use-toast';
 import { saveFreeTrial } from '@/app/actions/freeTrial';
 import { Loader2, MapPin, ExternalLink } from 'lucide-react';
+import { cityTranslations } from '@/config/translations';
 
 const freeTrialFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit Indian mobile number." }),
   location: z.string().url({ message: "Please auto-fetch a valid location link." }).optional().or(z.literal('')),
-  address: z.string().min(10, { message: "Please enter a full installation address." }),
+  pinCode: z.string().regex(/^\d{6}$/, "Please enter a valid 6-digit pin code."),
+  address: z.string().optional(),
   purifierName: z.string(),
   planName: z.string(),
   tenure: z.string(),
@@ -37,14 +39,37 @@ type FreeTrialFormValues = z.infer<typeof freeTrialFormSchema>;
 interface FreeTrialDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  cityName?: string;
 }
 
-export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogProps) {
+const cityPlaceholders: Record<string, { name: string; phone: string; address: string }> = {
+  'delhi': { name: 'Vikas Gupta', phone: '7979784087', address: 'B-12, Lajpat Nagar, New Delhi' },
+  'bengaluru': { name: 'Rajesh Nair', phone: '7979784087', address: '3rd Cross, Koramangala, Bengaluru' },
+  'mumbai': { name: 'Priya Deshmukh', phone: '7979784087', address: 'A-404, Andheri West, Mumbai' },
+  'hyderabad': { name: 'Srinivas Reddy', phone: '7979784087', address: 'Plot 5, Jubilee Hills, Hyderabad' },
+  'chennai': { name: 'Karthik Subramanian', phone: '7979784087', address: '12, T Nagar, Chennai' },
+  'pune': { name: 'Amit Kulkarni', phone: '7979784087', address: 'Flat 8, Kothrud, Pune' },
+  'kolkata': { name: 'Sourav Banerjee', phone: '7979784087', address: '14/2, Salt Lake, Kolkata' },
+  'jaipur': { name: 'Mahesh Sharma', phone: '7979784087', address: 'C-Scheme, Jaipur' },
+  'lucknow': { name: 'Anurag Mishra', phone: '7979784087', address: 'Gomti Nagar, Lucknow' },
+  'ahmedabad': { name: 'Darshan Patel', phone: '7979784087', address: 'Satellite Road, Ahmedabad' },
+  'chandigarh': { name: 'Harpreet Singh', phone: '7979784087', address: 'Sector 17, Chandigarh' },
+  'patna': { name: 'Ravi Kumar', phone: '7979784087', address: 'Boring Road, Patna' },
+  'ranchi': { name: 'Deepak Oraon', phone: '7979784087', address: 'Main Road, Ranchi' },
+  'bokaro steel city': { name: 'Sunil Tiwari', phone: '7979784087', address: 'Sector 4, Bokaro Steel City' },
+  'noida': { name: 'Ankit Verma', phone: '7979784087', address: 'Sector 62, Noida' },
+  'gurgaon': { name: 'Rohit Taneja', phone: '7979784087', address: 'DLF Phase 3, Gurgaon' },
+};
+
+const defaultPlaceholder = { name: 'Sonu Sharma', phone: '7979784087', address: 'Full address for installation...' };
+
+export default function FreeTrialDialog({ open, onOpenChange, cityName }: FreeTrialDialogProps) {
+  const ph = (cityName ? cityPlaceholders[cityName.toLowerCase()] : null) || defaultPlaceholder;
+  const labels = cityName ? cityTranslations[cityName.toLowerCase()] : null;
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [shareLocation, setShareLocation] = useState(false);
 
   const trialPurifierName = "Droppurity RO+";
   const trialPlanName = "Basic";
@@ -56,25 +81,40 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
       purifierName: trialPurifierName,
       planName: trialPlanName,
       tenure: trialTenure,
+      pinCode: '',
+      address: '',
     }
   });
   
-  const locationValue = watch('location');
+  const addressValue = watch('address');
   
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
-    // Ensure navigator is available
     if (typeof window !== "undefined" && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const { latitude, longitude } = position.coords;
-            const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-            setValue('location', locationUrl, { shouldValidate: true });
-            setIsFetchingLocation(false);
+        async (position) => {
+            try {
+              const { latitude, longitude } = position.coords;
+              const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+              setValue('location', locationUrl, { shouldValidate: true });
+
+              const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`, {
+                headers: { 'Accept-Language': 'en' }
+              });
+              const data = await response.json();
+              if (data && data.address) {
+                const fetchedPin = data.address.postcode || '';
+                if (fetchedPin) setValue('pinCode', fetchedPin, { shouldValidate: true });
+                setValue('address', data.display_name);
+              }
+            } catch (error) {
+              console.error(error);
+            } finally {
+              setIsFetchingLocation(false);
+            }
         },
         (error) => {
             setIsFetchingLocation(false);
-            setShareLocation(false);
             toast({
               variant: "destructive",
               title: "Location Error",
@@ -84,7 +124,6 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
         );
     } else {
         setIsFetchingLocation(false);
-        setShareLocation(false);
         toast({
             variant: "destructive",
             title: "Unsupported Browser",
@@ -93,18 +132,16 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
     }
   };
 
-  useEffect(() => {
-    if (shareLocation) {
-        handleFetchLocation();
-    } else {
-        setValue('location', '');
-    }
-  }, [shareLocation]);
+
 
 
   const onSubmit: SubmitHandler<FreeTrialFormValues> = async (data) => {
     setIsSubmitting(true);
-    const result = await saveFreeTrial(data);
+    const payload = {
+      ...data,
+      address: data.address ? `${data.address} - Pin: ${data.pinCode}` : data.pinCode,
+    };
+    const result = await saveFreeTrial(payload);
     setIsSubmitting(false);
 
     if (result.success) {
@@ -130,47 +167,58 @@ export default function FreeTrialDialog({ open, onOpenChange }: FreeTrialDialogP
         {!showSuccess ? (
           <>
             <DialogHeader>
-              <DialogTitle className="text-primary text-center font-bold">Book Free Trial Now</DialogTitle>
+              <DialogTitle className="text-primary text-center font-bold">
+                 Book Free Trial Now
+                 {labels?.bookTrial && <span className="block text-sm font-medium text-muted-foreground mt-1">{labels.bookTrial}</span>}
+              </DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto px-4">
               <input type="hidden" {...register("purifierName")} />
               <input type="hidden" {...register("planName")} />
               <input type="hidden" {...register("tenure")} />
               <div>
-                <Label htmlFor="ft-name">Full Name</Label>
-                <Input id="ft-name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
+                <Label htmlFor="ft-name">
+                  Full Name
+                  {labels?.fullName && <span className="font-normal text-muted-foreground ml-1">({labels.fullName})</span>}
+                </Label>
+                <Input id="ft-name" {...register("name")} placeholder={ph.name} className="mt-1" disabled={isSubmitting} />
                 {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
               </div>
               <div>
-                <Label htmlFor="ft-phone">Phone Number</Label>
-                <Input id="ft-phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
+                <Label htmlFor="ft-phone">
+                  Phone Number
+                  {labels?.phone && <span className="font-normal text-muted-foreground ml-1">({labels.phone})</span>}
+                </Label>
+                <Input id="ft-phone" type="tel" {...register("phone")} placeholder={ph.phone} className="mt-1" disabled={isSubmitting} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
               </div>
               <div>
-                <Label htmlFor="ft-address">Installation Address</Label>
-                <Textarea id="ft-address" {...register("address")} placeholder="Full address for installation..." rows={3} className="mt-1" disabled={isSubmitting} />
-                {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
-              </div>
-               <div className="space-y-2 pt-2">
-                  <div className="flex items-center space-x-2">
-                      <Checkbox id="ft-share-location" checked={shareLocation} onCheckedChange={(checked) => setShareLocation(!!checked)} disabled={isSubmitting || isFetchingLocation} />
-                      <label
-                          htmlFor="ft-share-location"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                          Help our delivery champ find you faster! 🗺️ Click here to share your live location.
-                      </label>
-                  </div>
-                  <div className="mt-1">
-                      {isFetchingLocation && <div className="flex items-center text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Fetching your location...</div>}
-                       {locationValue ? (
-                         <div className="text-xs text-green-600 font-medium py-1.5">Thanks for sharing! 👍</div>
-                      ) : (
-                        shareLocation && !isFetchingLocation && <div className="text-xs text-destructive">Could not fetch location. Please try again.</div>
-                      )}
-                  </div>
-                  <input type="hidden" {...register("location")} />
+                <Label htmlFor="ft-pincode">
+                  Pin Code
+                  {labels?.pinCode && <span className="font-normal text-muted-foreground ml-1">({labels.pinCode})</span>}
+                </Label>
+                <div className="flex gap-2 items-center mt-1">
+                  <Input id="ft-pincode" type="text" inputMode="numeric" maxLength={6} {...register("pinCode")} placeholder="110001" className="flex-1" disabled={isSubmitting} />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={handleFetchLocation}
+                    disabled={isFetchingLocation || isSubmitting}
+                    className="shrink-0"
+                  >
+                    {isFetchingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
+                  </Button>
                 </div>
+                {errors.pinCode && <p className="text-xs text-destructive mt-1">{errors.pinCode.message}</p>}
+                {addressValue && (
+                   <p className="text-xs text-green-600 font-medium mt-1">
+                       Area: {addressValue} ✅
+                   </p>
+                )}
+              </div>
+              <input type="hidden" {...register("location")} />
+              <input type="hidden" {...register("address")} />
                 <div className="text-center text-xs text-muted-foreground pt-2">
                     You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
                     <br />

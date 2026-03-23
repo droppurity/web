@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ClientLayout from '@/components/layout/ClientLayout';
 
-const siteUrl = "https://www.droppurity.in";
-const siteTitle = "RO Water Purifier on Rent | Droppurity";
-const siteDescription = "Get a Droppurity RO water purifier on rent. Plans from ₹299/mo. Enjoy pure, healthy water with zero down payment, lifetime free maintenance, and a 7-day risk-free trial.";
+const siteUrl = "https://droppurity.in";
+const siteTitle = "RO Water Purifier on Rent | ₹299/mo | Free Install & Service – Droppurity";
+const siteDescription = "Rent an RO water purifier starting at ₹299/month. Zero upfront cost, free installation, lifetime free maintenance & filter replacement. 7-day risk-free trial. Serving Bengaluru, Delhi, Mumbai, Hyderabad, Pune & more.";
 const ogImageUrl = `${siteUrl}/hero.png`;
 
 export const metadata: Metadata = {
@@ -26,12 +26,46 @@ export const metadata: Metadata = {
       { url: '/favicon/apple-touch-icon.png' },
     ],
   },
-  keywords: ["ro water purifier on rent", "water purifier rental", "ro on rent", "droppurity", "ro water filter for home", "best ro purifier", "ro purifier near me", "best ro purifier", "cheap and best ro purifier", "best ro filer", "filter on rent", "rent ro"],
+  keywords: [
+    "ro water purifier on rent",
+    "water purifier on rent",
+    "ro on rent",
+    "water purifier rental",
+    "ro purifier rental india",
+    "droppurity",
+    "ro water filter for home",
+    "best ro purifier on rent",
+    "ro purifier near me",
+    "alkaline water purifier on rent",
+    "copper water purifier on rent",
+    "water purifier subscription",
+    "rent ro purifier monthly",
+    "free installation water purifier",
+    "lifetime maintenance ro purifier",
+    "water purifier bangalore",
+    "water purifier delhi",
+    "water purifier mumbai",
+    "water purifier hyderabad",
+    "water purifier pune",
+    "water purifier chennai",
+    "purifier on rent without deposit",
+    "7 day free trial water purifier",
+    "ro purifier for rented house",
+    "zero cost ro purifier",
+  ],
   authors: [{ name: 'Droppurity', url: siteUrl }],
   creator: 'Droppurity',
+  publisher: 'Droppurity',
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
     type: "website",
@@ -45,7 +79,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1200,
         height: 630,
-        alt: 'A Droppurity RO water purifier, perfect for any home.',
+        alt: 'Droppurity RO Water Purifier on Rent – Starting at ₹299/month',
       },
     ],
   },
@@ -54,59 +88,132 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     images: [ogImageUrl],
+    site: "@droppurity",
+    creator: "@droppurity",
   },
   verification: {
     google: 'YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE',
   },
   alternates: {
-    canonical: '/',
+    canonical: siteUrl,
   },
-  other: {
-    'application/ld+json': JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Droppurity",
-      "serviceType": "RO Water Purifier Rental",
-      "provider": {
-        "@type": "Organization",
-        "name": "Droppurity",
-        "url": siteUrl,
-        "logo": `${siteUrl}/logo.png`,
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+91-79797-84087",
-          "contactType": "Customer Service",
-          "email": "official@droppurity.in"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Shivpuri colony, chas",
-          "addressLocality": "Bokaro",
-          "postalCode": "827013",
-          "addressRegion": "Jharkhand",
-          "addressCountry": "IN"
-        },
-        "sameAs": [
-          "https://x.com/droppurity",
-          "https://linkedin.com/company/droppurity",
-          "https://facebook.com/droppurity",
-          "https://instagram.com/droppurity",
-          "https://youtube.com/@droppurity"
-        ]
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "India"
-      },
-      "offers": {
+  category: 'home appliances',
+};
+
+// Organization + Service + Offer JSON-LD schema
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "LocalBusiness"],
+  "@id": `${siteUrl}/#organization`,
+  "name": "Droppurity",
+  "url": siteUrl,
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${siteUrl}/logo.png`,
+    "width": 200,
+    "height": 60,
+  },
+  "description": "Droppurity offers smart RO water purifiers on rent with lifetime free maintenance, free installation, and a 7-day risk-free trial across India.",
+  "telephone": "+91-79797-84087",
+  "email": "official@droppurity.in",
+  "foundingDate": "2022",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Shivpuri Colony, Chas",
+    "addressLocality": "Bokaro Steel City",
+    "postalCode": "827013",
+    "addressRegion": "Jharkhand",
+    "addressCountry": "IN",
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Bengaluru" },
+    { "@type": "City", "name": "Delhi" },
+    { "@type": "City", "name": "Mumbai" },
+    { "@type": "City", "name": "Hyderabad" },
+    { "@type": "City", "name": "Pune" },
+    { "@type": "City", "name": "Chennai" },
+    { "@type": "City", "name": "Kolkata" },
+    { "@type": "City", "name": "Noida" },
+    { "@type": "City", "name": "Gurugram" },
+    { "@type": "City", "name": "Faridabad" },
+    { "@type": "City", "name": "Ghaziabad" },
+    { "@type": "City", "name": "Bokaro Steel City" },
+  ],
+  "sameAs": [
+    "https://x.com/droppurity",
+    "https://linkedin.com/company/droppurity",
+    "https://facebook.com/droppurity",
+    "https://instagram.com/droppurity",
+    "https://youtube.com/@droppurity",
+  ],
+  "priceRange": "₹₹",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "RO Water Purifier Rental Plans",
+    "itemListElement": [
+      {
         "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Droppurity RO+ Water Purifier",
+          "description": "Advanced RO+UV+Copper purification. Ideal for standard families.",
+          "brand": { "@type": "Brand", "name": "Droppurity" },
+        },
         "price": "299",
         "priceCurrency": "INR",
-        "description": "Monthly rental starting from ₹299."
+        "priceSpecification": { "@type": "UnitPriceSpecification", "price": "299", "priceCurrency": "INR", "unitText": "month" },
       },
-      "description": "Smart RO water purifiers on rent with lifetime free maintenance."
-    })
-  }
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Droppurity Copper Water Purifier",
+          "description": "Enriched with natural copper minerals for immunity and wellness.",
+          "brand": { "@type": "Brand", "name": "Droppurity" },
+        },
+        "price": "384",
+        "priceCurrency": "INR",
+        "priceSpecification": { "@type": "UnitPriceSpecification", "price": "384", "priceCurrency": "INR", "unitText": "month" },
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Droppurity Alkaline Water Purifier",
+          "description": "Restores essential minerals and provides up to 8.5 pH balance. Ideal for acidity concerns.",
+          "brand": { "@type": "Brand", "name": "Droppurity" },
+        },
+        "price": "374",
+        "priceCurrency": "INR",
+        "priceSpecification": { "@type": "UnitPriceSpecification", "price": "374", "priceCurrency": "INR", "unitText": "month" },
+      },
+    ],
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  "url": siteUrl,
+  "name": "Droppurity",
+  "description": siteDescription,
+  "publisher": { "@id": `${siteUrl}/#organization` },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": { "@type": "EntryPoint", "urlTemplate": `${siteUrl}/plans?q={search_term_string}` },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": "Plans", "item": `${siteUrl}/plans` },
+    { "@type": "ListItem", "position": 3, "name": "FAQ", "item": `${siteUrl}/faq` },
+  ],
 };
 
 export default function RootLayout({
@@ -120,6 +227,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
           <ClientLayout>{children}</ClientLayout>

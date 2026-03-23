@@ -41,15 +41,40 @@ interface SubscriptionDialogProps {
   purifierContextName?: string;
   planName: string;
   tenure: TenureOption;
+  totalPrice: number;
+  cityName?: string;
   onSubscriptionSuccess: () => void;
 }
 
-export default function SubscriptionDialog({ purifierContextName, planName, tenure, onSubscriptionSuccess }: SubscriptionDialogProps) {
+const cityPlaceholders: Record<string, { name: string; email: string; phone: string; address: string }> = {
+  'delhi': { name: 'Vikas Gupta', email: 'vikas@gmail.com', phone: '7979784087', address: 'B-12, Lajpat Nagar, New Delhi' },
+  'bengaluru': { name: 'Rajesh Nair', email: 'rajesh@gmail.com', phone: '7979784087', address: '3rd Cross, Koramangala, Bengaluru' },
+  'mumbai': { name: 'Priya Deshmukh', email: 'priya@gmail.com', phone: '7979784087', address: 'A-404, Andheri West, Mumbai' },
+  'hyderabad': { name: 'Srinivas Reddy', email: 'srinivas@gmail.com', phone: '7979784087', address: 'Plot 5, Jubilee Hills, Hyderabad' },
+  'chennai': { name: 'Karthik Subramanian', email: 'karthik@gmail.com', phone: '7979784087', address: '12, T Nagar, Chennai' },
+  'pune': { name: 'Amit Kulkarni', email: 'amit@gmail.com', phone: '7979784087', address: 'Flat 8, Kothrud, Pune' },
+  'kolkata': { name: 'Sourav Banerjee', email: 'sourav@gmail.com', phone: '7979784087', address: '14/2, Salt Lake, Kolkata' },
+  'jaipur': { name: 'Mahesh Sharma', email: 'mahesh@gmail.com', phone: '7979784087', address: 'C-Scheme, Jaipur' },
+  'lucknow': { name: 'Anurag Mishra', email: 'anurag@gmail.com', phone: '7979784087', address: 'Gomti Nagar, Lucknow' },
+  'ahmedabad': { name: 'Darshan Patel', email: 'darshan@gmail.com', phone: '7979784087', address: 'Satellite Road, Ahmedabad' },
+  'chandigarh': { name: 'Harpreet Singh', email: 'harpreet@gmail.com', phone: '7979784087', address: 'Sector 17, Chandigarh' },
+  'patna': { name: 'Ravi Kumar', email: 'ravi@gmail.com', phone: '7979784087', address: 'Boring Road, Patna' },
+  'ranchi': { name: 'Deepak Oraon', email: 'deepak@gmail.com', phone: '7979784087', address: 'Main Road, Ranchi' },
+  'bokaro steel city': { name: 'Sunil Tiwari', email: 'sunil@gmail.com', phone: '7979784087', address: 'Sector 4, Bokaro Steel City' },
+  'noida': { name: 'Ankit Verma', email: 'ankit@gmail.com', phone: '7979784087', address: 'Sector 62, Noida' },
+  'gurgaon': { name: 'Rohit Taneja', email: 'rohit@gmail.com', phone: '7979784087', address: 'DLF Phase 3, Gurgaon' },
+};
+
+const defaultPlaceholder = { name: 'Sonu Sharma', email: 'you@example.com', phone: '7979784087', address: 'Flat No, Building, Street...' };
+
+export default function SubscriptionDialog({ purifierContextName, planName, tenure, totalPrice, cityName, onSubscriptionSuccess }: SubscriptionDialogProps) {
   const { toast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [shareLocation, setShareLocation] = useState(false);
+
+  const ph = (cityName ? cityPlaceholders[cityName.toLowerCase()] : null) || defaultPlaceholder;
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionFormSchema),
@@ -136,32 +161,73 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
   };
 
   return (
-    <DialogContent className="sm:max-w-[480px]" onInteractOutside={(e) => {
+    <DialogContent className="sm:max-w-[480px] md:max-w-[750px] lg:max-w-[850px] p-0 overflow-hidden" onInteractOutside={(e) => {
         if (isSubmitting) {
             e.preventDefault();
         }
     }}>
-      <DialogHeader>
-        <DialogTitle>Subscribe to {purifierContextName}</DialogTitle>
-        <DialogDescription>
-          You're choosing the {planName} plan for {tenure.displayName}. Please fill in your details to proceed.
+      <div className="grid grid-cols-1 md:grid-cols-2 max-h-[90vh] overflow-y-auto md:overflow-visible">
+        
+        {/* Left Column: Context & Summary */}
+        <div className="p-6 md:p-8 bg-muted/40 border-b md:border-b-0 md:border-r border-border/60">
+      <DialogHeader className="text-left">
+        <DialogTitle className="text-xl md:text-2xl">Subscribe to {purifierContextName}</DialogTitle>
+        <DialogDescription className="mt-1.5 leading-relaxed">
+          You're choosing the <strong className="text-foreground">{planName}</strong> plan for <strong className="text-foreground">{tenure.displayName}</strong>.
         </DialogDescription>
       </DialogHeader>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
-        <div>
-          <Label htmlFor="sd-name">Full Name</Label>
-          <Input id="sd-name" {...register("name")} placeholder="Sonu Sharma" className="mt-1" disabled={isSubmitting} />
-          {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+      
+      {(() => {
+        const planTotal = totalPrice;
+        const gstAmount = planTotal * 0.18;
+        const securityDeposit = 1500;
+        const finalTotalAmount = planTotal + gstAmount + securityDeposit;
+
+        return (
+          <div className="bg-background p-5 rounded-xl mt-6 border border-border/80 shadow-sm">
+            <h3 className="font-semibold text-foreground text-base mb-4">Order Summary</h3>
+            <div className="space-y-3 text-sm">
+               <div className="flex justify-between items-center text-muted-foreground">
+                 <span>Plan ({tenure.displayName})</span>
+                 <span className="font-medium text-foreground">₹{Math.round(planTotal)}</span>
+               </div>
+               <div className="flex justify-between items-center text-muted-foreground">
+                 <span>GST (18%)</span>
+                 <span className="font-medium text-foreground">₹{Math.round(gstAmount)}</span>
+               </div>
+               <div className="flex justify-between items-center text-muted-foreground">
+                 <span>Security Deposit <span className="text-[10px] text-dynamic-accent/80 ml-1 opacity-80">(Refundable)</span></span>
+                 <span className="font-medium text-foreground">₹{securityDeposit}</span>
+               </div>
+               <div className="border-t border-border pt-3 mt-4 flex justify-between items-center font-bold text-foreground">
+                 <span className="text-base">Total Payable</span>
+                 <span className="text-2xl md:text-3xl text-dynamic-accent">₹{Math.round(finalTotalAmount)}</span>
+               </div>
+            </div>
+          </div>
+        );
+      })()}
+      </div>
+
+      {/* Right Column: Form Inputs */}
+      <div className="p-6 md:p-8 flex flex-col">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex-grow flex flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <Label htmlFor="sd-name">Full Name</Label>
+            <Input id="sd-name" {...register("name")} placeholder={ph.name} className="mt-1 h-9" disabled={isSubmitting} />
+            {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+          </div>
+          <div>
+            <Label htmlFor="sd-phone">Phone Number</Label>
+            <Input id="sd-phone" type="tel" {...register("phone")} placeholder={ph.phone} className="mt-1 h-9" disabled={isSubmitting} />
+            {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
+          </div>
         </div>
         <div>
           <Label htmlFor="sd-email">Email Address</Label>
-          <Input id="sd-email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
+          <Input id="sd-email" type="email" {...register("email")} placeholder={ph.email} className="mt-1 h-9" disabled={isSubmitting} />
           {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
-        </div>
-        <div>
-          <Label htmlFor="sd-phone">Phone Number</Label>
-          <Input id="sd-phone" type="tel" {...register("phone")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
-          {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>}
         </div>
         
         <div>
@@ -169,9 +235,9 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
             <Textarea
               id="sd-address"
               {...register("address")}
-              placeholder="Your full address for installation (e.g., Flat No, Building, Street, Landmark...)"
-              rows={3}
-              className="mt-1"
+              placeholder={`Your full address in ${cityName || 'your city'} (e.g., ${ph.address})`}
+              rows={2}
+              className="mt-1 resize-none"
               disabled={isSubmitting}
             />
             {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
@@ -198,16 +264,20 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
             <input type="hidden" {...register("location")} />
         </div>
 
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="button" variant="outline" disabled={isSubmitting}>Cancel</Button>
-          </DialogClose>
-          <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>
-             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Confirm Subscription
-          </Button>
-        </DialogFooter>
+        <div className="mt-auto pt-6">
+            <DialogFooter className="gap-2 sm:gap-0">
+              <DialogClose asChild>
+                <Button type="button" variant="outline" className="h-11" disabled={isSubmitting}>Cancel</Button>
+              </DialogClose>
+              <Button type="submit" className="bg-dynamic-accent hover:bg-dynamic-accent/90 h-11 w-full sm:w-auto" disabled={isSubmitting}>
+                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Confirm Subscription
+              </Button>
+            </DialogFooter>
+        </div>
       </form>
+      </div>
+     </div>
     </DialogContent>
   );
 }

@@ -96,7 +96,7 @@ export default function ReferralDialog() {
             </div>
             <div>
               <Label htmlFor="friendMobile" className="text-foreground">Friend's Mobile Number</Label>
-              <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="9876543210" className="mt-1" disabled={isSubmitting} />
+              <Input id="friendMobile" type="tel" {...register("friendMobile")} placeholder="7979784087" className="mt-1" disabled={isSubmitting} />
               {errors.friendMobile && <p className="text-xs text-destructive mt-1">{errors.friendMobile.message}</p>}
             </div>
             <div>

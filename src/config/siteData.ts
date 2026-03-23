@@ -1,6 +1,6 @@
 
 import type { Purifier, TenureOption, Feature, Plan, PlanPriceDetail } from '@/lib/types';
-import { Sparkles, Star, Check, Atom } from 'lucide-react';
+import { Sparkles, Star, Check, Atom, TrendingDown } from 'lucide-react';
 
 // Updated Tenure Options
 export const tenureOptions: TenureOption[] = [
@@ -20,7 +20,7 @@ const copperSpecificFeature: Feature = { id: 'copper-goodness', name: 'Goodness 
 const alkalineSpecificFeature: Feature = { id: 'alkaline-ph', name: 'Alkaline pH Boost', icon: Check };
 
 // Base Plan Structures (features, limits) - Pricing will be per purifier
-export const basePlanDefinitions: Omit<Plan, 'id' | 'tenurePricing' | 'pillText' | 'recommended'> & { name: 'Basic' | 'Value' | 'Commercial', recommended?: boolean }[] = [
+export const basePlanDefinitions: Array<Omit<Plan, 'id' | 'tenurePricing' | 'pillText' | 'recommended'> & { name: 'Basic' | 'Value' | 'Commercial', recommended?: boolean }> = [
   {
     name: 'Basic',
     limits: 'Upto 25 L/day',
@@ -87,8 +87,27 @@ const generatePlansForPurifier = (
 
 export const purifiers: Purifier[] = [
   {
+    id: 'droppurity-ro-plus',
+    name: 'Droppurity RO+',
+    shortDescription: 'Advanced 7-stage filtration with UV-LED tech.',
+    tagline: 'Best Value',
+    taglineIcon: TrendingDown,
+    plans: generatePlansForPurifier('ro-plus', 0),
+    image: '/5.png',
+    thumbnailImages: [
+        '/2.png',
+        '/7.png',
+        '/8.png',
+    ],
+    storageCapacity: '10 Litre Storage',
+    keyFeatures: commonFeaturesList,
+    accentColor: 'blue',
+    dataAiHint: 'ro water purifier',
+  },
+  {
     id: 'droppurity-copper',
     name: 'Droppurity Copper',
+    shortDescription: 'Enriched with natural copper minerals for immunity.',
     tagline: 'Bestseller',
     taglineIcon: Sparkles,
     plans: generatePlansForPurifier('copper', 85),
@@ -104,23 +123,9 @@ export const purifiers: Purifier[] = [
     dataAiHint: 'copper water purifier',
   },
   {
-    id: 'droppurity-ro-plus',
-    name: 'Droppurity RO+',
-    plans: generatePlansForPurifier('ro-plus', 0),
-    image: '/5.png',
-    thumbnailImages: [
-        '/2.png',
-        '/7.png',
-        '/8.png',
-    ],
-    storageCapacity: '10 Litre Storage',
-    keyFeatures: commonFeaturesList, // These are technical features, not plan benefits
-    accentColor: 'blue',
-    dataAiHint: 'ro water purifier',
-  },
-  {
     id: 'droppurity-alkaline',
-    name: 'Droppurity Alkaline',
+    name: 'Droppurity Alkaline Upto 8.5 pH',
+    shortDescription: 'Restores essential minerals and provides upto 8.5 pH balance.',
     tagline: 'Popular choice',
     taglineIcon: Star,
     plans: generatePlansForPurifier('alkaline', 75),

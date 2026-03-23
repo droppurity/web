@@ -1,22 +1,17 @@
-
-"use client";
+'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift, ArrowBigRightDash } from 'lucide-react';
-import CitySelectionGrid from '@/components/droppurity/CitySelectionGrid';
+import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift } from 'lucide-react';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import CostComparisonTable from '@/components/droppurity/CostComparisonTable';
-import AutoLocationRedirect from '@/components/droppurity/AutoLocationRedirect';
-import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ReferralDialog from "@/components/droppurity/ReferralDialog";
 import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
-import { cn } from '@/lib/utils';
-import { tenureOptions } from '@/config/siteData';
+import { useState, useEffect, useRef } from 'react';
+import type { CityData } from '@/config/cityData';
 
 const features = [
   {
@@ -62,10 +57,13 @@ const highlights = [
   },
 ];
 
-export default function HomePage() {
+interface CityHomeDetailsProps {
+    city: CityData;
+}
+
+export default function CityHomeDetails({ city }: CityHomeDetailsProps) {
   const [isTrialDialogOpen, setIsTrialDialogOpen] = useState(false);
   const popupShownThisLoad = useRef(false);
-
 
   // Auto-trigger logic for free trial popup, appears once per page load.
   useEffect(() => {
@@ -100,170 +98,16 @@ export default function HomePage() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []); // Empty dependency array ensures this runs only once on mount
-  
-
-  
-  const sevenMonthPrice = tenureOptions.find(opt => opt.id === '7m')?.displayName || '7 Months';
-
-  const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
-    // Check if the click target or its parent is a button or a link
-    let target = e.target as HTMLElement;
-    while (target && target !== e.currentTarget) {
-        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-            return; // Don't trigger popup if a button or link was clicked
-        }
-        target = target.parentElement as HTMLElement;
-    }
-    setIsTrialDialogOpen(true);
-  };
-
-
-  const testimonialsData = [
-    { name: "Rakesh Kumar", rating: 5, review: "The best RO service I've used. Installation was quick and the water tastes great. Highly recommended for anyone looking for a water purifier on rent." },
-    { name: "Sunita Devi", rating: 5, review: "I was tired of dealing with water jars. Droppurity is a lifesaver! Their service is excellent and the free maintenance is a huge plus." },
-    { name: "Anil Singh", rating: 4, review: "A very professional and reliable water purifier rental service. The team is responsive and the 'no hidden charges' promise is real." }
-  ];
-
-  const aggregateRatingSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Droppurity RO Water Purifier Rental Service",
-    "image": "https://droppurity.in/hero.png",
-    "brand": { "@type": "Brand", "name": "Droppurity" },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "1240",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": testimonialsData.map(t => ({
-      "@type": "Review",
-      "author": { "@type": "Person", "name": t.name },
-      "reviewRating": { "@type": "Rating", "ratingValue": t.rating },
-      "reviewBody": t.review
-    }))
-  };
 
   return (
     <>
-      <AutoLocationRedirect />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingSchema) }}
-      />
       <div className="flex flex-col">
-        {/* Hero Section */}
-        <section
-          className="bg-background cursor-pointer"
-          onClick={handleHeroClick}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex flex-col lg:relative lg:aspect-[16/9] w-full rounded-xl overflow-hidden shadow-lg">
-              {/* Text Content - On top for mobile */}
-              <div className="bg-card p-6 text-center lg:hidden rounded-t-xl">
-                 <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2 sm:mb-2">
-                   RO Water Purifier on Rent 
-                </h1>
-                 <p className="text-lg sm:text-xl font-semibold text-foreground mb-3">
-                   शुद्ध पानी, अब आपके बजट में
-                </p>
-                <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                    <span className="text-xs opacity-80">Starts from just</span>
-                    <strong className="text-foreground font-bold text-3xl mx-1">₹299</strong>
-                    <span className="text-foreground/80">/month</span>
-                    <br />
-                    <span className="font-semibold text-primary">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-4 sm:mt-6">
-                  <Button asChild className="h-auto text-sm px-6 py-2.5">
-                    <Link href="#city-selector">
-                      <div className="flex flex-col items-center leading-tight">
-                        <span>Explore Plans</span>
-                      </div>
-                    </Link>
-                  </Button>
-                  <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-sm px-6 py-2.5">
-                     <div className="flex flex-col items-center leading-tight">
-                       <span>Book a Free Trial</span>
-                        <span className="mt-1 font-normal opacity-90 text-xs">
-                          7-Day Risk-Free
-                        </span>
-                     </div>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Combined Image and Desktop Text */}
-              <div className="relative aspect-[4/3] lg:aspect-[16/9] w-full rounded-b-xl lg:rounded-xl overflow-hidden">
-                {/* Desktop Text Content - Overlay */}
-                <div className="hidden lg:flex flex-col justify-center p-12 bg-transparent absolute z-10 top-0 left-0 h-full w-1/2 text-left">
-                  <h1 className="text-5xl font-bold text-white mb-4">
-                    RO Water Purifier on Rent
-                  </h1>
-                  <p className="text-3xl font-semibold text-gray-100 mb-4">
-                    शुद्ध पानी, अब आपके बजट में
-                  </p>
-                  <p className="text-lg text-gray-200 max-w-xl">
-                    <span className="text-sm opacity-80">Starts from just</span>
-                    <strong className="text-white font-bold text-5xl mx-1">₹299</strong>
-                    <span className="text-gray-100/90 text-2xl">/month</span>
-                    <br />
-                    <span className="font-semibold text-yellow-300 text-base">Free Installation & Lifetime Free Maintenance. No Hidden Charges.</span>
-                  </p>
-                  <div className="flex flex-col items-start gap-4 mt-8">
-                    <Button asChild className="h-auto text-base px-10 py-3 self-start">
-                      <Link href="#city-selector">
-                        <div className="flex flex-col items-center leading-tight">
-                          <span>Explore Plans</span>
-                        </div>
-                      </Link>
-                    </Button>
-                    <Button variant="secondary" onClick={() => setIsTrialDialogOpen(true)} className="h-auto text-base px-10 py-3 self-start">
-                       <div className="flex flex-col items-center leading-tight">
-                         <span>Book a Free Trial</span>
-                          <span className="mt-1 font-normal opacity-90 text-sm">
-                            7-Day Risk-Free
-                          </span>
-                       </div>
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Image */}
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/herom.png"
-                    alt="Droppurity water purifier in a modern kitchen setting, mobile view"
-                    fill
-                    className="block lg:hidden object-cover"
-                    priority
-                    data-ai-hint="water purifier kitchen"
-                  />
-                  <Image
-                    src="/hero.png"
-                    alt="Droppurity water purifier rental for families"
-                    fill
-                    className="hidden lg:block object-cover object-[center_35%]"
-                    priority
-                    data-ai-hint="family kitchen water"
-                  />
-                  {/* Desktop-only gradient overlay */}
-                  <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <CitySelectionGrid />
-        
         {/* General Service Content Section */}
-        <section className="py-4 sm:py-6 bg-secondary/30">
+        <section className="py-4 sm:py-6 bg-secondary/30 mt-8">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-base sm:text-lg font-bold text-foreground">Your Go-To Water Purifier Rental Service</h2>
+            <h2 className="text-base sm:text-lg font-bold text-foreground">Your Go-To Water Purifier Rental Service in {city.name}</h2>
             <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-3xl mx-auto">
-              Looking for the best <strong className="text-primary">RO water purifier on rent</strong>? Droppurity is your trusted provider, delivering pure and safe drinking water right to your home. We are proud to serve communities across the country. Enjoy hassle-free service with no hidden costs.
+              Looking for the best <strong className="text-primary">RO water purifier on rent in {city.name}</strong>? Droppurity is your trusted provider, delivering pure and safe drinking water right to your home. We are proud to serve {city.name}. Enjoy hassle-free service with no hidden costs.
             </p>
           </div>
         </section>
@@ -273,7 +117,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-md md:max-w-4xl lg:max-w-5xl px-4 sm:px-0">
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
-                Why Choose Droppurity ?
+                Why Choose Droppurity in {city.name}?
               </h2>
               <div className="grid md:grid-cols-3 gap-4 lg:gap-12">
                 {features.map((feature, index) => (
@@ -302,7 +146,6 @@ export default function HomePage() {
               <h2 className="text-sm sm:text-base font-semibold text-center mb-4 sm:mb-6 text-foreground">
                 Try Before You Buy: Our Simple Process
               </h2>
-
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
               <div className="flex flex-col items-center">
@@ -394,7 +237,7 @@ export default function HomePage() {
         <section className="py-4 sm:py-6 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-sm sm:text-base font-semibold mb-1.5 sm:mb-2 text-foreground">
-              Ready for Pure Water?
+              Ready for Pure Water in {city.name}?
             </h2>
             <p className="text-[11px] sm:text-xs text-muted-foreground max-w-md sm:max-w-lg mx-auto mb-3 sm:mb-4">
               Join thousands of happy customers enjoying the benefits of Droppurity.
@@ -405,9 +248,7 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-      <FreeTrialDialog open={isTrialDialogOpen} onOpenChange={setIsTrialDialogOpen} />
+      <FreeTrialDialog open={isTrialDialogOpen} onOpenChange={setIsTrialDialogOpen} cityName={city.name} />
     </>
   );
 }
-
-    

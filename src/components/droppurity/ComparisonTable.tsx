@@ -102,7 +102,6 @@ export default function ComparisonTable() {
           {/* Header Row */}
           <div className={`grid ${GRID_COLS} border-b border-border bg-muted/30`}>
             {tableHeaders.map((header) => {
-              const HeaderIcon = header.icon;
               return (
                 <div
                   key={header.id}

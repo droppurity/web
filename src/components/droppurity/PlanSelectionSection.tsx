@@ -11,8 +11,9 @@ import TenureSelector from '@/components/droppurity/TenureSelector';
 import PlanCard from '@/components/droppurity/PlanCard';
 import PlanTypeSelector from '@/components/droppurity/PlanTypeSelector';
 import KeyFeaturesDisplay from '@/components/droppurity/KeyFeaturesDisplay';
+import PurifierImageCarousel from '@/components/droppurity/PurifierImageCarousel';
 import { Button } from '@/components/ui/button';
-import { Droplet, HelpCircle, ChevronLeft, ChevronRight, ArrowBigRightDash } from 'lucide-react';
+import { Droplet, HelpCircle, ChevronLeft, ChevronRight, ArrowBigRightDash, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -232,8 +233,46 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
 
 const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProps>(
   ({ isHeaderDominant, cityName }, ref) => {
-  const [selectedPurifierId, setSelectedPurifierId] = useState<string>(defaultPurifierId);
-  const [selectedTenureId, setSelectedTenureId] = useState<string>(defaultTenureId);
+  const [selectedPurifierId, setSelectedPurifierId] = useState<string | null>(null);
+  
+  const availableTenures = useMemo(() => {
+    if (cityName === 'Bokaro Steel City') {
+      return tenureOptions;
+    }
+    return tenureOptions.filter(t => t.id !== '7m');
+  }, [cityName]);
+
+  const fallbackTenureId = availableTenures[0]?.id || defaultTenureId;
+
+  const [selectedTenureId, setSelectedTenureId] = useState<string>(() => {
+    return availableTenures.find(t => t.id === defaultTenureId) ? defaultTenureId : fallbackTenureId;
+  });
+
+  // Scroll to expanded card
+  useEffect(() => {
+    if (selectedPurifierId) {
+      // Force hide the header during expansion
+      window.dispatchEvent(new Event('hide-header'));
+
+      // Small delay to allow the grid layout shift to occur
+      const timer = setTimeout(() => {
+        const element = document.getElementById(`purifier-card-${selectedPurifierId}`);
+        if (element) {
+          const yOffset = -20; // Slight offset for better framing
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedPurifierId]);
+
+  useEffect(() => {
+    if (!availableTenures.find(t => t.id === selectedTenureId)) {
+      setSelectedTenureId(fallbackTenureId);
+    }
+  }, [availableTenures, selectedTenureId, fallbackTenureId]);
+
   const [isInView, setIsInView] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   
@@ -321,128 +360,207 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
   );
 
   const selectedTenure = useMemo(
-    () => tenureOptions.find(t => t.id === selectedTenureId) || tenureOptions[0],
-    [selectedTenureId]
+    () => availableTenures.find(t => t.id === selectedTenureId) || availableTenures[0],
+    [selectedTenureId, availableTenures]
   );
 
-  const overallThemeClass = useMemo(() => {
-    if (selectedPurifier.accentColor === 'copper') return 'theme-copper';
-    if (selectedPurifier.accentColor === 'teal') return 'theme-teal';
-    return 'theme-blue';
-  }, [selectedPurifier.accentColor]);
-
-  const stickyCardTopClass = 'top-[8rem]';
-
+  const getThemeVars = (accentColor: string) => {
+    switch(accentColor) {
+      case 'copper': return { 
+          bgHeader: 'from-orange-200 to-amber-300/80', 
+          ring: 'ring-orange-500', 
+          btn: 'bg-gradient-to-r from-orange-400 to-orange-600', 
+          textAccent: 'text-orange-500', 
+          textGradient: 'bg-gradient-to-br from-orange-600 to-orange-800 bg-clip-text text-transparent',
+          bgCard: 'bg-orange-50',
+          bgTag: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg',
+          topStrip: 'bg-gradient-to-r from-amber-500 to-orange-600',
+          topStripLabel: 'Copper Mineral',
+          topStripTextColor: 'text-amber-900',
+      };
+      case 'teal': return { 
+          bgHeader: 'from-teal-200 to-emerald-300/80', 
+          ring: 'ring-teal-500', 
+          btn: 'bg-gradient-to-r from-teal-400 to-teal-600', 
+          textAccent: 'text-teal-600', 
+          textGradient: 'bg-gradient-to-br from-teal-600 to-teal-800 bg-clip-text text-transparent',
+          bgCard: 'bg-teal-50',
+          bgTag: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg',
+          topStrip: 'bg-gradient-to-r from-teal-500 to-emerald-600',
+          topStripLabel: 'Alkaline pH Boost',
+          topStripTextColor: 'text-teal-900',
+      };
+      default: return { 
+          bgHeader: 'from-blue-200 to-sky-300/80', 
+          ring: 'ring-blue-600', 
+          btn: 'bg-gradient-to-r from-blue-500 to-blue-700', 
+          textAccent: 'text-blue-600', 
+          textGradient: 'bg-gradient-to-br from-blue-600 to-blue-900 bg-clip-text text-transparent',
+          bgCard: 'bg-blue-50',
+          bgTag: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg',
+          topStrip: 'bg-gradient-to-r from-blue-600 to-sky-500',
+          topStripLabel: 'Standard RO+',
+          topStripTextColor: 'text-blue-900',
+      };
+    }
+  };
 
   return (
-    <div ref={combinedRef} className={`py-12 sm:py-16 bg-secondary/30 ${overallThemeClass}`}>
-      <div className="container mx-auto px-4">
-        <header className="text-center mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold font-headline text-foreground flex items-center justify-center">
-              <Droplet className="w-7 h-7 sm:w-8 sm:h-8 text-primary mr-2" />
-              {cityName ? `Water Purifier Plans in ${cityName}` : 'Choose Your Droppurity Plan'}
+    <div ref={combinedRef} className={`py-8 sm:py-12 bg-transparent`}>
+      <div className="container mx-auto px-4 max-w-7xl">
+        <header className="text-center mb-8 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-headline text-foreground tracking-tight mb-3">
+              {cityName ? `Select Your Plan in ${cityName}` : 'Select Your Plan'}
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground mt-1">
-              {cityName
-                ? `Find the perfect RO rental plan for your home in ${cityName}.`
-                : 'Select the right purifier, plan, and tenure for your needs.'}
+            <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+              Pure hydration tailored to your lifestyle. Choose a model and customize your consumption needs.
             </p>
         </header>
 
-        <div className={cn(
-            "sticky bg-background/95 backdrop-blur-sm py-3 px-2 rounded-xl border border-border/70 shadow-lg mb-6 sm:mb-8",
-            !isDialogOpen && "z-40",
-            isHeaderDominant && !isDialogOpen && "z-[51]"
-          )}
-          style={{ top: '0.5rem' }}>
-          <PurifierSelector
-            purifiers={purifiers}
-            selectedPurifierId={selectedPurifierId}
-            onSelectPurifier={setSelectedPurifierId}
-          />
-           <div className="lg:hidden"> 
-            <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-1" displayMode="animate" />
-          </div>
-        </div>
+        <div className={cn("grid gap-10 lg:gap-6", selectedPurifierId ? "grid-cols-1 lg:grid-cols-2 items-start" : "grid-cols-1 lg:grid-cols-3 items-stretch")}>
+           {purifiers.map((p) => p).sort((a, b) => {
+             // If a card is selected, forcefully push it to the top (index 0) of the grid array.
+             if (selectedPurifierId) {
+               if (a.id === selectedPurifierId) return -1;
+               if (b.id === selectedPurifierId) return 1;
+               return 0; // retain original relative order for the rest
+             }
+             return 0;
+           }).map((purifier, index) => {
+             const isExpanded = purifier.id === selectedPurifierId;
+             const themeVars = getThemeVars(purifier.accentColor);
+             const basicPlan = purifier.plans.find(p => p.name.toLowerCase() === 'basic');
+             const startingPrice = basicPlan?.tenurePricing['7m']?.pricePerMonth || basicPlan?.tenurePricing['12m']?.pricePerMonth || basicPlan?.tenurePricing['28d']?.pricePerMonth || 299;
+             const mobileOrderClass = selectedPurifierId ? 'order-none' : (
+               purifier.id === 'droppurity-copper' ? 'order-1 lg:order-none' :
+               purifier.id === 'droppurity-alkaline' ? 'order-2 lg:order-none' :
+               'order-3 lg:order-none'
+             );
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10">
-          <div className="lg:col-span-2">
-            <PurifierImageDisplay purifier={selectedPurifier} isInView={isInView} />
-            <div className="hidden lg:block"> 
-                 <KeyFeaturesDisplay purifier={selectedPurifier} className="mt-2 lg:mt-3" displayMode="list" />
-            </div>
-          </div>
-
-          <div className="lg:col-span-3">
-            <Card className={`shadow-xl sticky ${stickyCardTopClass} border-border/80`}>
-              <CardHeader className="p-4 sm:p-6 pb-2">
-                <CardTitle className="font-headline text-lg text-foreground">Flexible Rental Plans</CardTitle>
-                <p className="text-sm text-muted-foreground">Security deposit of ₹1,500 will be 100% refundable.</p>
-              </CardHeader>
-              <CardContent className="p-4 sm:p-6 pt-3 space-y-6">
-                {/* Step 1 */}
-                <div className="space-y-4 rounded-xl bg-muted/30 p-4 border border-border/50">
-                    <div className="flex justify-between items-center">
-                        <h3 className="text-sm font-semibold text-foreground">Step 1: Choose Your Plan</h3>
-                        <Dialog onOpenChange={setIsDialogOpen}>
-                            <DialogTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    className="h-auto px-2 py-1 text-xs text-dynamic-accent hover:text-dynamic-accent hover:bg-dynamic-accent/10"
-                                >
-                                    <HelpCircle className="w-3 h-3 mr-1" /> Help me choose
-                                </Button>
-                            </DialogTrigger>
-                            <HelpMeChooseDialog />
-                        </Dialog>
-                    </div>
-                    <PlanTypeSelector
-                        plans={selectedPurifier.plans}
-                        selectedPlanId={selectedPlanId}
-                        onSelectPlan={setSelectedPlanId}
-                    />
-                </div>
-
-                {/* Step 2 */}
-                <div className="space-y-4 rounded-xl bg-muted/30 p-4 border border-border/50">
-                    <h3 className="text-sm font-semibold text-foreground mb-1">Step 2: Choose Your Tenure</h3>
-                    <TenureSelector
-                        tenureOptions={tenureOptions}
-                        selectedTenureId={selectedTenureId}
-                        onSelectTenure={setSelectedTenureId}
-                    />
-                </div>
-                
-                {/* Final Result */}
-                <div className="pt-2">
-                    {selectedPlan && selectedTenure ? (
-                    <PlanCard
-                        plan={selectedPlan}
-                        tenure={selectedTenure}
-                        purifierContextName={selectedPurifier.name}
-                        onDialogOpenChange={setIsDialogOpen}
-                    />
-                    ) : (
-                    <div className="text-center text-muted-foreground py-4 text-sm">
-                        Please make your selections to see plan details.
-                    </div>
+             return (
+               <div 
+                 key={purifier.id} 
+                 id={`purifier-card-${purifier.id}`}
+                 className={cn(
+                  "group relative rounded-[2rem] transition-all duration-500 flex",
+                  isExpanded ? "flex-col lg:flex-row lg:col-span-2 ring-2 shadow-2xl z-20 overflow-visible" : "flex-col lg:col-span-1 hover:scale-[1.02] border shadow-sm border-border/50 overflow-visible",
+                  mobileOrderClass,
+                  themeVars.bgCard,
+                  isExpanded && `${themeVars.ring}`,
+                  purifier.tagline && !isExpanded ? 'mt-4' : ''
+                )}>
+                   {purifier.tagline && (
+                     <div className={`absolute -top-6 left-4 z-30 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${themeVars.bgTag}`}>
+                       {purifier.tagline}
+                     </div>
+                   )}
+                   <div 
+                     onClick={() => !isExpanded && setSelectedPurifierId(purifier.id)}
+                     className={cn(
+                       "relative flex items-center justify-center bg-gradient-to-br transition-all duration-500 overflow-hidden shrink-0 rounded-t-[2rem]", 
+                       !isExpanded && "cursor-pointer",
+                       isExpanded && 'lg:rounded-l-[2rem] lg:rounded-tr-none',
+                       !isExpanded && 'rounded-t-[2rem]',
+                       themeVars.bgHeader, 
+                       isExpanded ? 'p-4 aspect-[4/3] lg:aspect-auto lg:w-[40%]' : 'pt-14 px-4 pb-3 aspect-square w-full'
+                   )}>
+                    {/* Colored top identity strip */}
+                    {!isExpanded && (
+                      <div className={`absolute top-0 left-0 right-0 h-10 ${themeVars.topStrip} flex items-center justify-center gap-1.5 z-10 pb-1`}>
+                        <span className="text-white text-[14px] font-bold uppercase tracking-[0.15em] drop-shadow-md">
+                          {themeVars.topStripLabel}
+                        </span>
+                      </div>
                     )}
-                </div>
+                    <div className={`w-full h-full transition-transform duration-500 ease-out ${!isExpanded ? 'group-hover:scale-125' : ''}`}>
+                      <PurifierImageCarousel 
+                         images={[purifier.image, ...(purifier.thumbnailImages || [])]}
+                         altPrefix={purifier.name}
+                         interval={3000 + (index * 1500)}
+                         startIndex={index}
+                         isExpanded={isExpanded}
+                         storageCapacity={purifier.storageCapacity}
+                         keyFeatures={purifier.keyFeatures}
+                      />
+                    </div>
+                    <div className={`absolute inset-0 bg-gradient-to-t ${themeVars.bgHeader.split(' ')[0].replace('to-', 'from-')} to-transparent opacity-60 mix-blend-overlay pointer-events-none`} />
+                  </div>
+                  <div className={cn(
+                      "p-0 flex flex-col flex-grow w-full",
+                      isExpanded ? "lg:w-[60%] lg:border-l border-border/40" : ""
+                  )}>
+                    <div className="flex justify-between items-start mb-1 mt-2 px-4 md:px-5">
+                      <h3 className={cn("font-headline text-2xl md:text-3xl font-extrabold leading-tight", themeVars.textGradient)}>{purifier.name}</h3>
+                      {isExpanded && <CheckCircle className={`w-4 h-4 md:w-5 md:h-5 ${themeVars.textAccent} shrink-0 ml-1.5`} />}
+                    </div>
+                    <p className="text-muted-foreground font-medium text-[11px] md:text-xs mb-3 min-h-[32px] px-4 md:px-5 leading-relaxed">
+                       {purifier.shortDescription || purifier.keyFeatures.slice(0, 2).map(f => f.name).join(' & ')}
+                    </p>
 
-              </CardContent>
-            </Card>
-          </div>
+                     {!isExpanded ? (
+                        <div className="px-4 md:px-5 pb-4 md:pb-5 flex-grow flex flex-col justify-end">
+                          <div className="flex items-center justify-between mb-3">
+                             <span className="text-muted-foreground text-[10px] font-medium">Starting at</span>
+                            <span className="text-lg font-black text-foreground">₹{startingPrice}<span className="text-[9px] font-normal text-muted-foreground">/mo</span></span>
+                         </div>
+                         <Button 
+                            onClick={() => setSelectedPurifierId(purifier.id)}
+                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-sm active:scale-95 transition-transform border-0`}
+                         >
+                            Show Plans & Validity
+                         </Button>
+                        </div>
+                    ) : (
+                       <div className="space-y-4 animate-in fade-in px-4 md:px-5 pb-4 md:pb-5 slide-in-from-top-4 duration-500 pt-1.5 border-t border-border/40 overflow-visible">
+                          {/* Step 1 */}
+                          <div>
+                            <div className="flex items-center justify-between mb-3">
+                               <p className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted-foreground">1. Select Capacity</p>
+                               <Dialog onOpenChange={setIsDialogOpen}>
+                                  <DialogTrigger asChild>
+                                      <button className={`text-[10px] font-bold uppercase tracking-widest ${themeVars.textAccent} hover:underline decoration-2 underline-offset-4 flex items-center`}>
+                                          <HelpCircle className="w-3 h-3 mr-1" /> Help Guide
+                                      </button>
+                                  </DialogTrigger>
+                                  <HelpMeChooseDialog />
+                               </Dialog>
+                            </div>
+                            <PlanTypeSelector
+                                plans={selectedPurifier.plans}
+                                selectedPlanId={selectedPlanId}
+                                onSelectPlan={setSelectedPlanId}
+                            />
+                          </div>
+
+                          {/* Step 2 */}
+                          <div>
+                            <p className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">2. Choose Tenure</p>
+                            <TenureSelector
+                                tenureOptions={availableTenures}
+                                selectedTenureId={selectedTenureId}
+                                onSelectTenure={setSelectedTenureId}
+                            />
+                          </div>
+
+                          <div className="pt-2">
+                            {selectedPlan && selectedTenure ? (
+                              <PlanCard
+                                  plan={selectedPlan}
+                                  tenure={selectedTenure}
+                                  purifierContextName={selectedPurifier.name}
+                                  cityName={cityName}
+                                  onDialogOpenChange={setIsDialogOpen}
+                              />
+                            ) : null}
+                          </div>
+                       </div>
+                    )}
+                  </div>
+               </div>
+             );
+           })}
         </div>
       </div>
-      <style jsx global>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 });
