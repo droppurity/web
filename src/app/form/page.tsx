@@ -96,16 +96,22 @@ export default function SubscriptionFormPage() {
               setValue('location', locationUrl, { shouldValidate: true });
 
               const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`, {
-                headers: { 'Accept-Language': 'en' }
+                headers: { 
+                    'Accept-Language': 'en',
+                    'User-Agent': 'Droppurity-Web/1.0 (official@droppurity.in)'
+                }
               });
+              if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
               const data = await response.json();
               if (data && data.address) {
                 const fetchedPin = data.address.postcode || '';
-                if (fetchedPin) setValue('pinCode', fetchedPin, { shouldValidate: true });
-                setValue('address', data.display_name);
+                if (fetchedPin && fetchedPin.length >= 6) {
+                    setValue('pinCode', fetchedPin.replace(/\D/g, '').slice(0, 6), { shouldValidate: true });
+                }
+                setValue('address', data.display_name || 'Location fetched');
               }
             } catch (error) {
-              console.error(error);
+              console.error('Reverse geocoding failed:', error);
             } finally {
               setIsFetchingLocation(false);
             }

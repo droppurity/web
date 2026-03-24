@@ -74,15 +74,15 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
   };
 
   return (
-    <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
+    <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg animate-fade-up ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
       {plan.recommended && plan.pillText && !purifierContextName && ( 
-        <Badge variant="default" className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dynamic-accent text-dynamic-accent-foreground px-3 py-1 text-xs z-10">
+        <Badge variant="default" className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dynamic-accent text-dynamic-accent-foreground px-3 py-1 text-xs z-10 animate-scale-in">
           {plan.pillText}
         </Badge>
       )}
       <CardHeader className="py-3 px-4 bg-card">
         {purifierContextName && (
-            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-0.5">
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-0.5 animate-pulse-ring rounded-full w-fit mx-auto px-2">
               {purifierContextName}
             </p>
           )}
@@ -101,7 +101,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
         </div>
         
         {savingsAmount > 0 && (
-          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-medium">
+          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-medium animate-bounce shadow-sm">
             Savings of ₹{Math.round(savingsAmount)}!
           </Badge>
         )}
@@ -112,7 +112,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
       <CardContent className="py-2 px-4 flex-grow">
         <ul className="space-y-1">
           {featuresToShow.map((feature, index) => (
-            <li key={index} className="flex items-start text-xs text-foreground">
+            <li key={index} className="flex items-start text-xs text-foreground animate-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
                <CheckCircle className="w-3 h-3 mr-1.5 text-dynamic-accent flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </li>
@@ -124,9 +124,12 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
             <DialogTrigger asChild>
                 <Button 
                     size="default" 
-                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 py-4 text-sm font-bold shadow-sm rounded-lg"
+                    className="w-full bg-dynamic-accent text-dynamic-accent-foreground hover:bg-dynamic-accent/90 py-4 text-sm font-bold shadow-md rounded-lg relative overflow-hidden group transition-all duration-300 active:scale-[0.98]"
                 >
-                   Subscribe Now
+                   <span className="relative z-10 flex items-center justify-center">
+                     Subscribe Now
+                   </span>
+                   <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-shimmer" />
                 </Button>
             </DialogTrigger>
             {isSubDialogOpen && (

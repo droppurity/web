@@ -62,7 +62,7 @@ export default function CityHero({ city }: CityHeroProps) {
               </span>
             </div>
             <div className="mt-6 flex items-start">
-              <Button onClick={() => setIsTrialDialogOpen(true)} className="bg-[#e4eff6] text-primary hover:bg-[#d0e3ef] h-auto text-base px-10 py-3 shadow-lg">
+              <Button onClick={() => setIsTrialDialogOpen(true)} className="bg-[#e4eff6] text-primary hover:bg-[#d0e3ef] h-auto text-base px-10 py-3 shadow-lg animate-attention-pulse">
                  <div className="flex flex-col items-center leading-tight">
                    <span>Book a Free Trial</span>
                     <span className="mt-1 font-medium opacity-90 text-sm">
@@ -95,7 +95,7 @@ export default function CityHero({ city }: CityHeroProps) {
                {city.localSubHeadline}
             </p>
             <div className="mt-6 flex justify-center">
-              <Button onClick={() => setIsTrialDialogOpen(true)} className="bg-[#e4eff6] text-primary hover:bg-[#d0e3ef] h-auto text-base px-8 py-2.5 shadow-md">
+              <Button onClick={() => setIsTrialDialogOpen(true)} className="bg-[#e4eff6] text-primary hover:bg-[#d0e3ef] h-auto text-base px-8 py-2.5 shadow-md animate-attention-pulse">
                  <div className="flex flex-col items-center leading-tight">
                    <span>Book a Free Trial</span>
                     <span className="mt-1 font-medium opacity-90 text-sm">
@@ -110,7 +110,7 @@ export default function CityHero({ city }: CityHeroProps) {
             <Accordion type="single" collapsible className="w-full" onValueChange={handleAccordionChange}>
                 <AccordionItem value="item-1" className="border-b-0">
                     <div className="flex justify-center w-full">
-                        <AccordionTrigger className="inline-flex flex-initial justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-2xl font-bold px-16 py-5 shadow-lg data-[state=open]:rounded-b-none data-[state=open]:shadow-xl tracking-wide">
+                        <AccordionTrigger className="inline-flex flex-initial justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-2xl font-bold px-16 py-5 shadow-lg data-[state=open]:rounded-b-none data-[state=open]:shadow-xl tracking-wide data-[state=closed]:animate-attention-pulse transition-all duration-300">
                             Show Plans
                         </AccordionTrigger>
                     </div>

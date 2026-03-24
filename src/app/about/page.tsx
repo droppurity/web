@@ -88,10 +88,10 @@ export default function AboutPage() {
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
                 {[
-                    { name: 'Prakash Jha', role: 'CEO & Founder' },
-                    { name: 'Rohan Mehra', role: 'Head of Engineering' },
-                    { name: 'Sunita Patel', role: 'Marketing Director' },
-                    { name: 'Anjali Sharma', role: 'Operations Manager' },
+                    { name: 'Lucky Kumar', role: 'CEO & Founder' },
+                    { name: 'Vicky Kumar', role: 'Head of Engineering' },
+                    { name: 'Vaishali Dutta', role: 'Marketing Director' },
+                    { name: 'Roushan Pandey', role: 'Operations Manager' },
                 ].map((member, i) => (
                     <Card key={i} className="shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
                         <CardContent className="p-6 flex flex-col items-center justify-center">

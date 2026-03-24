@@ -302,15 +302,15 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
       // Force hide the header during expansion
       window.dispatchEvent(new Event('hide-header'));
 
-      // Small delay to allow the grid layout shift to occur
+      // Small delay to allow expansion animation to start
       const timer = setTimeout(() => {
         const element = document.getElementById(`purifier-card-${selectedPurifierId}`);
         if (element) {
-          const yOffset = -20; // Slight offset for better framing
+          const yOffset = -80;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
-      }, 300);
+      }, 150);
       return () => clearTimeout(timer);
     }
   }, [selectedPurifierId]);
@@ -464,7 +464,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
   return (
     <div ref={combinedRef} className={`py-8 sm:py-12 bg-transparent`}>
       <div className="container mx-auto px-4 max-w-7xl">
-        <header className="text-center mb-8 sm:mb-10">
+        <header className="text-center mb-8 sm:mb-10 animate-fade-up">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-headline text-foreground tracking-tight mb-3">
               {activeCityName ? `Select Your Plan in ${activeCityName}` : 'Select Your City First'}
             </h2>
@@ -491,17 +491,9 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
             )}
         </header>
 
-        {activeCityName && (
-        <div className={cn("grid gap-10 lg:gap-6", selectedPurifierId ? "grid-cols-1 lg:grid-cols-2 items-start" : "grid-cols-1 lg:grid-cols-3 items-stretch")}>
-           {purifiers.map((p) => p).sort((a, b) => {
-             // If a card is selected, forcefully push it to the top (index 0) of the grid array.
-             if (selectedPurifierId) {
-               if (a.id === selectedPurifierId) return -1;
-               if (b.id === selectedPurifierId) return 1;
-               return 0; // retain original relative order for the rest
-             }
-             return 0;
-           }).map((purifier, index) => {
+         {activeCityName && (
+        <div className={cn("grid gap-6", selectedPurifierId ? "grid-cols-1 lg:grid-cols-2 items-start" : "grid-cols-1 lg:grid-cols-3 items-stretch")}>
+           {purifiers.map((purifier, index) => {
              const displayedPlans = purifier.plans.filter(plan => {
                  if (plan.name === 'Mini') return activeCityName === 'Bengaluru';
                  return true;
@@ -511,24 +503,24 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
              const themeVars = getThemeVars(purifier.accentColor);
              const basePlan = displayedPlans.find(p => p.name.toLowerCase() === 'mini') || displayedPlans.find(p => p.name.toLowerCase() === 'basic');
              const startingPrice = basePlan?.tenurePricing['12m']?.pricePerMonth || basePlan?.tenurePricing['7m']?.pricePerMonth || basePlan?.tenurePricing['28d']?.pricePerMonth || 299;
-             const mobileOrderClass = selectedPurifierId ? 'order-none' : (
-               purifier.id === 'droppurity-copper' ? 'order-1 lg:order-none' :
-               purifier.id === 'droppurity-alkaline' ? 'order-2 lg:order-none' :
-               'order-3 lg:order-none'
-             );
+             const mobileOrderClass = purifier.id === 'droppurity-copper' ? 'lg:order-none order-1' :
+               purifier.id === 'droppurity-alkaline' ? 'lg:order-none order-2' :
+               'lg:order-none order-3';
 
              return (
                <div 
                  key={purifier.id} 
                  id={`purifier-card-${purifier.id}`}
                  className={cn(
-                  "group relative rounded-[2rem] transition-all duration-500 flex",
-                  isExpanded ? "flex-col lg:flex-row lg:col-span-2 ring-2 shadow-2xl z-20 overflow-visible" : "flex-col lg:col-span-1 hover:scale-[1.02] border shadow-sm border-border/50 overflow-visible",
+                  "group relative rounded-[2rem] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] flex will-change-transform",
+                  isExpanded ? "flex-col lg:flex-row lg:col-span-2 ring-2 shadow-2xl z-20 overflow-visible animate-scale-in" : "flex-col lg:col-span-1 hover:scale-[1.02] border shadow-sm border-border/50 overflow-visible animate-fade-up",
                   mobileOrderClass,
                   themeVars.bgCard,
                   isExpanded && `${themeVars.ring}`,
                   purifier.tagline && !isExpanded ? 'mt-4' : ''
-                )}>
+                )}
+                style={{ animationDelay: `${index * 100}ms` }}
+               >
                    {purifier.tagline && (
                      <div className={`absolute -top-6 left-4 z-30 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${themeVars.bgTag}`}>
                        {purifier.tagline}
@@ -537,7 +529,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                    <div 
                      onClick={() => !isExpanded && setSelectedPurifierId(purifier.id)}
                      className={cn(
-                       "relative flex items-center justify-center bg-gradient-to-br transition-all duration-500 overflow-hidden shrink-0 rounded-t-[2rem]", 
+                       "relative flex items-center justify-center bg-gradient-to-br transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden shrink-0 rounded-t-[2rem] will-change-transform", 
                        !isExpanded && "cursor-pointer",
                        isExpanded && 'lg:rounded-l-[2rem] lg:rounded-tr-none',
                        !isExpanded && 'rounded-t-[2rem]',
@@ -552,7 +544,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                         </span>
                       </div>
                     )}
-                    <div className={`w-full h-full transition-transform duration-500 ease-out ${!isExpanded ? 'group-hover:scale-125' : ''}`}>
+                    <div className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform ${!isExpanded ? 'group-hover:scale-125' : ''}`}>
                       <PurifierImageCarousel 
                          images={[purifier.image, ...(purifier.thumbnailImages || [])]}
                          altPrefix={purifier.name}
@@ -585,13 +577,13 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                          </div>
                          <Button 
                             onClick={() => setSelectedPurifierId(purifier.id)}
-                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-sm active:scale-95 transition-transform border-0`}
+                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-sm active:scale-95 transition-all duration-200 border-0 animate-attention-pulse`}
                          >
                             Show Plans & Validity
                          </Button>
                         </div>
                     ) : (
-                       <div className="space-y-4 animate-in fade-in px-4 md:px-5 pb-4 md:pb-5 slide-in-from-top-4 duration-500 pt-1.5 border-t border-border/40 overflow-visible">
+                       <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 px-4 md:px-5 pb-4 md:pb-5 duration-500 ease-out pt-1.5 border-t border-border/40 overflow-visible">
                           {/* Step 1 */}
                           <div>
                             <div className="flex items-center justify-between mb-3">

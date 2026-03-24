@@ -106,6 +106,32 @@ export default function CitySEOContent({ city }: CitySEOContentProps) {
               </li>
             </ul>
           </div>
+
+          {city.slug === 'bengaluru' && (
+            <div className="mt-12 pt-8 border-t border-slate-200">
+              <h3 className="text-xl sm:text-2xl font-bold font-headline text-slate-900 mb-6 text-center">
+                Popular Areas We Serve in Bengaluru
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-sm text-slate-600 text-center">
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Whitefield</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Electronic City</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Marathahalli</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Indiranagar</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Koramangala</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">HSR Layout</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">BTM Layout</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Jayanagar</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Malleshwaram</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Rajajinagar</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Banashankari</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Bellandur</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Sarjapur</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Hebbal</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Yelahanka</div>
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">KR Puram</div>
+              </div>
+            </div>
+          )}
         </div>
 
       </div>
