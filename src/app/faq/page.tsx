@@ -27,15 +27,15 @@ const faqCategories = [
     faqs: [
       {
         question: "What is the starting price for renting a water purifier?",
-        answer: "Droppurity rental plans start at just ₹299/month for the Basic plan on the Droppurity RO+ purifier. Plans vary based on the purifier model (RO+, Copper, Alkaline) and the capacity (Basic 25L/day, Standard 50L/day, Premium Unlimited). All prices are inclusive — no hidden charges."
+        answer: "Droppurity rental plans start at just ₹299/month for the Basic plan on the Droppurity RO+ purifier. Plans vary based on the purifier model (RO+, Copper, Alkaline) and the capacity (Basic 500 L / month, Value Unlimited). All prices are inclusive — no hidden charges."
       },
       {
         question: "Are there any hidden charges in Droppurity plans?",
-        answer: "Absolutely not. Our pricing is fully transparent. Your monthly rental covers everything: the purifier machine, free installation, lifetime maintenance, filter replacements, and free relocation. The only additional charge is a fully refundable security deposit collected at the time of installation."
+        answer: "Absolutely not. Our pricing is fully transparent. Your monthly rental covers everything: the purifier machine, free installation, lifetime maintenance, filter replacements, and free relocation. The only additional charge is a 100% refundable security deposit collected at the time of installation."
       },
       {
         question: "What is the security deposit amount?",
-        answer: "A refundable security deposit is collected at the time of installation. This deposit is 100% refundable when you return the purifier in good condition. The deposit amount depends on the plan you choose."
+        answer: "A 100% refundable security deposit is collected at the time of installation. This deposit is 100% refundable when you return the purifier in good condition. The deposit amount depends on the plan you choose."
       },
       {
         question: "Can I change my plan after subscribing?",
@@ -52,7 +52,7 @@ const faqCategories = [
     faqs: [
       {
         question: "What is the 7-day risk-free trial?",
-        answer: "You can try our purifier for 7 days with zero commitment. Pay a fully refundable security deposit, get the purifier installed at your home, and experience it for a week. If you're not 100% satisfied for any reason, we'll uninstall it and refund your deposit — no questions asked."
+        answer: "You can try our purifier for 7 days with zero commitment. Pay a 100% refundable security deposit, get the purifier installed at your home, and experience it for a week. If you're not 100% satisfied for any reason, we'll uninstall it and refund your deposit — no questions asked."
       },
       {
         question: "How quickly is the purifier installed after booking?",
@@ -102,7 +102,7 @@ const faqCategories = [
       },
       {
         question: "What happens if I want to cancel my subscription?",
-        answer: "You can cancel anytime. Simply contact our support team, and we'll arrange a convenient time to uninstall the purifier. Your refundable security deposit will be returned within 5–7 business days after the purifier is collected."
+        answer: "You can cancel anytime. Simply contact our support team, and we'll arrange a convenient time to uninstall the purifier. Your 100% refundable security deposit will be returned within 5–7 business days after the purifier is collected."
       },
       {
         question: "Is there a minimum subscription period?",

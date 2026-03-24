@@ -313,7 +313,7 @@ export default function HomePage() {
               <div className="flex flex-col items-center">
                 <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">🛠️</div>
                 <h3 className="text-[11px] sm:text-xs font-semibold mb-0.5 text-foreground">Get It Installed</h3>
-                <p className="text-[11px] sm:text-xs text-muted-foreground">Pay a refundable deposit & start your 7-day trial.</p>
+                <p className="text-[11px] sm:text-xs text-muted-foreground">Pay a 100% refundable deposit & start your 7-day trial.</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="bg-primary text-primary-foreground rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl font-bold mb-1 sm:mb-2">❤️</div>

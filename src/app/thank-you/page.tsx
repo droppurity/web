@@ -114,7 +114,7 @@ function ThankYouContent() {
                 <span className="text-foreground">₹{planPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Security Deposit (Refundable):</span>
+                <span className="text-muted-foreground">Security Deposit (100% Refundable):</span>
                 <span className="font-medium text-foreground">₹{securityDeposit.toLocaleString()}</span>
               </div>
               <hr className="border-border my-2" />

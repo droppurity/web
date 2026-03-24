@@ -29,6 +29,7 @@ const subscriptionFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().regex(/^[6-9]\d{9}$/, { message: "Please enter a valid 10-digit Indian mobile number." }),
   location: z.string().url({ message: "Please auto-fetch a valid location link." }).optional().or(z.literal('')),
+  pinCode: z.string().regex(/^\d{6}$/, "Please enter a valid 6-digit pin code."),
   address: z.string().min(10, { message: "Please enter a full installation address." }),
   purifierName: z.string(),
   planName: z.string(),
@@ -72,7 +73,6 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
-  const [shareLocation, setShareLocation] = useState(false);
 
   const ph = (cityName ? cityPlaceholders[cityName.toLowerCase()] : null) || defaultPlaceholder;
 
@@ -86,56 +86,65 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
       email: '',
       phone: '',
       location: '',
+      pinCode: '',
       address: '',
     }
   });
   
-  const locationValue = watch('location');
+  const addressValue = watch('address');
 
   const handleFetchLocation = () => {
     setIsFetchingLocation(true);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-          setValue('location', locationUrl, { shouldValidate: true });
-          setIsFetchingLocation(false);
+    if (typeof window !== "undefined" && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            try {
+              const { latitude, longitude } = position.coords;
+              const locationUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+              setValue('location', locationUrl, { shouldValidate: true });
+
+              const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`, {
+                headers: { 'Accept-Language': 'en' }
+              });
+              const data = await response.json();
+              if (data && data.address) {
+                const fetchedPin = data.address.postcode || '';
+                if (fetchedPin) setValue('pinCode', fetchedPin, { shouldValidate: true });
+                setValue('address', data.display_name);
+              }
+            } catch (error) {
+              console.error(error);
+            } finally {
+              setIsFetchingLocation(false);
+            }
         },
         (error) => {
-          setIsFetchingLocation(false);
-          setShareLocation(false);
-          toast({
-            variant: "destructive",
-            title: "Location Error",
-            description: "Could not fetch location. Please grant permission.",
-          });
-          console.error("Geolocation error:", error);
+            setIsFetchingLocation(false);
+            toast({
+              variant: "destructive",
+              title: "Location Error",
+              description: "Could not fetch location. Please grant permission.",
+            });
         }
-      );
+        );
     } else {
-      setIsFetchingLocation(false);
-      setShareLocation(false);
-      toast({
-        variant: "destructive",
-        title: "Unsupported Browser",
-        description: "Your browser does not support Geolocation.",
-      });
+        setIsFetchingLocation(false);
+        toast({
+            variant: "destructive",
+            title: "Unsupported Browser",
+            description: "Your browser does not support Geolocation.",
+        });
     }
   };
-  
-  useEffect(() => {
-    if (shareLocation) {
-        handleFetchLocation();
-    } else {
-        setValue('location', '');
-    }
-  }, [shareLocation, setValue]);
 
 
   const onSubmit: SubmitHandler<SubscriptionFormValues> = async (data) => {
     setIsSubmitting(true);
-    const result = await saveSubscription(data);
+    const payload = {
+      ...data,
+      address: data.address ? `${data.address} - Pin: ${data.pinCode}` : data.pinCode,
+    };
+    const result = await saveSubscription(payload);
 
     if (result.success) {
       toast({
@@ -196,7 +205,7 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
                  <span className="font-medium text-foreground">₹{Math.round(gstAmount)}</span>
                </div>
                <div className="flex justify-between items-center text-muted-foreground">
-                 <span>Security Deposit <span className="text-[10px] text-dynamic-accent/80 ml-1 opacity-80">(Refundable)</span></span>
+                 <span>Security Deposit <span className="text-[10px] text-dynamic-accent/80 ml-1 opacity-80">(100% Refundable)</span></span>
                  <span className="font-medium text-foreground">₹{securityDeposit}</span>
                </div>
                <div className="border-t border-border pt-3 mt-4 flex justify-between items-center font-bold text-foreground">
@@ -231,6 +240,24 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
         </div>
         
         <div>
+            <Label htmlFor="sd-pincode">Pin Code</Label>
+            <div className="flex gap-2 items-center mt-1">
+                <Input id="sd-pincode" type="text" inputMode="numeric" maxLength={6} {...register("pinCode")} placeholder="110001" className="flex-1 h-9" disabled={isSubmitting} />
+                <Button
+                type="button"
+                variant="outline"
+                onClick={handleFetchLocation}
+                disabled={isFetchingLocation || isSubmitting}
+                className="shrink-0 h-9 bg-[#f4f8ff] hover:bg-[#e6f0ff] text-[#2563eb] border-[#bfdbfe] shadow-sm px-4 font-medium"
+                >
+                {isFetchingLocation ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <MapPin className="mr-2 h-4 w-4" />}
+                Auto-fetch Address
+                </Button>
+            </div>
+            {errors.pinCode && <p className="text-xs text-destructive mt-1">{errors.pinCode.message}</p>}
+        </div>
+        
+        <div className="pt-2">
             <Label htmlFor="sd-address">Installation Address</Label>
             <Textarea
               id="sd-address"
@@ -241,26 +268,11 @@ export default function SubscriptionDialog({ purifierContextName, planName, tenu
               disabled={isSubmitting}
             />
             {errors.address && <p className="text-xs text-destructive mt-1">{errors.address.message}</p>}
-        </div>
-
-        <div className="space-y-2 pt-2">
-            <div className="flex items-center space-x-2">
-                <Checkbox id="sd-share-location" checked={shareLocation} onCheckedChange={(checked) => setShareLocation(!!checked)} disabled={isSubmitting || isFetchingLocation} />
-                <label
-                    htmlFor="sd-share-location"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                    Help our delivery champ find you faster! 🗺️ Click here to share your live location.
-                </label>
-            </div>
-            <div className="mt-1">
-                {isFetchingLocation && <div className="flex items-center text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Fetching your location...</div>}
-                {locationValue ? (
-                   <div className="text-xs text-green-600 font-medium py-1.5">Thanks for sharing! 👍</div>
-                ) : (
-                  shareLocation && !isFetchingLocation && <div className="text-xs text-destructive">Could not fetch location. Please try again.</div>
-                )}
-            </div>
+            {addressValue && (
+                <p className="text-xs text-green-600 font-medium mt-1">
+                    Area: {addressValue} ✅
+                </p>
+            )}
             <input type="hidden" {...register("location")} />
         </div>
 

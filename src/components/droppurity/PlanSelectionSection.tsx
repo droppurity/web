@@ -3,6 +3,7 @@
 
 import React, { useState, useMemo, useEffect, forwardRef, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { purifiers, tenureOptions, defaultPurifierId, defaultTenureId } from '@/config/siteData';
 import type { Purifier as PurifierType, Plan as PlanType, TenureOption as TenureType } from '@/lib/types';
 
@@ -18,6 +19,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import HelpMeChooseDialog from "./HelpMeChooseDialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cityData } from "@/config/cityData";
 
 const getFilenameFromUrl = (url: string): string => url.substring(url.lastIndexOf('/') + 1);
 
@@ -234,13 +237,58 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
 const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProps>(
   ({ isHeaderDominant, cityName }, ref) => {
   const [selectedPurifierId, setSelectedPurifierId] = useState<string | null>(null);
+  const [internalCityName, setInternalCityName] = useState<string | undefined>(undefined);
+  
+  const activeCityName = cityName || internalCityName;
+  
+  useEffect(() => {
+    if (activeCityName) return;
+
+    if (typeof window !== 'undefined') {
+       const savedCity = sessionStorage.getItem('userCityName');
+       if (savedCity && cityData.find(c => c.name === savedCity)) {
+           setInternalCityName(savedCity);
+           return;
+       }
+    }
+
+    const autoDetectCity = async () => {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        if (!res.ok) return;
+        
+        const data = await res.json();
+        const userCity = data.city;
+        
+        if (userCity) {
+          const match = cityData.find(c => 
+            c.name.toLowerCase() === userCity.toLowerCase() || 
+            c.slug.toLowerCase() === userCity.toLowerCase().replace(/ /g, '-')
+          );
+
+          if (match) {
+            setInternalCityName(match.name);
+            sessionStorage.setItem('userCityName', match.name);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to detect user location for plans', error);
+      }
+    };
+
+    autoDetectCity();
+  }, [activeCityName]);
+
+  const handleCityChange = (newCity: string) => {
+    setInternalCityName(newCity);
+    if (typeof window !== 'undefined') {
+        sessionStorage.setItem('userCityName', newCity);
+    }
+  };
   
   const availableTenures = useMemo(() => {
-    if (cityName === 'Bokaro Steel City') {
-      return tenureOptions;
-    }
-    return tenureOptions.filter(t => t.id !== '7m');
-  }, [cityName]);
+    return tenureOptions;
+  }, []);
 
   const fallbackTenureId = availableTenures[0]?.id || defaultTenureId;
 
@@ -318,21 +366,26 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
     [selectedPurifierId]
   );
 
+  const activePurifierPlans = useMemo(() => {
+    return selectedPurifier.plans.filter(plan => {
+      if (plan.name === 'Mini') return activeCityName === 'Bengaluru';
+      return true;
+    });
+  }, [selectedPurifier.plans, activeCityName]);
+
   const [selectedPlanId, setSelectedPlanId] = useState<string>(() => {
     const initialPurifier = purifiers.find(p => p.id === defaultPurifierId) || purifiers[0];
-    const currentPurifierPlans = initialPurifier.plans;
-
-    const basicPlan = currentPurifierPlans.find(p => p.name.toLowerCase() === 'basic');
+    const basicPlan = initialPurifier.plans.find(p => p.name.toLowerCase() === 'basic');
     if (basicPlan) return basicPlan.id;
 
-    const recommendedPlan = currentPurifierPlans.find(p => p.recommended);
+    const recommendedPlan = initialPurifier.plans.find(p => p.recommended);
     if (recommendedPlan) return recommendedPlan.id;
 
-    return currentPurifierPlans[0]?.id || '';
+    return initialPurifier.plans[0]?.id || '';
   });
 
   useEffect(() => {
-    const currentPurifierPlans = selectedPurifier.plans;
+    const currentPurifierPlans = activePurifierPlans;
     if (!currentPurifierPlans || currentPurifierPlans.length === 0) {
       setSelectedPlanId('');
       return;
@@ -350,13 +403,16 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
         newSelectedPlanId = currentPurifierPlans[0].id;
       }
     }
-    setSelectedPlanId(newSelectedPlanId);
-  }, [selectedPurifier]); 
+    // Only update if the current selectedPlanId is no longer valid
+    if (!currentPurifierPlans.find(p => p.id === selectedPlanId)) {
+        setSelectedPlanId(newSelectedPlanId);
+    }
+  }, [activePurifierPlans, selectedPlanId]); 
 
 
   const selectedPlan = useMemo(
-    () => selectedPurifier.plans.find(p => p.id === selectedPlanId),
-    [selectedPurifier, selectedPlanId]
+    () => activePurifierPlans.find(p => p.id === selectedPlanId) || activePurifierPlans[0],
+    [activePurifierPlans, selectedPlanId]
   );
 
   const selectedTenure = useMemo(
@@ -410,13 +466,32 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
       <div className="container mx-auto px-4 max-w-7xl">
         <header className="text-center mb-8 sm:mb-10">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-headline text-foreground tracking-tight mb-3">
-              {cityName ? `Select Your Plan in ${cityName}` : 'Select Your Plan'}
+              {activeCityName ? `Select Your Plan in ${activeCityName}` : 'Select Your City First'}
             </h2>
             <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-              Pure hydration tailored to your lifestyle. Choose a model and customize your consumption needs.
+              {activeCityName 
+                ? 'Pure hydration tailored to your lifestyle. Choose a model and customize your consumption needs.'
+                : 'Please select your city to view the available RO rental plans and pricing tailored for your location.'}
             </p>
+            {!cityName && (
+              <div className="mt-6 flex justify-center w-full">
+                <Select value={internalCityName} onValueChange={handleCityChange}>
+                  <SelectTrigger className="w-full max-w-[280px] sm:max-w-[320px] text-base sm:text-lg py-5 sm:py-6 ring-2 ring-primary/20 focus:ring-primary shadow-sm rounded-xl bg-white border-2 border-primary/10">
+                     <SelectValue placeholder="Select your city" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl shadow-xl max-h-[300px]">
+                    {cityData.map(city => (
+                      <SelectItem key={city.slug} value={city.name} className="py-2.5 sm:py-3 text-sm sm:text-base cursor-pointer">
+                        {city.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
         </header>
 
+        {activeCityName && (
         <div className={cn("grid gap-10 lg:gap-6", selectedPurifierId ? "grid-cols-1 lg:grid-cols-2 items-start" : "grid-cols-1 lg:grid-cols-3 items-stretch")}>
            {purifiers.map((p) => p).sort((a, b) => {
              // If a card is selected, forcefully push it to the top (index 0) of the grid array.
@@ -427,10 +502,15 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
              }
              return 0;
            }).map((purifier, index) => {
+             const displayedPlans = purifier.plans.filter(plan => {
+                 if (plan.name === 'Mini') return activeCityName === 'Bengaluru';
+                 return true;
+             });
+
              const isExpanded = purifier.id === selectedPurifierId;
              const themeVars = getThemeVars(purifier.accentColor);
-             const basicPlan = purifier.plans.find(p => p.name.toLowerCase() === 'basic');
-             const startingPrice = basicPlan?.tenurePricing['7m']?.pricePerMonth || basicPlan?.tenurePricing['12m']?.pricePerMonth || basicPlan?.tenurePricing['28d']?.pricePerMonth || 299;
+             const basePlan = displayedPlans.find(p => p.name.toLowerCase() === 'mini') || displayedPlans.find(p => p.name.toLowerCase() === 'basic');
+             const startingPrice = basePlan?.tenurePricing['12m']?.pricePerMonth || basePlan?.tenurePricing['7m']?.pricePerMonth || basePlan?.tenurePricing['28d']?.pricePerMonth || 299;
              const mobileOrderClass = selectedPurifierId ? 'order-none' : (
                purifier.id === 'droppurity-copper' ? 'order-1 lg:order-none' :
                purifier.id === 'droppurity-alkaline' ? 'order-2 lg:order-none' :
@@ -526,7 +606,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                                </Dialog>
                             </div>
                             <PlanTypeSelector
-                                plans={selectedPurifier.plans}
+                                plans={activePurifierPlans}
                                 selectedPlanId={selectedPlanId}
                                 onSelectPlan={setSelectedPlanId}
                             />
@@ -548,7 +628,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                                   plan={selectedPlan}
                                   tenure={selectedTenure}
                                   purifierContextName={selectedPurifier.name}
-                                  cityName={cityName}
+                                  cityName={activeCityName}
                                   onDialogOpenChange={setIsDialogOpen}
                               />
                             ) : null}
@@ -560,6 +640,18 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
              );
            })}
         </div>
+        )}
+
+        {/* Commercial call to action */}
+        {activeCityName && (
+        <div className="mt-12 text-center bg-card rounded-[2rem] p-6 sm:p-8 shadow-sm border border-border/50 max-w-2xl mx-auto flex flex-col items-center justify-center">
+            <h3 className="font-headline text-xl sm:text-2xl font-bold mb-2">Need a Commercial Purifier?</h3>
+            <p className="text-muted-foreground text-sm sm:text-base mb-6 max-w-lg">We provide customized high-capacity RO plants for offices, restaurants, and commercial spaces. Leave your details and our experts will reach out.</p>
+            <Button asChild size="lg" className="w-full sm:w-auto font-bold rounded-xl px-10 h-12 text-sm sm:text-base bg-blue-600 hover:bg-blue-700 text-white">
+               <Link href="/commercial-contact">Contact for Commercial Plans</Link>
+            </Button>
+         </div>
+         )}
       </div>
     </div>
   );

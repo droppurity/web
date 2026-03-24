@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
       
       <h3>1. Upfront Investment</h3>
       <p><strong>Buying:</strong> High initial cost (₹15,000+). Money that could be invested elsewhere is locked in a depreciating appliance.</p>
-      <p><strong>Renting:</strong> Zero upfront cost. You only pay a small refundable deposit (usually ₹1,500–₹2,500) and a low monthly subscription starting at ₹299.</p>
+      <p><strong>Renting:</strong> Zero upfront cost. You only pay a small 100% refundable deposit (usually ₹1,500–₹2,500) and a low monthly subscription starting at ₹299.</p>
 
       <h3>2. Annual Maintenance Charges (AMC)</h3>
       <p>If you own a purifier, you likely pay an AMC of ₹3,000 to ₹5,000 per year. This often doesn't even include the cost of expensive membranes or UV lamps when they fail.</p>
@@ -60,7 +60,7 @@ export const blogPosts: BlogPost[] = [
       <p>A water purifier is a delicate piece of technology. transporting it yourself leads to leaks and broken filters. Let our experts handle the logistics for you.</p>
 
       <h3>Choosing the Right Plan</h3>
-      <p>For students and couples, our <strong>Basic Plan</strong> (25L/day) at ₹299/mo is the perfect budget choice. For larger families or those who cook frequently with RO water, our <strong>Premium Unlimited</strong> plan provides total peace of mind.</p>
+      <p>For students and couples, our <strong>Basic Plan</strong> (500 L / month) at ₹299/mo is the perfect budget choice. For larger families or those who cook frequently with RO water, our <strong>Premium Unlimited</strong> plan provides total peace of mind.</p>
     `
   },
   {

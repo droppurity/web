@@ -202,12 +202,12 @@ export default function FreeTrialDialog({ open, onOpenChange, cityName }: FreeTr
                   <Button
                     type="button"
                     variant="outline"
-                    size="icon"
                     onClick={handleFetchLocation}
                     disabled={isFetchingLocation || isSubmitting}
-                    className="shrink-0"
+                    className="shrink-0 bg-[#f4f8ff] hover:bg-[#e6f0ff] text-[#2563eb] border-[#bfdbfe] shadow-sm px-4 font-medium"
                   >
-                    {isFetchingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
+                    {isFetchingLocation ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <MapPin className="mr-2 h-4 w-4" />}
+                    Auto-fetch Address
                   </Button>
                 </div>
                 {errors.pinCode && <p className="text-xs text-destructive mt-1">{errors.pinCode.message}</p>}
@@ -220,9 +220,9 @@ export default function FreeTrialDialog({ open, onOpenChange, cityName }: FreeTr
               <input type="hidden" {...register("location")} />
               <input type="hidden" {...register("address")} />
                 <div className="text-center text-xs text-muted-foreground pt-2">
-                    You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (25L/day)</strong>.
+                    You are booking a trial for the <strong>{trialPurifierName}</strong> with the <strong>{trialPlanName} Plan (500 L / month)</strong>.
                     <br />
-                    Pay only a refundable security deposit after successful installation.
+                    Pay only a 100% refundable security deposit after successful installation.
                 </div>
               <DialogFooter className="pt-2 sm:justify-center">
                 <Button type="submit" className="bg-primary hover:bg-primary/90" disabled={isSubmitting}>

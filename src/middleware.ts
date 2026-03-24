@@ -1,46 +1,39 @@
 
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
 
 export async function middleware(req: NextRequest) {
+  // Check for admin routes
   if (req.nextUrl.pathname.startsWith('/rajababuadmin')) {
-    const basicAuth = req.headers.get('authorization');
 
-    if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      if (authValue) {
-        const [user, pwd] = Buffer.from(authValue, 'base64').toString().split(':');
+    // Exception for the login page and static assets (if any)
+    if (req.nextUrl.pathname === '/rajababuadmin/login') {
+      return NextResponse.next();
+    }
 
-        // The URL for our internal authentication-checking API route
-        const url = req.nextUrl.clone();
-        url.pathname = '/api/auth/admin';
+    const cookieStore = await cookies();
+    const token = cookieStore.get('admin_session')?.value;
 
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username: user, password: pwd }),
-          });
-          
-          // If the credentials are valid (API returns a 2xx status), let the request through
-          if (response.ok) {
-            return NextResponse.next();
-          }
-        } catch (error) {
-            console.error('Error calling auth API from middleware:', error);
-            // Fall through to the authentication challenge below
-        }
+    if (token) {
+      try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-default-secret-key-change-in-prod');
+        const { payload } = await jwtVerify(token, secret);
+
+        // If verification succeeds, proceed
+        // Optionally, we could pass the user/deviceId downstream via headers if needed
+        return NextResponse.next();
+
+      } catch (err) {
+        // Token invalid or expired
+        console.error("Token verification failed:", err);
       }
     }
-    
-    // If authentication is missing or invalid, send the 401 challenge to the browser
-    return new NextResponse('Authentication required.', {
-      status: 401,
-      headers: {
-        'WWW-Authenticate': 'Basic realm="Secure Area"',
-      },
-    });
+
+    // Redirect to login if no valid token
+    const url = req.nextUrl.clone();
+    url.pathname = '/rajababuadmin/login';
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
