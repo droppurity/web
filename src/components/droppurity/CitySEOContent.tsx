@@ -1,8 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import { Check } from 'lucide-react';
 import type { CityData } from '@/config/cityData';
 import { Card } from "@/components/ui/card";
+import { bangaloreLocalities } from '@/config/localityData';
 
 interface CitySEOContentProps {
   city: CityData;
@@ -113,22 +115,15 @@ export default function CitySEOContent({ city }: CitySEOContentProps) {
                 Popular Areas We Serve in Bengaluru
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-sm text-slate-600 text-center">
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Whitefield</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Electronic City</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Marathahalli</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Indiranagar</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Koramangala</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">HSR Layout</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">BTM Layout</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Jayanagar</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Malleshwaram</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Rajajinagar</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Banashankari</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Bellandur</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Sarjapur</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Hebbal</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">Yelahanka</div>
-                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/30 transition-colors">KR Puram</div>
+                {bangaloreLocalities.map((area) => (
+                  <Link
+                    key={area.slug}
+                    href={`/bengaluru/${area.slug}`}
+                    className="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-primary/40 hover:bg-primary/5 hover:text-primary transition-colors font-medium"
+                  >
+                    {area.name}
+                  </Link>
+                ))}
               </div>
             </div>
           )}
@@ -138,3 +133,4 @@ export default function CitySEOContent({ city }: CitySEOContentProps) {
     </section>
   );
 }
+

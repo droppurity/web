@@ -577,7 +577,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                          </div>
                          <Button 
                             onClick={() => setSelectedPurifierId(purifier.id)}
-                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-sm active:scale-95 transition-all duration-200 border-0 animate-attention-pulse`}
+                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 border-0`}
                          >
                             Show Plans & Validity
                          </Button>

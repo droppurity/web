@@ -177,6 +177,9 @@ export default function FreeTrialDialog({ open, onOpenChange, cityName }: FreeTr
                  Book Free Trial Now
                  {labels?.bookTrial && <span className="block text-sm font-medium text-muted-foreground mt-1">{labels.bookTrial}</span>}
               </DialogTitle>
+              <DialogDescription className="sr-only">
+                Fill in your details to book a free 7-day trial of our RO water purifier.
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-h-[70vh] overflow-y-auto px-4">
               <input type="hidden" {...register("purifierName")} />

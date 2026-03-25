@@ -32,7 +32,7 @@ export default function TenureSelector({
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {option.offerPillText ? (
-                <div className={`mb-1.5 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold shadow-sm flex items-center gap-1 whitespace-nowrap ${isSelected ? 'bg-yellow-400 text-yellow-950 animate-glow-pulse' : 'bg-yellow-100 text-yellow-800'}`}>
+                <div className={`mb-1.5 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold shadow-sm flex items-center gap-1 whitespace-nowrap ${isSelected ? 'bg-yellow-400 text-yellow-950' : 'bg-yellow-100 text-yellow-800'}`}>
                   <Gift className="w-3 h-3" />
                   {option.offerPillText}
                 </div>

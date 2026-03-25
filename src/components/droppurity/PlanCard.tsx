@@ -82,7 +82,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
       )}
       <CardHeader className="py-3 px-4 bg-card">
         {purifierContextName && (
-            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-0.5 animate-pulse-ring rounded-full w-fit mx-auto px-2">
+            <p className="text-[10px] text-dynamic-accent text-center font-medium uppercase tracking-wide mb-0.5 border border-dynamic-accent/20 rounded-full w-fit mx-auto px-2 bg-dynamic-accent/5">
               {purifierContextName}
             </p>
           )}
@@ -101,7 +101,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
         </div>
         
         {savingsAmount > 0 && (
-          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-medium animate-bounce shadow-sm">
+          <Badge variant="outline" className="mx-auto mt-2 border-yellow-400 bg-yellow-50 text-yellow-700 text-xs font-semibold shadow-sm">
             Savings of ₹{Math.round(savingsAmount)}!
           </Badge>
         )}
