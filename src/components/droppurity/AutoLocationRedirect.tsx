@@ -9,7 +9,13 @@ export default function AutoLocationRedirect() {
 
   useEffect(() => {
     // Prevent redirect loops if the user explicitly clicks back to home
-    const hasRedirected = sessionStorage.getItem('hasAutoRedirected');
+    let hasRedirected = false;
+    try {
+      hasRedirected = !!sessionStorage.getItem('hasAutoRedirected');
+    } catch (e) {
+      // If sessionStorage is blocked/unavailable, we just skip it
+    }
+
     if (hasRedirected) {
       return;
     }
@@ -31,11 +37,15 @@ export default function AutoLocationRedirect() {
           );
 
           if (match) {
-            sessionStorage.setItem('hasAutoRedirected', 'true');
+            try {
+              sessionStorage.setItem('hasAutoRedirected', 'true');
+            } catch (e) {}
             router.replace(`/${match.slug}`);
           } else {
              // Even if no match, log that we checked to avoid aggressively hitting the API
-             sessionStorage.setItem('hasAutoRedirected', 'true');
+            try {
+              sessionStorage.setItem('hasAutoRedirected', 'true');
+            } catch (e) {}
           }
         }
       } catch (error) {

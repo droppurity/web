@@ -2,6 +2,7 @@
 import { MetadataRoute } from 'next'
 import { cityData } from '@/config/cityData'
 import { blogPosts } from '@/config/blogData'
+import { bangaloreLocalities } from '@/config/localityData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://droppurity.in'
@@ -84,5 +85,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...cityPages,
     ...blogPostPages,
+    ...bangaloreLocalities.map(area => ({
+      url: `${baseUrl}/bengaluru/${area.slug}`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    })),
   ]
 }

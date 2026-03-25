@@ -39,7 +39,8 @@ export default function CityHero({ city }: CityHeroProps) {
             alt={`A view of ${city.monument} in ${city.name}`}
             width={1200}
             height={600}
-            className="w-full h-auto object-cover aspect-[2/1] sm:aspect-[2/1]"
+            className="w-full h-auto object-cover aspect-[2/1]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
             data-ai-hint={city.dataAiHint}
             priority
           />
@@ -110,7 +111,7 @@ export default function CityHero({ city }: CityHeroProps) {
             <Accordion type="single" collapsible className="w-full" onValueChange={handleAccordionChange}>
                 <AccordionItem value="item-1" className="border-b-0">
                     <div className="flex justify-center w-full">
-                        <AccordionTrigger className="inline-flex flex-initial justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-2xl font-bold px-16 py-5 shadow-lg data-[state=open]:rounded-b-none data-[state=open]:shadow-xl tracking-wide transition-all duration-300">
+                        <AccordionTrigger className="btn-show-plans inline-flex flex-initial justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 hover:no-underline text-2xl font-bold px-16 py-5 shadow-lg data-[state=open]:rounded-b-none data-[state=open]:shadow-xl tracking-wide transition-[background-color,box-shadow,border-radius] duration-300">
                             Show Plans
                         </AccordionTrigger>
                     </div>

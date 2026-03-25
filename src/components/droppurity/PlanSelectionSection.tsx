@@ -166,9 +166,9 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
           <Image
             src={mainDisplayImage}
             alt={getFilenameFromUrl(mainDisplayImage)}
-            layout="fill"
-            objectFit="contain"
-            className="rounded-md"
+            fill
+            className="object-contain rounded-md"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 30vw, 300px"
             priority 
             data-ai-hint={purifier.dataAiHint || "water purifier"}
           />
@@ -203,14 +203,14 @@ function PurifierImageDisplay({ purifier, isInView }: { purifier: PurifierType, 
                       key={index}
                       onClick={() => handleThumbnailClick(index)}
                       className={cn(
-                        "w-8 h-8 sm:w-9 sm:h-9 rounded border-2 transition-all shrink-0 focus:outline-none focus:ring-1 focus:ring-offset-1",
+                        "w-8 h-8 sm:w-9 sm:h-9 rounded border-2 transition-[border-color,box-shadow,transform] shrink-0 focus:outline-none focus:ring-1 focus:ring-offset-1",
                         index === currentImageIndex
-                          ? 'border-dynamic-accent ring-dynamic-accent'
+                          ? 'border-dynamic-accent ring-dynamic-accent scale-105'
                           : 'border-border hover:border-muted-foreground focus:ring-ring'
                       )}
                       aria-label={`View image ${index + 1} of ${purifier.name}`}
                     >
-                      <Image src={img} alt={getFilenameFromUrl(img)} width={36} height={36} className="object-contain w-full h-full" />
+                      <Image src={img} alt={getFilenameFromUrl(img)} width={36} height={36} className="object-contain w-full h-full" sizes="40px" />
                     </button>
                   ))}
                 </div>
@@ -245,11 +245,13 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
     if (activeCityName) return;
 
     if (typeof window !== 'undefined') {
-       const savedCity = sessionStorage.getItem('userCityName');
-       if (savedCity && cityData.find(c => c.name === savedCity)) {
-           setInternalCityName(savedCity);
-           return;
-       }
+       try {
+         const savedCity = sessionStorage.getItem('userCityName');
+         if (savedCity && cityData.find(c => c.name === savedCity)) {
+             setInternalCityName(savedCity);
+             return;
+         }
+       } catch (e) {}
     }
 
     const autoDetectCity = async () => {
@@ -268,7 +270,9 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
           if (match) {
             setInternalCityName(match.name);
-            sessionStorage.setItem('userCityName', match.name);
+            try {
+              sessionStorage.setItem('userCityName', match.name);
+            } catch (e) {}
           }
         }
       } catch (error) {
@@ -282,7 +286,9 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
   const handleCityChange = (newCity: string) => {
     setInternalCityName(newCity);
     if (typeof window !== 'undefined') {
-        sessionStorage.setItem('userCityName', newCity);
+        try {
+          sessionStorage.setItem('userCityName', newCity);
+        } catch (e) {}
     }
   };
   
@@ -304,12 +310,15 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
 
       // Small delay to allow expansion animation to start
       const timer = setTimeout(() => {
-        const element = document.getElementById(`purifier-card-${selectedPurifierId}`);
-        if (element) {
-          const yOffset = -80;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+        requestAnimationFrame(() => {
+          const element = document.getElementById(`purifier-card-${selectedPurifierId}`);
+          if (element) {
+            const isMobile = window.innerWidth < 768;
+            const yOffset = isMobile ? -10 : -80;
+            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        });
       }, 150);
       return () => clearTimeout(timer);
     }
@@ -492,7 +501,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
         </header>
 
          {activeCityName && (
-        <div className={cn("grid gap-6", selectedPurifierId ? "grid-cols-1 lg:grid-cols-2 items-start" : "grid-cols-1 lg:grid-cols-3 items-stretch")}>
+        <div className={cn("grid gap-6", selectedPurifierId ? "grid-cols-1 md:grid-cols-2 items-start" : "grid-cols-1 md:grid-cols-3 items-stretch")}>
            {purifiers.map((purifier, index) => {
              const displayedPlans = purifier.plans.filter(plan => {
                  if (plan.name === 'Mini') return activeCityName === 'Bengaluru';
@@ -503,17 +512,21 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
              const themeVars = getThemeVars(purifier.accentColor);
              const basePlan = displayedPlans.find(p => p.name.toLowerCase() === 'mini') || displayedPlans.find(p => p.name.toLowerCase() === 'basic');
              const startingPrice = basePlan?.tenurePricing['12m']?.pricePerMonth || basePlan?.tenurePricing['7m']?.pricePerMonth || basePlan?.tenurePricing['28d']?.pricePerMonth || 299;
-             const mobileOrderClass = purifier.id === 'droppurity-copper' ? 'lg:order-none order-1' :
-               purifier.id === 'droppurity-alkaline' ? 'lg:order-none order-2' :
-               'lg:order-none order-3';
+             const mobileOrderClass = purifier.id === 'droppurity-copper' ? 'order-1' :
+               purifier.id === 'droppurity-alkaline' ? 'order-2' :
+               'order-3';
 
              return (
                <div 
                  key={purifier.id} 
                  id={`purifier-card-${purifier.id}`}
                  className={cn(
-                  "group relative rounded-[2rem] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] flex will-change-transform",
-                  isExpanded ? "flex-col lg:flex-row lg:col-span-2 ring-2 shadow-2xl z-20 overflow-visible animate-scale-in" : "flex-col lg:col-span-1 hover:scale-[1.02] border shadow-sm border-border/50 overflow-visible animate-fade-up",
+                  "group relative rounded-[2rem] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex",
+                  isExpanded ? "flex-col md:flex-row md:col-span-2 ring-2 shadow-2xl z-20 overflow-visible md:order-first" : "flex-col md:col-span-1 border shadow-sm border-border/50 overflow-visible",
+                   // Desktop ordering: non-expanded cards go after expanded
+                   !isExpanded && selectedPurifierId && 'md:order-2',
+                   // Default desktop ordering when nothing is expanded
+                   !selectedPurifierId && 'md:order-none',
                   mobileOrderClass,
                   themeVars.bgCard,
                   isExpanded && `${themeVars.ring}`,
@@ -529,7 +542,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                    <div 
                      onClick={() => !isExpanded && setSelectedPurifierId(purifier.id)}
                      className={cn(
-                       "relative flex items-center justify-center bg-gradient-to-br transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden shrink-0 rounded-t-[2rem] will-change-transform", 
+                       "relative flex items-center justify-center bg-gradient-to-br transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shrink-0 rounded-t-[2rem]", 
                        !isExpanded && "cursor-pointer",
                        isExpanded && 'lg:rounded-l-[2rem] lg:rounded-tr-none',
                        !isExpanded && 'rounded-t-[2rem]',
@@ -544,7 +557,7 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                         </span>
                       </div>
                     )}
-                    <div className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform ${!isExpanded ? 'group-hover:scale-125' : ''}`}>
+                    <div className={`w-full h-full transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isExpanded ? 'group-hover:scale-125' : ''}`}>
                       <PurifierImageCarousel 
                          images={[purifier.image, ...(purifier.thumbnailImages || [])]}
                          altPrefix={purifier.name}
@@ -577,13 +590,13 @@ const PlanSelectionSection = forwardRef<HTMLDivElement, PlanSelectionSectionProp
                          </div>
                          <Button 
                             onClick={() => setSelectedPurifierId(purifier.id)}
-                            className={`w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 border-0`}
+                            className={`btn-show-plans w-full py-4 rounded-xl ${themeVars.btn} text-white font-bold text-sm shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 border-0`}
                          >
                             Show Plans & Validity
                          </Button>
                         </div>
                     ) : (
-                       <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 px-4 md:px-5 pb-4 md:pb-5 duration-500 ease-out pt-1.5 border-t border-border/40 overflow-visible">
+                       <div className="space-y-4 px-4 md:px-5 pb-4 md:pb-5 pt-1.5 border-t border-border/40 overflow-visible">
                           {/* Step 1 */}
                           <div>
                             <div className="flex items-center justify-between mb-3">

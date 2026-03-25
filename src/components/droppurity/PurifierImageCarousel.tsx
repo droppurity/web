@@ -156,11 +156,11 @@ export default function PurifierImageCarousel({ images, altPrefix, interval = 30
                      key={idx} 
                      onClick={() => handleManualSelect(idx)} 
                      className={cn(
-                        "relative w-9 h-9 sm:w-11 sm:h-11 rounded border overflow-hidden transition-all", 
+                        "relative w-9 h-9 sm:w-11 sm:h-11 rounded border overflow-hidden transition-[border-color,box-shadow,opacity]", 
                         idx === currentIndex ? 'border-dynamic-accent ring-1 ring-dynamic-accent shadow-sm' : 'border-border opacity-70 hover:opacity-100'
                      )}
                   >
-                     <Image src={src} fill className="object-cover p-0.5" alt="" />
+                     <Image src={src} fill className="object-cover p-0.5" sizes="80px" alt="" />
                   </button>
                ))}
             </div>
@@ -182,10 +182,11 @@ export default function PurifierImageCarousel({ images, altPrefix, interval = 30
           alt={`${altPrefix} view ${index + 1}`}
           fill
           className={cn(
-            "object-contain drop-shadow-2xl scale-[0.85] group-hover:scale-90 transition-all translate-y-3",
+            "object-contain drop-shadow-2xl scale-[0.85] group-hover:scale-90 transition-[transform,opacity] translate-y-3",
             "duration-1000",
             index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           )}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 300px"
           priority={index === 0 || (isDesktop && index === (startIndex % images.length))}
         />
       ))}

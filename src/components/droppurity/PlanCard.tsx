@@ -74,7 +74,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
   };
 
   return (
-    <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg animate-fade-up ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
+    <div className={`flex flex-col rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${plan.recommended && !purifierContextName ? 'border-dynamic-accent border-2 relative' : 'border border-border'}`}>
       {plan.recommended && plan.pillText && !purifierContextName && ( 
         <Badge variant="default" className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dynamic-accent text-dynamic-accent-foreground px-3 py-1 text-xs z-10 animate-scale-in">
           {plan.pillText}
@@ -112,7 +112,7 @@ export default function PlanCard({ plan, tenure, purifierContextName, cityName, 
       <CardContent className="py-2 px-4 flex-grow">
         <ul className="space-y-1">
           {featuresToShow.map((feature, index) => (
-            <li key={index} className="flex items-start text-xs text-foreground animate-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
+            <li key={index} className="flex items-start text-xs text-foreground">
                <CheckCircle className="w-3 h-3 mr-1.5 text-dynamic-accent flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </li>
