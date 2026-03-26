@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift, ArrowBigRightDash } from 'lucide-react';
+import { CheckCircle, Shield, Sparkles, ShieldCheck, CalendarDays, Clock, IndianRupee, Gift, ArrowBigRightDash, MapPin, BookOpen, ArrowRight } from 'lucide-react';
 import CitySelectionGrid from '@/components/droppurity/CitySelectionGrid';
 import ComparisonTable from '@/components/droppurity/ComparisonTable';
 import CostComparisonTable from '@/components/droppurity/CostComparisonTable';
@@ -17,6 +17,8 @@ import TestimonialsSection from '@/components/droppurity/TestimonialsSection';
 import FreeTrialDialog from '@/components/droppurity/FreeTrialDialog';
 import { cn } from '@/lib/utils';
 import { tenureOptions } from '@/config/siteData';
+import { bangaloreLocalities } from '@/config/localityData';
+import { blogPosts } from '@/config/blogData';
 
 const features = [
   {
@@ -257,6 +259,45 @@ export default function HomePage() {
         </section>
         
         <CitySelectionGrid />
+
+        {/* Bangalore Areas Section — SEO Internal Links */}
+        <section className="py-4 sm:py-6 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-sm sm:text-base font-semibold text-foreground mb-3">
+              RO Water Purifier on Rent in Bangalore – Area-wise
+            </h2>
+            <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+              {[
+                { name: 'Whitefield', slug: 'whitefield' },
+                { name: 'HSR Layout', slug: 'hsr-layout' },
+                { name: 'Electronic City', slug: 'electronic-city' },
+                { name: 'Koramangala', slug: 'koramangala' },
+                { name: 'Marathahalli', slug: 'marathahalli' },
+                { name: 'Bellandur', slug: 'bellandur' },
+                { name: 'BTM Layout', slug: 'btm-layout' },
+                { name: 'Indiranagar', slug: 'indiranagar' },
+                { name: 'JP Nagar', slug: 'jp-nagar' },
+                { name: 'Hebbal', slug: 'hebbal' },
+                { name: 'Sarjapur Road', slug: 'sarjapur-road' },
+                { name: 'Yelahanka', slug: 'yelahanka' },
+                { name: 'Jayanagar', slug: 'jayanagar' },
+                { name: 'Banashankari', slug: 'banashankari' },
+                { name: 'Malleshwaram', slug: 'malleshwaram' },
+              ].map(area => (
+                <Link
+                  key={area.slug}
+                  href={`/bengaluru/${area.slug}`}
+                  className="bg-primary/5 hover:bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full text-xs sm:text-sm text-primary font-medium transition-colors"
+                >
+                  RO on rent in {area.name}
+                </Link>
+              ))}
+            </div>
+            <Link href="/bengaluru" className="inline-block mt-3 text-xs text-primary hover:underline font-medium">
+              View all Bangalore areas →
+            </Link>
+          </div>
+        </section>
         
         {/* General Service Content Section */}
         <section className="py-4 sm:py-6 bg-secondary/30">
@@ -389,6 +430,76 @@ export default function HomePage() {
         </section>
 
         <TestimonialsSection />
+
+        {/* Bangalore Areas Section — SEO Internal Links */}
+        <section className="py-6 sm:py-8 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center justify-center gap-2">
+                <MapPin className="w-5 h-5 text-primary" />
+                RO Water Purifier on Rent in Bengaluru Areas
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1.5 max-w-2xl mx-auto">
+                We serve all major localities in Bengaluru with 48-hour installation. Find your area below for <Link href="/plans" className="text-primary font-semibold hover:underline">affordable RO rental plans</Link>.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-4xl mx-auto">
+              {bangaloreLocalities.map((area) => (
+                <Link
+                  key={area.slug}
+                  href={`/bengaluru/${area.slug}`}
+                  className="bg-secondary/60 hover:bg-primary/10 hover:border-primary/30 border border-border px-3 py-1.5 rounded-lg text-xs sm:text-sm text-foreground/80 hover:text-primary transition-colors font-medium"
+                >
+                  {area.name}
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-4">
+              <Link href="/bengaluru" className="text-sm text-primary font-semibold hover:underline inline-flex items-center gap-1">
+                View all Bengaluru service areas <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Latest Blog Posts — SEO Internal Links */}
+        <section className="py-6 sm:py-8 bg-secondary/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center justify-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                Water Purifier Guides & Tips
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1.5 max-w-2xl mx-auto">
+                Learn about RO purifiers, rental vs buying, alkaline water benefits, and more from our experts.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {blogPosts.slice(0, 3).map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="p-4 bg-card rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
+                >
+                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm leading-snug">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                  <span className="text-xs text-primary font-semibold mt-2 inline-block group-hover:translate-x-0.5 transition-transform">
+                    Read More →
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-4">
+              <Link href="/blog" className="text-sm text-primary font-semibold hover:underline inline-flex items-center gap-1">
+                Read all articles & guides <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* Call to Action Section */}
         <section className="py-4 sm:py-6 bg-background">

@@ -6,7 +6,7 @@ import { blogPosts } from '@/config/blogData';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, BookOpen } from 'lucide-react';
 
 export async function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -44,6 +44,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) {
     notFound();
   }
+
+  // Get related posts (all posts except current)
+  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -127,7 +130,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </aside>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-primary/10 text-center">
+          {/* Related Blog Posts — Internal Cross-Links */}
+          {relatedPosts.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-primary/10">
+              <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                More from Our Blog
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {relatedPosts.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/blog/${related.slug}`}
+                    className="p-4 bg-secondary/30 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
+                  >
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm leading-snug">
+                      {related.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">
+                      {related.excerpt}
+                    </p>
+                    <span className="text-xs text-primary font-semibold mt-2 inline-block">
+                      Read More →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-12 pt-8 border-t border-primary/10 text-center">
             <h3 className="text-2xl font-bold text-primary mb-4">Ready to Switch to Better Water?</h3>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
               Join thousands of happy customers and upgrade to a premium purifier on rent. Zero maintenance, zero hidden costs, 100% pure water.
@@ -146,3 +178,4 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </>
   );
 }
+

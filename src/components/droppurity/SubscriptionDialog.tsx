@@ -66,7 +66,7 @@ const cityPlaceholders: Record<string, { name: string; email: string; phone: str
   'gurgaon': { name: 'Rohit Taneja', email: 'rohit@gmail.com', phone: '7979784087', address: 'DLF Phase 3, Gurgaon' },
 };
 
-const defaultPlaceholder = { name: 'Sonu Sharma', email: 'you@example.com', phone: '7979784087', address: 'Flat No, Building, Street...' };
+const defaultPlaceholder = { name: 'Sonu Sharma', email: 'official@droppurity.in', phone: '7979784087', address: 'Flat No, Building, Street...' };
 
 export default function SubscriptionDialog({ purifierContextName, planName, tenure, totalPrice, cityName, onSubscriptionSuccess }: SubscriptionDialogProps) {
   const { toast } = useToast();

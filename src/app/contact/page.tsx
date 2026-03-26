@@ -86,7 +86,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <Label htmlFor="email" className="text-foreground text-sm">Email Address</Label>
-                    <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
+                    <Input id="email" type="email" {...register("email")} placeholder="official@droppurity.in" className="mt-1" disabled={isSubmitting} />
                     {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
                   </div>
                   <div>
@@ -136,7 +136,10 @@ export default function ContactPage() {
                     <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-semibold text-foreground text-sm">Visit Us</h3>
-                      {/* Address details can be added here if needed in future */}
+                      <p className="text-sm text-muted-foreground">
+                        2nd cross, Vinayaka Layout,<br />
+                        Rayasandra, Bengaluru - 560100
+                      </p>
                     </div>
                   </div>
                 </CardContent>

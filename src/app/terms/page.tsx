@@ -28,7 +28,7 @@ export default function TermsOfUsePage() {
                  <CardDescription>Last updated: July 29, 2024</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 text-muted-foreground prose prose-sm max-w-none">
-              <p>Welcome to Droppurity. These Terms and Conditions govern your rental or purchase of our water purification products and services. By entering into an agreement with us, you accept these terms in full.</p>
+              <p>Welcome to Droppurity. These Terms and Conditions govern your rental or purchase of our water purification products and services provided by <strong>Drop Rechnologies Private Ltd</strong>. By entering into an agreement with us, you accept these terms in full.</p>
 
               <div className="space-y-4">
                   <h2 className="!mb-2">1. Service Agreement</h2>
@@ -102,7 +102,7 @@ export default function TermsOfUsePage() {
 
               <div className="space-y-4">
                   <h2 className="!mb-2">11. Governing Law</h2>
-                  <p>11.1. This agreement and any disputes arising from it will be governed by the laws of India, with exclusive jurisdiction in the courts of Jharkhand.</p>
+                  <p>11.1. This agreement and any disputes arising from it will be governed by the laws of India, with exclusive jurisdiction in the courts of Bengaluru, Karnataka.</p>
               </div>
 
               <div className="space-y-4">

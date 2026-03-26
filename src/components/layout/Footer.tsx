@@ -41,21 +41,14 @@ export default function Footer() {
             </p>
             <div>
               <p className="text-xs text-primary-foreground/80">
+                <strong>Bengaluru Office (HQ):</strong><br />
+                2nd cross, Vinayaka Layout,<br />
+                Rayasandra, Bengaluru - 560100.
+              </p>
+              <p className="text-xs text-primary-foreground/80 mt-1.5">
                 <strong>Nagpur office:</strong><br />
-                Plot No. 21, Adarsh Nagar,<br />
-                Opp. Shivaji Chowk, Khadgaon Road,<br />
+                Plot No. 21, Adarsh Nagar, Khadgaon Road,<br />
                 WADI, NAGPUR - 440 023. (MH.)
-              </p>
-              <p className="text-xs text-primary-foreground/80 mt-1.5">
-                <strong>Ranchi office:</strong><br />
-                B-503, Shivalik Enclave, Obaria Road,<br />
-                Hatia, Near Nandan Palace,<br />
-                Ranchi - 834003
-              </p>
-              <p className="text-xs text-primary-foreground/80 mt-1.5">
-                <strong>Patna Office:</strong><br />
-                East ram Krishna nagar,<br />
-                near gdm college, Patna - 800027.
               </p>
               <p className="text-xs text-primary-foreground/80 mt-1.5">
                 <strong>Bokaro Office:</strong><br />
@@ -63,7 +56,7 @@ export default function Footer() {
                 Bokaro, Jharkhand - 827013.
               </p>
                <p className="text-[10px] text-primary-foreground/60 italic mt-2.5">
-                Note: These office locations represent our valued product partners, relation partners, and service partners.
+                Note: These office locations represent our legal entity, valued product partners, and service partners.
               </p>
             </div>
           </div>
@@ -135,7 +128,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-6 text-center text-[10px] text-primary-foreground/80">
-          <p>&copy; {new Date().getFullYear()} Droppurity. All rights reserved. Smart Purifiers on Rent.</p>
+          <p>&copy; {new Date().getFullYear()} Drop Rechnologies Private Ltd. All rights reserved. Brand: Droppurity.</p>
         </div>
       </div>
     </footer>

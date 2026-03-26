@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Check, MapPin, Phone, Droplets, Shield, Clock, ArrowRight, Star, IndianRupee, Wrench } from 'lucide-react';
+import { Check, MapPin, Phone, Droplets, Shield, Clock, ArrowRight, Star, IndianRupee, Wrench, BookOpen } from 'lucide-react';
 import { bangaloreLocalities, getLocalityBySlug, getAllLocalitySlugs, type LocalityData } from '@/config/localityData';
 import AreaTrialForm from '@/components/droppurity/AreaTrialForm';
+import { blogPosts } from '@/config/blogData';
 
 // Generate static pages for all localities
 export async function generateStaticParams() {
@@ -45,12 +46,14 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   };
 }
 
-// FAQ data specific to locality
+// FAQ data specific to locality - with internal links for SEO
 function getLocalityFAQs(locality: LocalityData) {
   return [
     {
       question: `What is the cost of renting an RO purifier in ${locality.name}, Bengaluru?`,
-      answer: `Droppurity offers RO water purifier rental in ${locality.name} starting at just ₹299/month with zero upfront costs. This includes free installation, free lifetime maintenance, and free filter replacements.`,
+      answer: `Droppurity offers RO water purifier rental in ${locality.name} starting at just ₹299/month with zero upfront costs. This includes free installation, free lifetime maintenance, and free filter replacements. Check our complete pricing on the plans page.`,
+      hasLinks: true,
+      linkHtml: `Droppurity offers <a href="/plans" class="text-primary font-semibold hover:underline">RO water purifier rental plans</a> in ${locality.name} starting at just ₹299/month with zero upfront costs. This includes free installation, free lifetime maintenance, and free filter replacements.`,
     },
     {
       question: `Does Droppurity provide free installation in ${locality.name}?`,
@@ -59,10 +62,14 @@ function getLocalityFAQs(locality: LocalityData) {
     {
       question: `What type of RO purifier is best for ${locality.name}'s water?`,
       answer: `${locality.waterQualityNote} Our RO+UV+UF purifiers with multi-stage filtration are ideal for ${locality.name}'s water quality. We also offer Copper and Alkaline variants for added health benefits.`,
+      hasLinks: true,
+      linkHtml: `${locality.waterQualityNote} Our RO+UV+UF purifiers with multi-stage filtration are ideal for ${locality.name}'s water quality. We also offer <a href="/plans" class="text-primary font-semibold hover:underline">Copper and Alkaline variants</a> for added health benefits. Read our <a href="/blog/alkaline-water-benefits-ph-8-5" class="text-primary font-semibold hover:underline">guide on alkaline water benefits</a>.`,
     },
     {
       question: `Can I try before subscribing in ${locality.name}?`,
       answer: `Absolutely! We offer a 7-day risk-free trial in ${locality.name}. If you're not satisfied with our service, we'll pick up the purifier and refund your security deposit – no questions asked.`,
+      hasLinks: true,
+      linkHtml: `Absolutely! We offer a <a href="/trial" class="text-primary font-semibold hover:underline">7-day risk-free trial</a> in ${locality.name}. If you're not satisfied with our service, we'll pick up the purifier and refund your security deposit – no questions asked.`,
     },
     {
       question: `What if I relocate within ${locality.name} or Bengaluru?`,
@@ -71,6 +78,8 @@ function getLocalityFAQs(locality: LocalityData) {
     {
       question: `How quickly can I get an RO purifier installed in ${locality.name}?`,
       answer: `We offer 48-hour installation in ${locality.name}. Book your free trial today and our team will contact you to schedule a convenient installation time.`,
+      hasLinks: true,
+      linkHtml: `We offer 48-hour installation in ${locality.name}. <a href="/trial" class="text-primary font-semibold hover:underline">Book your free trial today</a> and our team will contact you to schedule a convenient installation time.`,
     },
   ];
 }
@@ -326,8 +335,8 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Free Relocation</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> 10L Storage Tank</li>
                 </ul>
-                <Link href="/bengaluru" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
-                  View Full Plans →
+                <Link href="/plans" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
+                  View All RO Rental Plans →
                 </Link>
               </div>
               {/* Copper */}
@@ -343,8 +352,8 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Immunity Boost</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Free Maintenance</li>
                 </ul>
-                <Link href="/bengaluru" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
-                  View Full Plans →
+                <Link href="/plans" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
+                  Compare All Purifier Plans →
                 </Link>
               </div>
               {/* Alkaline */}
@@ -360,8 +369,8 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Anti-Acidity Benefits</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Free Maintenance</li>
                 </ul>
-                <Link href="/bengaluru" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
-                  View Full Plans →
+                <Link href="/plans" className="mt-4 block text-center text-sm font-semibold text-primary hover:underline">
+                  See Affordable Rental Plans →
                 </Link>
               </div>
             </div>
@@ -442,7 +451,11 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
                     <span className="text-primary text-lg font-bold ml-2 group-open:rotate-45 transition-transform">+</span>
                   </summary>
                   <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                    {faq.answer}
+                    {faq.hasLinks ? (
+                      <span dangerouslySetInnerHTML={{ __html: faq.linkHtml! }} />
+                    ) : (
+                      faq.answer
+                    )}
                   </div>
                 </details>
               ))}
@@ -450,8 +463,45 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
           </div>
         </section>
 
-        {/* Nearby Areas */}
+        {/* Helpful Guides — SEO Internal Links to Blog */}
         <section className="py-10 sm:py-14 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h2 className="text-xl sm:text-2xl font-bold font-headline text-center text-slate-900 mb-3">
+              Helpful Guides for {locality.name} Residents
+            </h2>
+            <p className="text-center text-muted-foreground text-sm mb-6">
+              Learn more about water purification, rental tips, and making the best choice for your home in {locality.name}
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {blogPosts.slice(0, 3).map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-primary/30 hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <BookOpen className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">Guide</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-800 group-hover:text-primary transition-colors text-sm leading-snug">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-4">
+              <Link href="/blog" className="text-sm text-primary font-semibold hover:underline">
+                Read all guides & articles →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Nearby Areas */}
+        <section className="py-10 sm:py-14 bg-slate-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <h2 className="text-xl sm:text-2xl font-bold font-headline text-center text-slate-900 mb-3">
               Also Serving Nearby Areas
@@ -493,10 +543,10 @@ export default async function AreaPage({ params }: { params: Promise<{ area: str
                 Call: 79797-84087
               </a>
               <Link
-                href="/bengaluru"
+                href="/plans"
                 className="inline-flex items-center gap-2 border-2 border-white/60 text-white font-semibold px-8 py-3 rounded-lg hover:bg-white/10 transition-colors"
               >
-                View All Plans
+                View All Rental Plans
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

@@ -217,7 +217,7 @@ export default function SubscriptionFormPage() {
               </div>
               <div>
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" {...register("email")} placeholder="you@example.com" className="mt-1" disabled={isSubmitting} />
+                <Input id="email" type="email" {...register("email")} placeholder="official@droppurity.in" className="mt-1" disabled={isSubmitting} />
                 {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
               </div>
               <div>

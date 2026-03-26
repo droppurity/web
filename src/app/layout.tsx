@@ -71,8 +71,8 @@ export const metadata: Metadata = {
     "iot water purifier",
   ],
   authors: [{ name: 'Droppurity', url: siteUrl }],
-  creator: 'Droppurity',
-  publisher: 'Droppurity',
+  creator: 'Drop Rechnologies Private Ltd',
+  publisher: 'Drop Rechnologies Private Ltd',
   robots: {
     index: true,
     follow: true,
@@ -136,10 +136,10 @@ const organizationSchema = {
   "foundingDate": "2022",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Shivpuri Colony, Chas",
-    "addressLocality": "Bokaro Steel City",
-    "postalCode": "827013",
-    "addressRegion": "Jharkhand",
+    "streetAddress": "2nd cross, Vinayaka Layout, Rayasandra",
+    "addressLocality": "Bengaluru",
+    "postalCode": "560100",
+    "addressRegion": "Karnataka",
     "addressCountry": "IN",
   },
   "areaServed": [

@@ -67,6 +67,22 @@ export default function BlogListPage() {
             </Link>
           ))}
         </div>
+
+        {/* CTA Section — Internal Links to Transactional Pages */}
+        <div className="mt-16 pt-8 border-t border-primary/10 text-center max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold text-primary mb-3">Ready to Get Pure Water at Home?</h2>
+          <p className="text-muted-foreground mb-6">
+            Explore our <Link href="/plans" className="text-primary font-semibold hover:underline">affordable RO rental plans</Link> starting at ₹299/month with free installation and lifetime free maintenance.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Button asChild size="lg" className="px-8">
+              <Link href="/plans">View Rental Plans</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="px-8 border-primary/20 hover:bg-primary/5">
+              <Link href="/trial">Book Free Trial</Link>
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ export default function CareersPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              We do not have any open positions at the moment, but we are always looking for talented individuals. Please check back later or send your resume to <a href="mailto:careers@droppurity.in" className="text-primary hover:underline">careers@droppurity.in</a>.
+              We do not have any open positions at the moment, but we are always looking for talented individuals. Please check back later or send your resume to <a href="mailto:official@droppurity.in" className="text-primary hover:underline">official@droppurity.in</a>.
             </p>
           </CardContent>
         </Card>
