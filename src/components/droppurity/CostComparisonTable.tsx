@@ -31,7 +31,7 @@ const comparisonData = [
   },
   {
     parameter: 'Water Quality Assurance',
-    waterJar: { text: 'Not Guaranteed', icon: X, iconClass: 'text-destructive' },
+    waterJar: { text: 'Unfiltered Quality', icon: X, iconClass: 'text-destructive' },
     otherRo: { text: 'Depends on Service', icon: X, iconClass: 'text-destructive' },
     droppurity: { text: 'Assured Purity', icon: ShieldCheck, iconClass: 'text-green-500' },
   },

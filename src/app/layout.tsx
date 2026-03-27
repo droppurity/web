@@ -5,7 +5,7 @@ import ClientLayout from '@/components/layout/ClientLayout';
 
 const siteUrl = "https://droppurity.in";
 const siteTitle = "RO Water Purifier on Rent | ₹299/mo | Free Install & Service – Droppurity";
-const siteDescription = "Rent an RO water purifier starting at ₹299/month. Zero upfront cost, free installation, lifetime free maintenance & filter replacement. 7-day risk-free trial. Serving Bengaluru, Delhi, Mumbai, Hyderabad, Pune & more.";
+const siteDescription = "Book a 7-Day Risk-Free Trial – RO Water Purifier on Rent in Bengaluru starting from ₹299/month only. Copper & Alkaline options available. Free installation, lifetime free maintenance. Don't like it? 100% refund. Droppurity.";
 const ogImageUrl = `${siteUrl}/hero.png`;
 
 export const metadata: Metadata = {
@@ -227,9 +227,11 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
-    { "@type": "ListItem", "position": 2, "name": "Plans", "item": `${siteUrl}/plans` },
-    { "@type": "ListItem", "position": 3, "name": "FAQ", "item": `${siteUrl}/faq` },
+    { "@type": "ListItem", "position": 1, "name": "Book 7-Day Free Trial – Bengaluru", "item": `${siteUrl}/trial` },
+    { "@type": "ListItem", "position": 2, "name": "Copper RO Purifier on Rent", "item": `${siteUrl}/plans#copper` },
+    { "@type": "ListItem", "position": 3, "name": "Alkaline RO Purifier on Rent", "item": `${siteUrl}/plans#alkaline` },
+    { "@type": "ListItem", "position": 4, "name": "Our Plans", "item": `${siteUrl}/plans` },
+    { "@type": "ListItem", "position": 5, "name": "Rent RO Purifier in Bangalore", "item": `${siteUrl}/bengaluru` },
   ],
 };
 

@@ -128,7 +128,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-6 text-center text-[10px] text-primary-foreground/80">
-          <p>&copy; {new Date().getFullYear()} Drop Technologies Private Ltd. All rights reserved. Brand: Droppurity.</p>
+          <p>&copy; Drop Technologies Private Ltd. All rights reserved. Brand: Droppurity.</p>
         </div>
       </div>
     </footer>
