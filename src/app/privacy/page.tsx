@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
                  <CardDescription>Last updated: July 29, 2024</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 text-muted-foreground prose prose-sm max-w-none">
-                <p>At Droppurity (brand under <strong>Drop Rechnologies Private Ltd</strong>), we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner.</p>
+                <p>At Droppurity (brand under <strong>Drop Technologies Private Ltd</strong>), we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner.</p>
                 
                 <div className="space-y-4">
                     <h2 className="!mb-2">1. Information We Collect</h2>
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
                     <h2 className="!mb-2">5. Contact Information</h2>
                     <p>For any privacy-related queries, please contact our Data Protection Officer at:</p>
                     <ul className="!mt-2">
-                        <li><strong>Drop Rechnologies Private Ltd</strong></li>
+                        <li><strong>Drop Technologies Private Ltd</strong></li>
                         <li>2nd cross, Vinayaka Layout, Rayasandra, Bengaluru - 560100</li>
                         <li>Email: <a href="mailto:official@droppurity.in" className="text-primary hover:underline">official@droppurity.in</a></li>
                     </ul>

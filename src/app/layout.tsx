@@ -71,8 +71,8 @@ export const metadata: Metadata = {
     "iot water purifier",
   ],
   authors: [{ name: 'Droppurity', url: siteUrl }],
-  creator: 'Drop Rechnologies Private Ltd',
-  publisher: 'Drop Rechnologies Private Ltd',
+  creator: 'Drop Technologies Private Ltd',
+  publisher: 'Drop Technologies Private Ltd',
   robots: {
     index: true,
     follow: true,
